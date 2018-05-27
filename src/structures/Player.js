@@ -1,4 +1,4 @@
-import { TickBase } from "./Bases";
+const { TickBase } = require("./Bases");
 class Player extends TickBase
 {
 	constructor(data = {})
@@ -7,7 +7,7 @@ class Player extends TickBase
 		this.name = 'Name'
 	}
 
-	toString = () => `${this.name} - ${this._id}`
+	toString() {return `${this.name} - ${this._id}`}
 }
 
-export { Player }
+module.exports = { Player }

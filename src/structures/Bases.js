@@ -1,5 +1,5 @@
-import { EventEmitter } from "events"
-import RandomJs from "random-js"
+const { EventEmitter } = require("events")
+const RandomJs = require("random-js")
 const Random = new RandomJs(RandomJs.engines.browserCrypto)
 
 class Base
@@ -85,4 +85,4 @@ class TickBase extends EventEmitter
 	}
 }
 
-export {Base, TickBase}
+module.exports = { Base, TickBase }

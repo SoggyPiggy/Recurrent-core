@@ -1,4 +1,4 @@
-import { Player } from './../structures/Player'
+const { Player } = require('./../structures/Player')
 
 class PlayerManager extends Array
 {
@@ -27,4 +27,4 @@ class PlayerManager extends Array
 	}
 }
 
-export { PlayerManager }
+module.exports = { PlayerManager }

@@ -8,4 +8,4 @@ function EventLoader(data = {})
 {
 }
 
-export { Event, Handler }
+module.exports = { Event, Handler }

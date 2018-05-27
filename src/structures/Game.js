@@ -1,4 +1,4 @@
-import { PlayerManager } from "./../managers/PlayerManager";
+const { PlayerManager } = require("./../managers/PlayerManager");
 
 class Game
 {
@@ -8,4 +8,4 @@ class Game
 	}
 }
 
-export { Game }
+module.exports = { Game }
