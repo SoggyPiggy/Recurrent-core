@@ -15,7 +15,6 @@ class PlayerManager extends Array
 
 	get player()
 	{
-		console.log('Player Fetched: ', this[0])
 		return this[0]
 	}
 
