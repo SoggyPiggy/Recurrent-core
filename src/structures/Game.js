@@ -4,7 +4,7 @@ class Game
 {
 	constructor()
 	{
-		this.players = new PlayerManager()
+		this.players = new PlayerManager();
 	}
 }
 
