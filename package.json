@@ -2,7 +2,7 @@
   "name": "recurrent-core",
   "version": "1.0.0",
   "description": "The core game for 'recurrent'",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": "https://github.com/SoggyPiggy/recurrent-core.git",
   "author": "SoggyPiggy <soggypiggy@gmail.com>",
   "license": "Apache License 2.0",
