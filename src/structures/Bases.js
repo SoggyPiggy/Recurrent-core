@@ -85,4 +85,42 @@ class TickBase extends EventEmitter
 	}
 }
 
+class ActorBase extends TickBase
+{
+	constructor(data)
+	{
+		super(data);
+		this.name = typeof data.name !== 'undefined' ? data.name : this.generateName();
+		this.stats = this.generateStats(data.stats);
+		this.health = typeof data.health !== 'undefined' ? data.health : 1;
+	}
+
+	generateStats(data)
+	{
+		let settings = { Avg: 100, Max: 150, Adjust: 15, MicroAdjust: 7, }
+		if (typeof data === 'undefined') data = {};
+		let skillNames =
+		[
+			'strength', // Stronger attacks
+			'constitution',// More health
+			'dexerity', // Faster tick rate
+			// 'luck', // Better chances
+			'intelligence', // More XP
+		]
+		let max = skillNames.length * settin;
+		let used = 0;
+		for (let skill of skillNames)
+		{
+			if (typeof data[skill] === 'undefined') data[skill] = 0;
+			else used += data[skill];
+		}
+		while (used < max)
+		{
+			let selected = this.random.pick(skillNames);
+			if (data[selected] >= 150) continue;
+			let adjust
+		}
+	}
+}
+
 module.exports = { Base, TickBase }
