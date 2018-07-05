@@ -1,0 +1,29 @@
+const { Quest, SlayerQuest, DungeonCrawlQuest, GatheringQuest } = require('./../structures/Quests');
+
+class QuestManager extends Array
+{
+	constructor(chapter, data = [])
+	{
+		if (!Array.isArray(data)) data = [];
+		for (let i = 0; i < data.length; i++)
+		{
+			switch (data[i].eventType)
+			{
+				case 'slayer': data[i] = new SlayerQuest(chapter, data[i]); break;
+				case 'dungeon': data[i] = new DungeonCrawlQuest(chapter, data[i]); break;
+				case 'gathering': data[i] = new GatheringQuest(chapter, data[i]); break;
+				default: break;
+			}
+		}
+		super(...data);
+	}
+
+	get quest() { return this.length ? this[0] : this.newQuest(); }
+
+	newQuest(data = {})
+	{
+		// TODO: Add functionality to this shit
+	}
+}
+
+module.exports = { QuestManager };

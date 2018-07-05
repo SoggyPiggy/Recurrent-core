@@ -1,5 +1,6 @@
 const { TickBase } = require('./Bases');
 const { Player } = require('./Player');
+const { QuestManager } = require('../managers/QuestManager');
 
 class Chapter extends TickBase
 {
@@ -8,7 +9,7 @@ class Chapter extends TickBase
 		super(data);
 		this.player = new Player(data.player);
 		this.log;
-		this.events;
+		this.quests = new QuestManager(this, data.quests);
 
 		this.player.on('died', () => this.deactivate());
 	}
@@ -29,6 +30,7 @@ class Chapter extends TickBase
 	{
 		let data = super.compress();
 		data.player = this.player.compress();
+		data.quests = this.quests.compress();
 		return data;
 	}
 }
