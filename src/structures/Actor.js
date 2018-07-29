@@ -66,8 +66,11 @@ class Actor extends EventBase
 
 	generateName()
 	{
-		return 'Actor Name';
+		let names = ['Bob', 'Jim', 'Rob', 'Tim', 'Tom', 'Han', 'Zac'];
+		return this.random.pick(names);
 	}
+
+	toString() { return `${this.name} - ${this._id}`; }
 
 	compress()
 	{

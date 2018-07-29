@@ -22,8 +22,6 @@ class Chapter extends TickBase
 
 	tick()
 	{
-		console.log(`${String(this.ticks).padStart(5, '0')} - Health ${String(this.player.health).padStart(4, '0')} / ${String(this.player.healthMax).padStart(4, '0')}`)
-		this.player.takeDamage(this.player.healthMax / 2);
 	}
 
 	compress()

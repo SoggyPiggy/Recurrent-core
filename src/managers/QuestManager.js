@@ -1,4 +1,7 @@
-const { Quest, SlayerQuest, DungeonCrawlQuest, GatheringQuest } = require('./../structures/Quests');
+const { DungeonCrawlQuest } = require('./../structures/Quests/DungeonCrawlQuest');
+const { GatheringQuest } = require('./../structures/Quests/GatheringQuest');
+const { SellingQuest } = require('./../structures/Quests/SellingQuest');
+const { SlayerQuest } = require('./../structures/Quests/SlayerQuest');
 
 class QuestManager extends Array
 {
@@ -12,6 +15,7 @@ class QuestManager extends Array
 				case 'slayer': data[i] = new SlayerQuest(chapter, data[i]); break;
 				case 'dungeon': data[i] = new DungeonCrawlQuest(chapter, data[i]); break;
 				case 'gathering': data[i] = new GatheringQuest(chapter, data[i]); break;
+				case 'selling': data[i] = new SellingQuest(chapter, data[i]); break;
 				default: break;
 			}
 		}

@@ -1,4 +1,4 @@
-const { Quest } = require('./Quest');
+const { Quest } = require('./../Quest');
 
 class DungeonCrawlQuest extends Quest
 {
