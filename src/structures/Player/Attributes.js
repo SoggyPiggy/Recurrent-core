@@ -1,9 +1,9 @@
-class ActorAttributes
+class PlayerAttributes
 {
-	constructor(actor, data = {})
+	constructor(player, data = {})
 	{
-		this.actor = actor;
-		this.random = this.actor.random;
+		this.player = player;
+		this.random = this.player.random;
 		this.raw = {};
 		this.generate(data);
 	}
@@ -70,4 +70,4 @@ class ActorAttributes
 	}
 }
 
-module.exports = { ActorAttributes };
+module.exports = { PlayerAttributes };
