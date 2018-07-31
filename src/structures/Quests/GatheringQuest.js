@@ -5,7 +5,7 @@ class GatheringQuest extends Quest
 	constructor(chapter, data = {})
 	{
 		super(chapter, data);
-		this.eventType = 'gathering';
+		this.questType = 'gathering';
 	}
 }
 

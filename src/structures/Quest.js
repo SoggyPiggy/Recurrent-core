@@ -7,7 +7,7 @@ class Quest extends EventBase
 	constructor(chapter, data = {})
 	{
 		super(data);
-		this.eventType = 'base';
+		this.questType = 'base';
 		this.chapter = chapter;
 		this.objectives = typeof data.objectives !== 'undefined' ? data.objectives : [];
 		this.processObjectives();
@@ -41,12 +41,16 @@ class Quest extends EventBase
 	}
 
 	tick()
-	{}
+	{
+		let objective = this.activeObjective();
+		if (!objective.completed) return objective.tick();
+		
+	}
 
 	compress()
 	{
 		let data = super.compress();
-		data.eventType = this.eventType;
+		data.questType = this.questType;
 		return data;
 	}
 }

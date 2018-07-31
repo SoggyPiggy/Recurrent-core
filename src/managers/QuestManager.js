@@ -10,7 +10,7 @@ class QuestManager extends Array
 		if (!Array.isArray(data)) data = [];
 		for (let i = 0; i < data.length; i++)
 		{
-			switch (data[i].eventType)
+			switch (data[i].questType)
 			{
 				case 'slayer': data[i] = new SlayerQuest(chapter, data[i]); break;
 				case 'dungeon': data[i] = new DungeonCrawlQuest(chapter, data[i]); break;
@@ -27,6 +27,9 @@ class QuestManager extends Array
 	newQuest(data = {})
 	{
 		// TODO: Add functionality to this shit
+		let newQuest = new SlayerQuest();
+		this.unshift(newQuest);
+		return newQuest;
 	}
 }
 

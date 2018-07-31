@@ -1,4 +1,4 @@
-const { Objective } = require('./../Objective');
+const { Objective } = require('../Objective');
 
 class FightingObjective extends Objective
 {
