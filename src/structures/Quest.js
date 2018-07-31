@@ -37,14 +37,12 @@ class Quest extends EventBase
 	}
 
 	generateObjectives()
-	{
-	}
+	{}
 
 	tick()
 	{
 		let objective = this.activeObjective();
 		if (!objective.completed) return objective.tick();
-		
 	}
 
 	compress()

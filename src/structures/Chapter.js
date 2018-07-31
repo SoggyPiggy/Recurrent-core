@@ -20,10 +20,6 @@ class Chapter extends TickBase
 		super.activate(this.player.tickRate);
 	}
 
-	tick()
-	{
-	}
-
 	compress()
 	{
 		let data = super.compress();

@@ -1,6 +1,6 @@
-const { Base } = require('./Bases');
+const { EventBase } = require('./Bases');
 
-class Objective extends Base
+class Objective extends EventBase
 {
 	constructor(chapter, data = {})
 	{
