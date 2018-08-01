@@ -23,11 +23,15 @@ class Player extends EventBase
 	get race() { return this.information.raceName; }
 	set race(race) { this.information.setRace(race); }
 
-	get tickRate() { return 750 - this.attributes.proficiency * 3; }
-	get xpMod() { return 1 + this.attributes.insight / 171; }
-	get healthMod() { return this.attributes.constitution * 5; }
-	get damageDealtMod() { return 1 + this.attributes.might / 171; }
-	get damageTakenMod() { return this.attributes.fortitude / 171 * .25; }
+	get charm() { return this.attributes.charm; }
+	get constitution() { return this.attributes.constitution; }
+	get fortitude() { return this.attributes.fortitude; }
+	get fortuity() { return this.attributes.fortuity; }
+	get insight() { return this.attributes.insight; }
+	get might() { return this.attributes.might; }
+	get perception() { return this.attributes.perception; }
+	get proficiency() { return this.attributes.proficiency; }
+	get stamina() { return this.attributes.stamina; }
 
 	toString = () => `'${this.name}' the ${this.race}`;
 
@@ -42,3 +46,5 @@ class Player extends EventBase
 		return data;
 	}
 }
+
+module.exports = { Player };
