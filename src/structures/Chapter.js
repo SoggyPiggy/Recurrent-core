@@ -17,7 +17,7 @@ class Chapter extends TickBase
 	activate()
 	{
 		if (this.player.dead) return;
-		super.activate(this.player.tickRate);
+		super.activate(750 - this.player.proficiency * 2);
 	}
 
 	compress()
