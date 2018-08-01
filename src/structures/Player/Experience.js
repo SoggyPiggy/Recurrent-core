@@ -7,18 +7,23 @@ class PlayerExperience
 		this.xp = typeof data.xp !== 'undefined' ? data.xp : 0;
 	}
 
-	get level() { return Math.floor(Math.pow(this.xp, (2 / 5)) + 1); }
+	get level() { return this.getLevel(this.xp); }
 	get xpMod() { return this.player.attributes.insight / 171; }
 
-	level()
+	getLevel(xp)
 	{
-		return this.level;
+		return Math.floor(Math.pow(xp + 1, 2 / 5));
+	}
+
+	getXP(level)
+	{
+		return Math.ceil(Math.pow(level, 5 / 2) - 1);
 	}
 
 	gain(xp)
 	{
 		let baseXP = xp;
-		let bonusXP = xp * this.xpMod;
+		let bonusXP = Math.round(xp * this.xpMod);
 		let totalXP = baseXP + bonusXP;
 		let preLevel = this.level;
 		this.xp += totalXP;

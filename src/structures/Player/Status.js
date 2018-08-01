@@ -9,7 +9,7 @@ class PlayerStatus
 	}
 
 	get maxHealth() { return 145 + (this.player.attributes.con); }
-	get maxStamina() { return 145 = (this.player.attributes.stamina)}
+	get maxStamina() { return 145 + (this.player.attributes.stamina)}
 	get dead() { return this.health <= 0; }
 	get healthy() { return this.health >= this.maxHealth / 2; }
 	get fatigued() { return this.stamina <= 0; }
