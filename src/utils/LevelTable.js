@@ -1,27 +1,14 @@
-class LevelTable extends Array
+const { IDMap } = require('./IDMap');
+
+class LevelTable extends IDMap
 {
 	constructor()
 	{
 		super();
 	}
 
-	addDrop(min, max, item)
+	forLevel(level)
 	{
-		this.push({min, max, item});
-	}
-
-	getItems(level)
-	{
-		let data = [];
-		for (let item of this)
-		{
-			if (level >= item.min && level <= item.max) data.push(item.item);
-		}
-		return data;
-	}
-
-	filterItems(level)
-	{
-		return this.filter(item => level >= item.min && level <= item.max);
+		return Array.from(this.values()).filter(v => level >= v.minLevel && level <= v.maxLevel);
 	}
 }
