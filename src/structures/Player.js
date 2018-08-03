@@ -4,6 +4,7 @@ const { PlayerEquipment } = require('./Player/Equipment');
 const { PlayerInformation } = require('./Player/Information');
 const { PlayerStatus }= require('./Player/Status');
 const { PlayerExperience } = require('./Player/Experience');
+const { PlayerCoordinates } = require('./Player/Coordinates');
 
 class Player extends EventBase
 {
@@ -12,10 +13,11 @@ class Player extends EventBase
 		super(data);
 		this.chapter = chapter;
 		this.attributes = new PlayerAttributes(this, data.attributes);
+		this.coordinates = new PlayerCoordinates(this, data.coordinates);
 		this.equipment = new PlayerEquipment(this, data.equipment);
+		this.experience = new PlayerExperience(this, data.experience);
 		this.information = new PlayerInformation(this, data.information);
 		this.status = new PlayerStatus(this, data.status);
-		this.experience = new PlayerExperience(this, data.experience);
 	}
 
 	get name() { return this.information.name; }
@@ -39,10 +41,11 @@ class Player extends EventBase
 	{
 		let data = super.compress();
 		data.attributes = this.attributes.compress();
+		data.coordinates = this.coordinates.compress();
 		data.equipment = this.equipment.compress();
+		data.experience = this.experience.compress();
 		data.information = this.information.compress();
 		data.status = this.status.compress();
-		data.experience = this.experience.compress();
 		return data;
 	}
 }
