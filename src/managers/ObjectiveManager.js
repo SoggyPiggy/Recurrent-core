@@ -3,7 +3,7 @@ const { FightingObjective } = require('./../structures/Objectives/FightingObject
 
 class ObjectiveManager extends Array
 {
-	constructor(chapter, data = [])
+	constructor(quest, data = [])
 	{
 		if (!Array.isArray(data)) data = [];
 		for (let i = 0; i < data.length; i++)
@@ -11,31 +11,40 @@ class ObjectiveManager extends Array
 			if (data[i] instanceof Objective) continue;
 			switch (data[i].type)
 			{
-				case 'fight': break;
-				default: break;
+				case 'fight': data[i] = new FightingObjective(quest, data[i]); break;
+				default: data[i] = new Objective(quest, data[i]); break;
 			}
 		}
 		super(...data);
+		if (this.length <= 0) quest.addObjectives();
+		this.refreshActiveObjective();
+		this.objective.once('completed', () => this.refreshActiveObjective());
 	}
 
-	get objective() { return this.getActiveObjective(); }
-	get completed() { return this.isCompleted(); }
+	get objective() { return this._activeobjective; }
+	get complete() { return this[this.length - 1].complete; }
 
-	getActiveObjective()
+	refreshActiveObjective()
 	{
 		for (let objective of this)
 		{
-			if (!objective.completed) return objective;
+			if (!objective.complete)
+			{
+				this._activeobjective = objective;
+				return;
+			}
 		}
+		this._activeobjective = this[0];
 	}
 
-	isCompleted()
+	compress()
 	{
-		for (let objective of tihs)
+		let data = [];
+		for (let objective of this)
 		{
-			if (!objective.completed) return false;
+			data.push(objective.compress());
 		}
-		return true;
+		return data;
 	}
 }
 

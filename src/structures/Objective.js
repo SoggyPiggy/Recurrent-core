@@ -2,32 +2,17 @@ const { EventBase } = require('./Bases');
 
 class Objective extends EventBase
 {
-	constructor(chapter, data = {})
+	constructor(quest, data = {})
 	{
 		super(data);
-		this.chapter = chapter;
-		this.player = this.chapter.player;
-		this.info = typeof data.info !== 'undefined' ? data.info : this.generateInfo();
+		this.quest = quest;
+		this.player = this.quest.chapter.player;
 		this.progress = typeof data.progress !== 'undefined' ? data.progress : 0;
 		this.end = typeof data.end !== 'undefined' ? data.end : this.generateEnd();
 	}
 
-	get title() { return this.info.title; }
-	get description() { return this.info.description; }
-	get completed() { return this.progress >= this.end; }
-
-	tick()
-	{}
-
-	generateInfo()
-	{
-		return { title: 'Objective Title', description: 'Description of the base objective' };
-	}
-
-	generateEnd()
-	{
-		return 1000;
-	}
+	get complete() { return this.progress >= this.end; }
+	get completion() { return this.progress / this.end; }
 
 	compress()
 	{

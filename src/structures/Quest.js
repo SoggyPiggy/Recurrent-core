@@ -7,48 +7,36 @@ class Quest extends EventBase
 	constructor(chapter, data = {})
 	{
 		super(data);
-		this.questType = 'base';
 		this.chapter = chapter;
-		this.objectives = typeof data.objectives !== 'undefined' ? data.objectives : [];
-		this.processObjectives();
+		this.type = 'base';
+		this.objectives = new ObjectiveManager(this, data.objectives);
 	}
 
-	get completed() { return this.objectives.length <= 0 ? true : this.objectives[this.objectives.length - 1].completed; }
+	get complete() { return this.objectives.complete; };
 
-	activeObjective()
+	addObjectives()
 	{
-		if (this.completed) return null;
-		for (let i = this.activeobjective; i < this.objectives.length - 1; i++)
-		{
-			this.activeobjective = i;
-			if (!this.objectives[i].completed) return this.objectives[i];
-		}
-		return null;
-	}
-
-	processObjectives(data = null)
-	{
-		if (this.objectives.length) this.objectives = new ObjectiveManager(this.objectives);
-		else
-		{
-			this.objectives = new ObjectiveManager();
-			this.generateObjectives();
-		}
+		this.objectives.push(...this.generateObjectives());
 	}
 
 	generateObjectives()
-	{}
-
-	tick()
 	{
-		let objective = this.activeObjective();
-		if (!objective.completed) return objective.tick();
+		let objectives = [];
+		let count = this.random.integer(5, 8);
+		for (let i = 0; i < count; i++)
+		{
+			objectives.push(new Objective(this));
+		}
+		return objectives;
 	}
 
 	compress()
 	{
 		let data = super.compress();
-		data.questType = this.questType;
+		data.type = this.type;
+		data.objectives = this.objectives.compress();
 		return data;
 	}
 }
+
+module.exports = { Quest };
