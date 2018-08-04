@@ -1,14 +1,13 @@
+const { Experience } = require('./../Experience');
+
 class PlayerExperience
 {
 	constructor(player, data = {})
 	{
+		super(data);
 		this.player = player;
 		this.random = this.player.random;
-		this.xp = typeof data.xp !== 'undefined' ? data.xp : 0;
 	}
-
-	get level() { return this.getLevel(this.xp); }
-	get xpMod() { return this.player.attributes.insight / 171; }
 
 	getLevel(xp)
 	{
@@ -20,23 +19,17 @@ class PlayerExperience
 		return Math.ceil(Math.pow(level, 5 / 2) - 1);
 	}
 
-	gain(xp)
+	bonusXP(xp)
 	{
-		let baseXP = xp;
-		let bonusXP = Math.round(xp * this.xpMod);
-		let totalXP = baseXP + bonusXP;
-		let preLevel = this.level;
-		this.xp += totalXP;
-		let postLevel = this.level;
-		let levelsGained = postLevel - preLevel;
-		if (postLevel > preLevel) this.player.emit('levelup', levelsGained, preLevel, postLevel, totalXP, baseXP, bonusXP);
+		return Math.round(xp * this.player.attributes.insight / 171);
 	}
 
-	compress()
+	gain(xp)
 	{
-		let data = {};
-		data.xp = this.xp;
-		return xp;
+		let data = super.gain(xp);
+		this.player.emit('xp', data);
+		if (data.preLevel < data.postLevel) this.player.emit('levelup', data);
+		return data;
 	}
 }
 
