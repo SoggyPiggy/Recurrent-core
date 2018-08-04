@@ -5,6 +5,6 @@ class _Quest extends Quest
 	constructor(chapter, data = {})
 	{
 		super(chapter, data);
-		this.questType = '_';
+		this.type = '_';
 	}
 }

@@ -5,7 +5,7 @@ class DungeonCrawlQuest extends Quest
 	constructor(chapter, data = {})
 	{
 		super(chapter, data);
-		this.questType = 'dungeon';
+		this.type = 'dungeon';
 	}
 }
 

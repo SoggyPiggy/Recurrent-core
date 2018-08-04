@@ -5,7 +5,7 @@ class SlayerQuest extends Quest
 	constructor(chapter, data = {})
 	{
 		super(chapter, data);
-		this.questType = 'slayer';
+		this.type = 'slayer';
 	}
 }
 
