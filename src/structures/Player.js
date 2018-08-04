@@ -18,8 +18,6 @@ class Player extends EventBase
 		this.experience = new PlayerExperience(this, data.experience);
 		this.information = new PlayerInformation(this, data.information);
 		this.status = new PlayerStatus(this, data.status);
-
-		this.count = 0;
 	}
 
 	get name() { return this.information.name; }
