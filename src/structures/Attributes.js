@@ -4,6 +4,7 @@ class Attributes extends Base
 {
 	constructor(data = {}, settings = {})
 	{
+		super(data);
 		this.raw = this.applyAttributes(data);
 	}
 

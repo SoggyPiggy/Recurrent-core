@@ -18,6 +18,8 @@ class Player extends EventBase
 		this.experience = new PlayerExperience(this, data.experience);
 		this.information = new PlayerInformation(this, data.information);
 		this.status = new PlayerStatus(this, data.status);
+
+		this.count = 0;
 	}
 
 	get name() { return this.information.name; }
@@ -35,7 +37,7 @@ class Player extends EventBase
 	get proficiency() { return this.attributes.proficiency; }
 	get stamina() { return this.attributes.stamina; }
 
-	toString = () => `'${this.name}' the ${this.race}`;
+	toString() { return `'${this.name}' the ${this.race}` };
 
 	compress()
 	{

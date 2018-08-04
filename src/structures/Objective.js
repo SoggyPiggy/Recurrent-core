@@ -14,6 +14,11 @@ class Objective extends EventBase
 	get complete() { return this.progress >= this.end; }
 	get completion() { return this.progress / this.end; }
 
+	generateEnd()
+	{
+		return 1000;
+	}
+
 	compress()
 	{
 		let data = super.compress();

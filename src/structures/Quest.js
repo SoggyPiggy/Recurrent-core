@@ -14,11 +14,6 @@ class Quest extends EventBase
 
 	get complete() { return this.objectives.complete; };
 
-	addObjectives()
-	{
-		this.objectives.push(...this.generateObjectives());
-	}
-
 	generateObjectives()
 	{
 		let objectives = [];
