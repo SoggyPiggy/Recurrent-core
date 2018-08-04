@@ -16,7 +16,7 @@ class ObjectiveManager extends Array
 			}
 		}
 		super(...data);
-		if (this.length <= 0) quest.addObjectives();
+		this.quest = quest;
 		this.refreshActiveObjective();
 		this.objective.once('completed', () => this.refreshActiveObjective());
 	}

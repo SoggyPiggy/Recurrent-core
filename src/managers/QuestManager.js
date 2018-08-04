@@ -22,6 +22,7 @@ class QuestManager extends Array
 			}
 		}
 		super(...data);
+		this.chapter = chapter;
 		if (this.length <= 0) this.newQuest();
 		this.quest.once('completed', () => this.newQuest());
 	}
