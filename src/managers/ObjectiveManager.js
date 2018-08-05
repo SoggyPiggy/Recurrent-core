@@ -19,11 +19,13 @@ class ObjectiveManager extends Array
 		this.quest = quest;
 		if (this.length <= 0) this.push(...quest.generateObjectives());
 		this.refreshActiveObjective();
+		this.refreshCompletion();
 		this.objective.once('completed', () => this.refreshActiveObjective());
 	}
 
 	get objective() { return this._activeobjective; }
 	get complete() { return this[this.length - 1].complete; }
+	get completion() { return this._completion; }
 
 	refreshActiveObjective()
 	{
@@ -36,6 +38,17 @@ class ObjectiveManager extends Array
 			}
 		}
 		this._activeobjective = this[0];
+	}
+
+	refreshCompletion()
+	{
+		let total = 0;
+		for (let objective of this)
+		{
+			total += objective.completion;
+		}
+		let completion = total / this.length;
+		this._completion = completion !== NaN ? completion : 0;
 	}
 
 	compress()

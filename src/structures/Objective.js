@@ -9,6 +9,7 @@ class Objective extends EventBase
 		this.player = this.quest.chapter.player;
 		this.progress = typeof data.progress !== 'undefined' ? data.progress : 0;
 		this.end = typeof data.end !== 'undefined' ? data.end : this.generateEnd();
+		this.on('tick', () => this.tick());
 	}
 
 	get complete() { return this.progress >= this.end; }
@@ -17,6 +18,25 @@ class Objective extends EventBase
 	generateEnd()
 	{
 		return 1000;
+	}
+
+	progress()
+	{}
+
+	completionCheck()
+	{
+		if (!this.complete) return false;
+		if (this.progress > this.end) this.progress = this.end;
+		this.emit('completed');
+		return true;
+	}
+
+	tick()
+	{
+		let progress = this.progress();
+		this.progress += progress;
+		this.completionCheck();
+		this.quest.objectives.refreshCompletion();
 	}
 
 	compress()

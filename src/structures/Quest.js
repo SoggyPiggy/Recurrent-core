@@ -13,6 +13,7 @@ class Quest extends EventBase
 	}
 
 	get complete() { return this.objectives.complete; };
+	get completion() { return this.objectives.completion; };
 
 	generateObjectives()
 	{
