@@ -3,8 +3,9 @@ class PlayerEquipment
 	constructor(player, data = {})
 	{
 		this.player = player;
-		this.random = this.player.random;
 	}
+
+	get random() { return this.player.random; }
 }
 
 module.exports = { PlayerEquipment }

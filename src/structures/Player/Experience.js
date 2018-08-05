@@ -6,8 +6,9 @@ class PlayerExperience extends Experience
 	{
 		super(data);
 		this.player = player;
-		this.random = this.player.random;
 	}
+
+	get random() { return this.player.random; }
 
 	getLevel(xp)
 	{

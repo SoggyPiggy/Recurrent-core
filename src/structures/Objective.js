@@ -6,7 +6,6 @@ class Objective extends EventBase
 	{
 		super(data);
 		this.quest = quest;
-		this.player = this.quest.chapter.player;
 		this.progress = typeof data.progress !== 'undefined' ? data.progress : 0;
 		this.end = typeof data.end !== 'undefined' ? data.end : this.generateEnd();
 		this.rewards = typeof data.rewards !== 'undefined' ? data.rewards : this.generateRewards();
@@ -15,6 +14,7 @@ class Objective extends EventBase
 		this.on('completed', () => this.reward());
 	}
 
+	get player() { return this.quest.player; }
 	get complete() { return this.progress >= this.end; }
 	get completion() { return this.progress / this.end; }
 

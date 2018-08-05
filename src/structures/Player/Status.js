@@ -3,11 +3,11 @@ class PlayerStatus
 	constructor(player, data = {})
 	{
 		this.player = player;
-		this.random = this.player.random;
 		this.health = typeof data.health !== 'undefined' ? data.health : this.maxHealth;
 		this.stamina = typeof data.stamina !== 'undefined' ? data.stamina : this.maxStamina;
 	}
 
+	get random() { return this.player.random; }
 	get maxHealth() { return 145 + (this.player.attributes.con); }
 	get maxStamina() { return 145 + (this.player.attributes.stamina)}
 	get dead() { return this.health <= 0; }

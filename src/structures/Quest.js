@@ -8,7 +8,6 @@ class Quest extends EventBase
 	{
 		super(data);
 		this.chapter = chapter;
-		this.player = this.chapter.player;
 		this.type = 'base';
 		this.objectives = new ObjectiveManager(this, data.objectives);
 		this.rewards = typeof data.rewards !== 'undefined' ? data.rewards : this.generateObjectives();
@@ -17,6 +16,7 @@ class Quest extends EventBase
 		this.on('completed', () => this.reward());
 	}
 
+	get player() { return this.chapter.player; }
 	get objective() { return this.objectives.objective; };
 	get complete() { return this.objectives.complete; };
 	get completion() { return this.objectives.completion; };

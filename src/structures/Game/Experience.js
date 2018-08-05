@@ -6,8 +6,9 @@ class MasteryExperience extends Experience
 	{
 		super(data);
 		this.game = game;
-		this.random = this.game.random;
 	}
+
+	get random() { return this.game.random; }
 
 	getLevel(xp)
 	{

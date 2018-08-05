@@ -17,12 +17,13 @@ class PlayerInformation
 	constructor(player, data = {})
 	{
 		this.player = player;
-		this.random = this.player.random;
 		this.custom = typeof data.custom !== 'undefined' ? data.custom : false;
 		this.race = typeof data.race !== 'undefined' ? data.race : this.randomRace();
 		this.name = typeof data.name !== 'undefined' ? data.name : this.randomName();
 		this.raceName = races[this.race].race;
 	}
+
+	get random() { return this.player.random; }
 
 	randomRace()
 	{
