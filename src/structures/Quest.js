@@ -10,8 +10,10 @@ class Quest extends EventBase
 		this.chapter = chapter;
 		this.type = 'base';
 		this.objectives = new ObjectiveManager(this, data.objectives);
+		this.on('tick', () => this.tick());
 	}
 
+	get objective() { return this.objectives.objective; };
 	get complete() { return this.objectives.complete; };
 	get completion() { return this.objectives.completion; };
 
@@ -24,6 +26,19 @@ class Quest extends EventBase
 			objectives.push(new Objective(this));
 		}
 		return objectives;
+	}
+
+	completionCheck()
+	{
+		if (!this.complete) return false;
+		this.emit('completed');
+		return true;
+	}
+
+	tick()
+	{
+		this.objectives.refreshCompletion();
+		this.completionCheck();
 	}
 
 	compress()

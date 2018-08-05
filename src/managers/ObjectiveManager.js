@@ -20,7 +20,6 @@ class ObjectiveManager extends Array
 		if (this.length <= 0) this.push(...quest.generateObjectives());
 		this.refreshActiveObjective();
 		this.refreshCompletion();
-		this.objective.once('completed', () => this.refreshActiveObjective());
 	}
 
 	get objective() { return this._activeobjective; }
@@ -34,10 +33,10 @@ class ObjectiveManager extends Array
 			if (!objective.complete)
 			{
 				this._activeobjective = objective;
-				return;
+				break;
 			}
 		}
-		this._activeobjective = this[0];
+		this.objective.once('completed', () => this.refreshActiveObjective());
 	}
 
 	refreshCompletion()

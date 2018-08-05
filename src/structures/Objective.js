@@ -20,8 +20,10 @@ class Objective extends EventBase
 		return 1000;
 	}
 
-	progress()
-	{}
+	advance()
+	{
+		return 100;
+	}
 
 	completionCheck()
 	{
@@ -33,10 +35,9 @@ class Objective extends EventBase
 
 	tick()
 	{
-		let progress = this.progress();
+		let progress = this.advance();
 		this.progress += progress;
 		this.completionCheck();
-		this.quest.objectives.refreshCompletion();
 	}
 
 	compress()

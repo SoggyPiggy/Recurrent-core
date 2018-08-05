@@ -24,7 +24,6 @@ class QuestManager extends Array
 		super(...data);
 		this.chapter = chapter;
 		if (this.length <= 0) this.newQuest();
-		this.quest.once('completed', () => this.newQuest());
 	}
 
 	get quest() { return this[0]; }
@@ -32,9 +31,10 @@ class QuestManager extends Array
 	newQuest(data = {})
 	{
 		// TODO: Add functionality to this shit
-		let newQuest = new SlayerQuest(this.chapter);
-		this.unshift(newQuest);
-		return newQuest;
+		let quest = new SlayerQuest(this.chapter);
+		this.unshift(quest);
+		quest.once('completed', () => this.newQuest());
+		return quest;
 	}
 
 	compress()

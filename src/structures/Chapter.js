@@ -10,10 +10,6 @@ class Chapter extends TickBase
 		this.player = new Player(data.player);
 		this.log;
 		this.quests = new QuestManager(this, data.quests);
-
-		this.on('tick', () => this.quest.emit('tick'));
-		this.on('tick', () => this.objective.emit('tick'));
-		this.on('tick', () => this.player.emit('tick'));
 	}
 	
 	get quest() { return this.quests.quest; }
@@ -25,7 +21,14 @@ class Chapter extends TickBase
 		this.player.once('died', () => this.deactivate());
 		super.activate(750 - this.player.proficiency * 2);
 	}
-
+	
+	tick()
+	{
+		this.objective.emit('tick');
+		this.quest.emit('tick');
+		this.player.emit('tick');
+	}
+	
 	compress()
 	{
 		let data = super.compress();
