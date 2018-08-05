@@ -1,6 +1,6 @@
 const { Experience } = require('./../Experience');
 
-class PlayerExperience
+class PlayerExperience extends Experience
 {
 	constructor(player, data = {})
 	{

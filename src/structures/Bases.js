@@ -39,6 +39,24 @@ class EventBase extends EventEmitter
 		this._created = typeof data._created !== 'undefined' ? data._created : new Date().getTime();
 		this.random = Random;
 	}
+
+	compress()
+	{
+		let data = {};
+		data._id = this._id;
+		data._created = this._created;
+		return data;
+	}
+
+	toString()
+	{
+		return JSON.stringify(this.compress(), null, '\t');
+	}
+
+	toJSON()
+	{
+		return JSON.stringify(this.compress());
+	}
 }
 
 class TickBase extends EventBase
