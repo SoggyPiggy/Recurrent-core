@@ -8,9 +8,13 @@ class Quest extends EventBase
 	{
 		super(data);
 		this.chapter = chapter;
+		this.player = this.chapter.player;
 		this.type = 'base';
 		this.objectives = new ObjectiveManager(this, data.objectives);
+		this.rewards = typeof data.rewards !== 'undefined' ? data.rewards : this.generateObjectives();
+		this.rewarded = typeof data.rewarded !== 'undefined' ? data.rewarded : false;
 		this.on('tick', () => this.tick());
+		this.on('completed', () => this.reward());
 	}
 
 	get objective() { return this.objectives.objective; };
@@ -26,6 +30,20 @@ class Quest extends EventBase
 			objectives.push(new Objective(this));
 		}
 		return objectives;
+	}
+
+	generateRewards()
+	{
+		return {};
+	}
+
+	reward()
+	{
+		if (this.rewarded) return;
+		if (typeof this.rewards.xp !== 'undefined')
+		{
+			this.player.experience.gain(this.rewards.xp);
+		}
 	}
 
 	completionCheck()
@@ -46,6 +64,8 @@ class Quest extends EventBase
 		let data = super.compress();
 		data.type = this.type;
 		data.objectives = this.objectives.compress();
+		data.rewards = this.rewards;
+		data.rewarded = this.rewarded;
 		return data;
 	}
 }
