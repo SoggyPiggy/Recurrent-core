@@ -10,7 +10,7 @@ class Quest extends EventBase
 		this.chapter = chapter;
 		this.type = 'base';
 		this.objectives = new ObjectiveManager(this, data.objectives);
-		this.rewards = typeof data.rewards !== 'undefined' ? data.rewards : this.generateObjectives();
+		this.rewards = typeof data.rewards !== 'undefined' ? data.rewards : this.generateRewards();
 		this.rewarded = typeof data.rewarded !== 'undefined' ? data.rewarded : false;
 		this.on('tick', () => this.tick());
 		this.on('completed', () => this.reward());
