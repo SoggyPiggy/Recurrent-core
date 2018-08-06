@@ -34,6 +34,16 @@ class Player extends EventBase
 	get perception() { return this.attributes.perception; }
 	get proficiency() { return this.attributes.proficiency; }
 	get stamina() { return this.attributes.stamina; }
+	
+	get charmMod() { return this.charm / 171; }
+	get constitutionMod() { return this.constitution / 171; }
+	get fortitudeMod() { return this.fortitude / 171; }
+	get fortuityMod() { return this.fortuity / 171; }
+	get insightMod() { return this.insight / 171; }
+	get mightMod() { return this.might / 171; }
+	get perceptionMod() { return this.perception / 171; }
+	get proficiencyMod() { return this.proficiency / 171; }
+	get staminaMod() { return this.stamina / 171; }
 
 	toString() { return `'${this.name}' the ${this.race}` };
 

@@ -22,7 +22,7 @@ class PlayerExperience extends Experience
 
 	bonusXP(xp)
 	{
-		return Math.round(xp * this.player.attributes.insight / 171);
+		return Math.round(xp * this.player.insightMod);
 	}
 
 	gain(xp)
