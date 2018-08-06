@@ -24,7 +24,7 @@ class Objective extends EventBase
 
 	generateEnd()
 	{
-		return 1000;
+		return this.random.integer(750, 1250);
 	}
 
 	generateRewards()
@@ -43,7 +43,7 @@ class Objective extends EventBase
 
 	advance()
 	{
-		return 100;
+		return this.random.integer(75, 125);
 	}
 
 	completionCheck()
