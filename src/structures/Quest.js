@@ -11,15 +11,19 @@ class Quest extends EventBase
 		this.type = 'base';
 		this.objectives = new ObjectiveManager(this, data.objectives);
 		this.rewards = typeof data.rewards !== 'undefined' ? data.rewards : this.generateRewards();
-		this.rewarded = typeof data.rewarded !== 'undefined' ? data.rewarded : false;
-		this.on('tick', () => this.tick());
-		this.on('completed', () => this.reward());
+		if (!this.complete)
+		{
+			this.on('tick', () => this.tick());
+			this.once('completed', () => this.removeAllListeners('tick'));
+			this.once('completed', () => this.reward());
+		}
 	}
 
 	get player() { return this.chapter.player; }
-	get objective() { return this.objectives.objective; };
-	get complete() { return this.objectives.complete; };
-	get completion() { return this.objectives.completion; };
+	get manager() { return this.chapter.quests; }
+	get objective() { return this.objectives.objective; }
+	get complete() { return this.objectives.complete; }
+	get completion() { return this.objectives.completion; }
 
 	generateObjectives()
 	{
@@ -39,7 +43,6 @@ class Quest extends EventBase
 
 	reward()
 	{
-		if (this.rewarded) return;
 		if (typeof this.rewards.xp !== 'undefined')
 		{
 			this.player.experience.gain(this.rewards.xp);
@@ -50,6 +53,7 @@ class Quest extends EventBase
 	{
 		if (!this.complete) return false;
 		this.emit('completed');
+		this.once('tick', () => this.manager.newQuest());
 		return true;
 	}
 
@@ -65,7 +69,6 @@ class Quest extends EventBase
 		data.type = this.type;
 		data.objectives = this.objectives.compress();
 		data.rewards = this.rewards;
-		data.rewarded = this.rewarded;
 		return data;
 	}
 }

@@ -9,12 +9,16 @@ class Objective extends EventBase
 		this.progress = typeof data.progress !== 'undefined' ? data.progress : 0;
 		this.end = typeof data.end !== 'undefined' ? data.end : this.generateEnd();
 		this.rewards = typeof data.rewards !== 'undefined' ? data.rewards : this.generateRewards();
-		this.rewarded = typeof data.rewarded !== 'undefined' ? data.rewarded : false;
-		this.on('tick', () => this.tick());
-		this.on('completed', () => this.reward());
+		if (!this.complete)
+		{
+			this.on('tick', () => this.tick());
+			this.once('completed', () => this.removeAllListeners('tick'));
+			this.once('completed', () => this.reward());
+		}
 	}
 
 	get player() { return this.quest.player; }
+	get manager() { return this.quest.objestives; }
 	get complete() { return this.progress >= this.end; }
 	get completion() { return this.progress / this.end; }
 
@@ -30,7 +34,6 @@ class Objective extends EventBase
 
 	reward()
 	{
-		if (this.rewarded) return;
 		if (typeof this.rewards.xp !== 'undefined')
 		{
 			this.player.experience.gain(this.rewards.xp);
@@ -64,7 +67,6 @@ class Objective extends EventBase
 		data.progress = this.progress;
 		data.end = this.end;
 		data.rewards = this.rewards;
-		data.rewarded = this.rewarded;
 		return data;
 	}
 }

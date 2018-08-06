@@ -33,7 +33,6 @@ class QuestManager extends Array
 		// TODO: Add functionality to this shit
 		let quest = new SlayerQuest(this.chapter);
 		this.unshift(quest);
-		quest.once('completed', () => this.newQuest());
 		return quest;
 	}
 
