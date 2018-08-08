@@ -9,18 +9,21 @@ class PlayerStatus
 
 	get random() { return this.player.random; }
 	get maxHealth() { return 145 + (this.player.attributes.con); }
-	get maxStamina() { return 145 + (this.player.attributes.stamina)}
+	get maxStamina() { return 20 + (this.player.attributes.stamina); }
+	get fullHealth() { return this.health === this.maxHealth; }
+	get fullStamina() { return this.stamina === this.maxStamina; }
 	get dead() { return this.health <= 0; }
-	get healthy() { return this.health >= this.maxHealth / 2; }
 	get fatigued() { return this.stamina <= 0; }
+	get healthy() { return this.health >= (this.maxHealth / 3) * 2; }
+	get rested() { return this.stamina >= (this.maxStamina / 3) * 2; }
 
 	recover()
 	{
-		if (!this.healthy && !this.fatigued)
+		if (!this.fullHealth && !this.fatigued)
 		{
 			let energy = this.stamina >= 5 ? 5 : this.stamina;
 			let health = this.maxHealth * (.05 * (energy / 5));
-			this.drainStamina(energy);
+			this.loseStamina(energy);
 			this.gainHealth(health);
 			this.fatiguedCheck();
 		}
@@ -34,24 +37,26 @@ class PlayerStatus
 
 	gainHealth(health = this.maxHealth)
 	{
+		health = Math.round(health);
 		if (health + this.health > this.maxHealth) this.health = this.maxHealth;
 		else this.health += health;
 	}
 
 	gainStamina(energy = this.maxStamina)
 	{
+		energy = Math.round(energy);
 		if (energy + this.stamina > this.maxStamina) this.stamina = this.maxStamina;
 		else this.stamina += energy;
 	}
 	
-	drainHealth(damage)
+	loseHealth(damage)
 	{
 		if (this.dead) return;
 		this.health -= damage;
 		this.deathCheck();
 	}
 
-	drainStamina(energy)
+	loseStamina(energy)
 	{
 		if (this.fatigued) return;
 		this.stamina -= energy;
