@@ -5,13 +5,15 @@ class FightingObjective extends Objective
 	constructor(chapter, data)
 	{
 		super(chapter, data);
+		this.type = 'fight';
 	}
 
 	advance()
 	{
 		let progress = super.advance();
-		let buff = progress * this.player.mightMod;
-		return Math.round(progress + buff);
+		progress *= (1 + this.player.mightMod);
+		if (this.player.status.fatigued) progress *= 0.6;
+		return progress;
 	}
 }
 
