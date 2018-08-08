@@ -6,6 +6,9 @@ class Objective extends EventBase
 	{
 		super(data);
 		this.quest = quest;
+		this.type = 'base';
+		this.title = typeof data.title !== 'undefined' ? data.title : 'TITLE';
+		this.description = typeof data.description !== 'undefined' ? data.description : 'DESCRIPTION';
 		this.progress = typeof data.progress !== 'undefined' ? data.progress : 0;
 		this.end = typeof data.end !== 'undefined' ? data.end : this.generateEnd();
 		this.rewards = typeof data.rewards !== 'undefined' ? data.rewards : this.generateRewards();
@@ -46,6 +49,11 @@ class Objective extends EventBase
 		return this.random.integer(75, 125);
 	}
 
+	drain()
+	{
+		return 5;
+	}
+
 	completionCheck()
 	{
 		if (!this.complete) return false;
@@ -56,14 +64,17 @@ class Objective extends EventBase
 
 	tick()
 	{
-		let progress = this.advance();
-		this.progress += progress;
+		this.progress += Math.round(this.advance());
+		this.player.status.loseStamina(Math.round(this.drain()));
 		this.completionCheck();
 	}
 
 	compress()
 	{
 		let data = super.compress();
+		data.type = this.type;
+		data.title = this.title;
+		data.description = this.description;
 		data.progress = this.progress;
 		data.end = this.end;
 		data.rewards = this.rewards;
