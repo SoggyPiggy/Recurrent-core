@@ -18,7 +18,7 @@ class Objective extends EventBase
 	}
 
 	get player() { return this.quest.player; }
-	get manager() { return this.quest.objestives; }
+	get manager() { return this.quest.objectives; }
 	get complete() { return this.progress >= this.end; }
 	get completion() { return this.progress / this.end; }
 
