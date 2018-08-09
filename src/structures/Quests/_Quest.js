@@ -8,3 +8,5 @@ class _Quest extends Quest
 		this.type = '_';
 	}
 }
+
+module.exports = { _Quest };

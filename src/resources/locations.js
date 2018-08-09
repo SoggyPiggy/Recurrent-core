@@ -1,11 +1,10 @@
-const locations =
-[
+const locations = [
 	{
 		name: 'Hallows Cave',
 		distance: 4000,
 		minLevel: 5,
 		maxLevel: 10,
-		enemies: []
-	}
-]
+		enemies: [],
+	},
+];
 module.exports = locations;

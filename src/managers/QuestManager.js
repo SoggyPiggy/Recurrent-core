@@ -6,44 +6,42 @@ const { SlayerQuest } = require('./../structures/Quests/SlayerQuest');
 
 class QuestManager extends Array
 {
-	constructor(chapter, data)
+	constructor(chapter, data = [])
 	{
-		if (!Array.isArray(data)) data = [];
-		for (let i = 0; i < data.length; i++)
-		{
-			if (data[i] instanceof Quest) continue;
-			switch (data[i].type)
-			{
-				case 'slayer': data[i] = new SlayerQuest(chapter, data[i]); break;
-				case 'dungeon': data[i] = new DungeonCrawlQuest(chapter, data[i]); break;
-				case 'gathering': data[i] = new GatheringQuest(chapter, data[i]); break;
-				case 'selling': data[i] = new SellingQuest(chapter, data[i]); break;
-				default: data[1] = new Quest(chapter, data[i]); break;
-			}
-		}
-		super(...data);
+		super(...data.map(quest => this.processQuest(chapter, quest)));
 		this.chapter = chapter;
 		if (this.length <= 0) this.newQuest();
 	}
 
-	get quest() { return this[0]; }
+	get quest()
+	{
+		return this[0];
+	}
 
-	newQuest(data = {})
+	static processQuest(chapter, quest)
+	{
+		if (quest instanceof Quest) return quest;
+		switch (quest.type)
+		{
+			case 'slayer': return new SlayerQuest(chapter, quest);
+			case 'dungeon': return new DungeonCrawlQuest(chapter, quest);
+			case 'gathering': return new GatheringQuest(chapter, quest);
+			case 'selling': return new SellingQuest(chapter, quest);
+			default: return new Quest(chapter, quest);
+		}
+	}
+
+	newQuest()
 	{
 		// TODO: Add functionality to this shit
-		let quest = new SlayerQuest(this.chapter);
+		const quest = new SlayerQuest(this.chapter);
 		this.unshift(quest);
 		return quest;
 	}
 
 	compress()
 	{
-		let data = [];
-		for (let quest of this)
-		{
-			data.push(quest.compress());
-		}
-		return data;
+		return this.map(quest => quest.compress());
 	}
 }
 

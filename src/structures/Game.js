@@ -11,16 +11,23 @@ class Game extends EventBase
 		this.mastery = new MasteryExperience(this, data.masetry);
 	}
 
-	get chapter() { return this.chapters.chapter; }
-	get player() { return this.chapters.player; }
+	get chapter()
+	{
+		return this.chapters.chapter;
+	}
+
+	get player()
+	{
+		return this.chapters.player;
+	}
 
 	compress()
 	{
-		let data = super.compress();
+		const data = super.compress();
 		data.chapters = this.chapters.compress();
 		data.masetry = this.mastery.compress();
 		return data;
 	}
 }
 
-module.exports = { Game }
+module.exports = { Game };

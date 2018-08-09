@@ -1,17 +1,12 @@
 function parseID(id)
 {
 	if (typeof id === 'string') return id;
-	if (typeof id === 'object') return id._id;
+	if (typeof id === 'object') return id.id;
 	return id;
 }
 
 class IDMap extends Map
 {
-	constructor()
-	{
-		super();
-	}
-
 	delete(key)
 	{
 		return super.delete(parseID(key));
@@ -30,7 +25,7 @@ class IDMap extends Map
 	set(key, value)
 	{
 		if (typeof value === 'undefined') return super.set(parseID(key), key);
-		else return super.set(parseID(key), value);
+		return super.set(parseID(key), value);
 	}
 }
 

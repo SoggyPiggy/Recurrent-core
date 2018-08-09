@@ -20,17 +20,32 @@ class Objective extends EventBase
 		}
 	}
 
-	get player() { return this.quest.player; }
-	get manager() { return this.quest.objectives; }
-	get complete() { return this.progress >= this.end; }
-	get completion() { return this.progress / this.end; }
+	get player()
+	{
+		return this.quest.player;
+	}
+
+	get manager()
+	{
+		return this.quest.objectives;
+	}
+
+	get complete()
+	{
+		return this.progress >= this.end;
+	}
+
+	get completion()
+	{
+		return this.progress / this.end;
+	}
 
 	generateEnd()
 	{
 		return this.random.integer(750, 1250);
 	}
 
-	generateRewards()
+	static generateRewards()
 	{
 		return {};
 	}
@@ -49,7 +64,7 @@ class Objective extends EventBase
 		return this.random.integer(75, 125);
 	}
 
-	drain()
+	static drain()
 	{
 		return 5;
 	}
@@ -71,7 +86,7 @@ class Objective extends EventBase
 
 	compress()
 	{
-		let data = super.compress();
+		const data = super.compress();
 		data.type = this.type;
 		data.title = this.title;
 		data.description = this.description;

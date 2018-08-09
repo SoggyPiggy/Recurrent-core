@@ -3,17 +3,19 @@ class PlayerLuck
 	constructor(player, data = {})
 	{
 		// TODO: Make better.
-		super(data);
 		this.player = player;
 		this.rolls = typeof data.rolls !== 'undefined' ? data.rolls : [];
 		this.rollsCheck();
 	}
 
-	get random() { return this.player.random; }
+	get random()
+	{
+		return this.player.random;
+	}
 
 	roll()
 	{
-		let roll = this.rolls.pop();
+		const roll = this.rolls.pop();
 		this.rollsCheck();
 		return roll === 1;
 	}
@@ -22,29 +24,27 @@ class PlayerLuck
 	{
 		if (this.rolls.length <= 0)
 		{
-			let fails = Array(30).fill(0);
-			let passes = Array(this.player.fortuity * 2 + 15).fill(1);
-			let rolls = this.shuffle([].concat(fails).concat(passes));
-			this.rolls.concat(rolls)
+			const fails = Array(30).fill(0);
+			const passes = Array(this.player.fortuity * 2 + 15).fill(1);
+			const rolls = this.shuffle([].concat(fails).concat(passes));
+			this.rolls.concat(rolls);
 		}
 	}
 
-	shuffle(array)
+	static shuffle(data)
 	{
-		let m = array.length, t, i;
-		while (m)
+		const array = [...data];
+		for (let i = array.length - 1; i > 0; i -= 1)
 		{
-			i = this.random.integer(0, m--);
-			t = array[m];
-			array[m] = array[i];
-			array[i] = t;
+			const j = Math.floor(Math.random() * (i + 1));
+			[array[i], array[j]] = [array[j], array[i]];
 		}
 		return array;
 	}
 
 	compress()
 	{
-		let data = {};
+		const data = {};
 		data.rolls = this.rolls;
 		return data;
 	}

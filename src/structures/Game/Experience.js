@@ -8,21 +8,24 @@ class MasteryExperience extends Experience
 		this.game = game;
 	}
 
-	get random() { return this.game.random; }
-
-	getLevel(xp)
+	get random()
 	{
-		return Math.floor(Math.pow(xp + 1, 1 / 5));
+		return this.game.random;
 	}
 
-	getXP(level)
+	static getLevel(xp)
 	{
-		return Math.ceil(Math.pow(level, 5) - 1);
+		return Math.floor((xp + 1) ** (1 / 5));
+	}
+
+	static getXP(level)
+	{
+		return Math.ceil((level ** 5) - 1);
 	}
 
 	gain(xp)
 	{
-		let data = super.gain(xp);
+		const data = super.gain(xp);
 		this.game.emit('xp', data);
 		if (data.preLevel < data.postLevel) this.game.emit('levelup', data);
 		return data;

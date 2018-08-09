@@ -1,21 +1,22 @@
 const { EventEmitter } = require('events');
 const RandomJs = require('random-js');
+
 const Random = new RandomJs(RandomJs.engines.browserCrypto);
 
 class Base
 {
 	constructor(data = {})
 	{
-		this._id = typeof data._id !== 'undefined' ? data._id : Random.uuid4();
-		this._created = typeof data._created !== 'undefined' ? data._created : new Date().getTime();
+		this.id = typeof data.id !== 'undefined' ? data.id : Random.uuid4();
+		this.created = typeof data.created !== 'undefined' ? data.created : new Date().getTime();
 		this.random = Random;
 	}
 
 	compress()
 	{
-		let data = {};
-		data._id = this._id;
-		data._created = this._created;
+		const data = {};
+		data.id = this.id;
+		data.created = this.created;
 		return data;
 	}
 
@@ -35,16 +36,16 @@ class EventBase extends EventEmitter
 	constructor(data = {})
 	{
 		super();
-		this._id = typeof data._id !== 'undefined' ? data._id : Random.uuid4();
-		this._created = typeof data._created !== 'undefined' ? data._created : new Date().getTime();
+		this.id = typeof data.id !== 'undefined' ? data.id : Random.uuid4();
+		this.created = typeof data.created !== 'undefined' ? data.created : new Date().getTime();
 		this.random = Random;
 	}
 
 	compress()
 	{
-		let data = {};
-		data._id = this._id;
-		data._created = this._created;
+		const data = {};
+		data.id = this.id;
+		data.created = this.created;
 		return data;
 	}
 
@@ -64,36 +65,42 @@ class TickBase extends EventBase
 	constructor(data = {})
 	{
 		super(data);
-		this._interval = null;
+		this.interval = null;
 		this.ticks = typeof data.ticks !== 'undefined' ? data.ticks : 0;
-		this.on('tick', () => this.ticks++);
+		this.on('tick', () =>
+		{
+			this.ticks += 1;
+		});
 		this.on('tick', () => this.tick());
 		this.on('start', () => this.activate());
 		this.on('end', () => this.deactivate());
 	}
 
-	get active() { return this._interval !== null; }
+	get active()
+	{
+		return this.interval !== null;
+	}
 
 	activate(rate = 1000)
 	{
 		if (this.active) this.deactivate();
-		this._interval = setInterval(() => this.emit('tick'), rate);
+		this.interval = setInterval(() => this.emit('tick'), rate);
 	}
 
 	deactivate()
 	{
-		clearInterval(this._interval);
-		this._interval = null;
+		clearInterval(this.interval);
+		this.interval = null;
 	}
 
-	tick()
+	tick() // eslint-disable-line class-methods-use-this
 	{}
 
 	compress()
 	{
-		let data = {};
-		data._id = this._id;
-		data._created = this._created;
+		const data = {};
+		data.id = this.id;
+		data.created = this.created;
 		data.ticks = this.ticks;
 		return data;
 	}
@@ -109,4 +116,4 @@ class TickBase extends EventBase
 	}
 }
 
-module.exports = { Base, EventBase, TickBase }
+module.exports = { Base, EventBase, TickBase };

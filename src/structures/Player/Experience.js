@@ -8,16 +8,19 @@ class PlayerExperience extends Experience
 		this.player = player;
 	}
 
-	get random() { return this.player.random; }
-
-	getLevel(xp)
+	get random()
 	{
-		return Math.floor(Math.pow(xp + 1, 2 / 5));
+		return this.player.random;
 	}
 
-	getXP(level)
+	static getLevel(xp)
 	{
-		return Math.ceil(Math.pow(level, 5 / 2) - 1);
+		return Math.floor((xp + 1) ** (2 / 5));
+	}
+
+	static getXP(level)
+	{
+		return Math.ceil((level ** (5 / 2)) - 1);
 	}
 
 	bonusXP(xp)
@@ -27,7 +30,7 @@ class PlayerExperience extends Experience
 
 	gain(xp)
 	{
-		let data = super.gain(xp);
+		const data = super.gain(xp);
 		this.player.emit('xp', data);
 		if (data.preLevel < data.postLevel) this.player.emit('levelup', data);
 		return data;

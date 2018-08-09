@@ -5,15 +5,22 @@ class Experience
 		this.xp = typeof data.xp !== 'undefined' ? data.xp : 0;
 	}
 
-	get level() { return this.getLevel(this.xp); }
-	get levelCompletion() { return this.xpInCurrentLevel() / this.getXP(this.level); }
+	get level()
+	{
+		return this.getLevel(this.xp);
+	}
 
-	getLevel(xp)
+	get levelCompletion()
+	{
+		return this.xpInCurrentLevel() / this.getXP(this.level);
+	}
+
+	static getLevel(xp)
 	{
 		return Math.floor(xp / 100);
 	}
 
-	getXPTotal(level)
+	static getXPTotal(level)
 	{
 		return Math.ceil(level * 100);
 	}
@@ -23,9 +30,9 @@ class Experience
 		return this.getXPTotal(level) - this.getXPTotal(level - 1);
 	}
 
-	bonusXP(xp)
+	static bonusXP(xp)
 	{
-		return 0;
+		return xp * 0;
 	}
 
 	xpInCurrentLevel()
@@ -40,18 +47,20 @@ class Experience
 
 	gain(xp)
 	{
-		let baseXP = xp;
-		let bonusXP = this.bonusXP(xp);
-		let totalXP = baseXP + bonusXP;
-		let preLevel = this.level;
+		const baseXP = xp;
+		const bonusXP = this.bonusXP(xp);
+		const totalXP = baseXP + bonusXP;
+		const preLevel = this.level;
 		this.xp += totalXP;
-		let postLevel = this.level;
-		return { preLevel, postLevel, totalXP, baseXP, bonusXP };
+		const postLevel = this.level;
+		return {
+			preLevel, postLevel, totalXP, baseXP, bonusXP,
+		};
 	}
 
 	compress()
 	{
-		let data = {};
+		const data = {};
 		data.xp = this.xp;
 		return data;
 	}

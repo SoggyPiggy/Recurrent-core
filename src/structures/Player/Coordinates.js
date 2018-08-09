@@ -8,7 +8,10 @@ class PlayerCoordinates extends Coordinates
 		this.player = player;
 	}
 
-	get random() { return this.player.random; }
+	get random()
+	{
+		return this.player.random;
+	}
 }
 
 module.exports = { PlayerCoordinates };

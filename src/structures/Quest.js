@@ -19,24 +19,43 @@ class Quest extends EventBase
 		}
 	}
 
-	get player() { return this.chapter.player; }
-	get manager() { return this.chapter.quests; }
-	get objective() { return this.objectives.objective; }
-	get complete() { return this.objectives.complete; }
-	get completion() { return this.objectives.completion; }
+	get player()
+	{
+		return this.chapter.player;
+	}
+
+	get manager()
+	{
+		return this.chapter.quests;
+	}
+
+	get objective()
+	{
+		return this.objectives.objective;
+	}
+
+	get complete()
+	{
+		return this.objectives.complete;
+	}
+
+	get completion()
+	{
+		return this.objectives.completion;
+	}
 
 	generateObjectives()
 	{
-		let objectives = [];
-		let count = this.random.integer(5, 8);
-		for (let i = 0; i < count; i++)
+		const objectives = [];
+		const count = this.random.integer(5, 8);
+		for (let i = 0; i < count; i += 1)
 		{
 			objectives.push(new Objective(this));
 		}
 		return objectives;
 	}
 
-	generateRewards()
+	static generateRewards()
 	{
 		return {};
 	}
@@ -65,7 +84,7 @@ class Quest extends EventBase
 
 	compress()
 	{
-		let data = super.compress();
+		const data = super.compress();
 		data.type = this.type;
 		data.objectives = this.objectives.compress();
 		data.rewards = this.rewards;

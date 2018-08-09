@@ -13,16 +13,16 @@ class RestingObjective extends Objective
 		return this.random.integer(2, 5);
 	}
 
-	advance()
+	static advance()
 	{
 		return 1;
 	}
 
-	drain()
+	static drain()
 	{
 		return 0;
 	}
-	
+
 	tick()
 	{
 		if (this.player.status.healthy) this.player.status.respite();

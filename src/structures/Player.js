@@ -2,7 +2,7 @@ const { EventBase } = require('./Bases');
 const { PlayerAttributes } = require('./Player/Attributes');
 const { PlayerEquipment } = require('./Player/Equipment');
 const { PlayerInformation } = require('./Player/Information');
-const { PlayerStatus }= require('./Player/Status');
+const { PlayerStatus } = require('./Player/Status');
 const { PlayerExperience } = require('./Player/Experience');
 const { PlayerCoordinates } = require('./Player/Coordinates');
 
@@ -20,36 +20,124 @@ class Player extends EventBase
 		this.status = new PlayerStatus(this, data.status);
 	}
 
-	get name() { return this.information.name; }
-	set name(name) { this.information.setName(name); }
-	get race() { return this.information.raceName; }
-	set race(race) { this.information.setRace(race); }
+	get name()
+	{
+		return this.information.name;
+	}
 
-	get charm() { return this.attributes.charm; }
-	get constitution() { return this.attributes.constitution; }
-	get fortitude() { return this.attributes.fortitude; }
-	get fortuity() { return this.attributes.fortuity; }
-	get insight() { return this.attributes.insight; }
-	get might() { return this.attributes.might; }
-	get perception() { return this.attributes.perception; }
-	get proficiency() { return this.attributes.proficiency; }
-	get stamina() { return this.attributes.stamina; }
-	
-	get charmMod() { return this.charm / 171; }
-	get constitutionMod() { return this.constitution / 171; }
-	get fortitudeMod() { return this.fortitude / 171; }
-	get fortuityMod() { return this.fortuity / 171; }
-	get insightMod() { return this.insight / 171; }
-	get mightMod() { return this.might / 171; }
-	get perceptionMod() { return this.perception / 171; }
-	get proficiencyMod() { return this.proficiency / 171; }
-	get staminaMod() { return this.stamina / 171; }
+	set name(name)
+	{
+		this.information.setName(name);
+	}
 
-	toString() { return `'${this.name}' the ${this.race}` };
+	get race()
+	{
+		return this.information.raceName;
+	}
+
+	set race(race)
+	{
+		this.information.setRace(race);
+	}
+
+	get charm()
+	{
+		return this.attributes.charm;
+	}
+
+	get constitution()
+	{
+		return this.attributes.constitution;
+	}
+
+	get fortitude()
+	{
+		return this.attributes.fortitude;
+	}
+
+	get fortuity()
+	{
+		return this.attributes.fortuity;
+	}
+
+	get insight()
+	{
+		return this.attributes.insight;
+	}
+
+	get might()
+	{
+		return this.attributes.might;
+	}
+
+	get perception()
+	{
+		return this.attributes.perception;
+	}
+
+	get proficiency()
+	{
+		return this.attributes.proficiency;
+	}
+
+	get stamina()
+	{
+		return this.attributes.stamina;
+	}
+
+	get charmMod()
+	{
+		return this.charm / 171;
+	}
+
+	get constitutionMod()
+	{
+		return this.constitution / 171;
+	}
+
+	get fortitudeMod()
+	{
+		return this.fortitude / 171;
+	}
+
+	get fortuityMod()
+	{
+		return this.fortuity / 171;
+	}
+
+	get insightMod()
+	{
+		return this.insight / 171;
+	}
+
+	get mightMod()
+	{
+		return this.might / 171;
+	}
+
+	get perceptionMod()
+	{
+		return this.perception / 171;
+	}
+
+	get proficiencyMod()
+	{
+		return this.proficiency / 171;
+	}
+
+	get staminaMod()
+	{
+		return this.stamina / 171;
+	}
+
+	toString()
+	{
+		return `'${this.name}' the ${this.race}`;
+	}
 
 	compress()
 	{
-		let data = super.compress();
+		const data = super.compress();
 		data.attributes = this.attributes.compress();
 		data.coordinates = this.coordinates.compress();
 		data.equipment = this.equipment.compress();
