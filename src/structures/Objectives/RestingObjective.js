@@ -13,12 +13,12 @@ class RestingObjective extends Objective
 		return this.random.integer(2, 5);
 	}
 
-	static advance()
+	advance()
 	{
 		return 1;
 	}
 
-	static drain()
+	drain()
 	{
 		return 0;
 	}

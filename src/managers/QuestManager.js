@@ -8,7 +8,7 @@ class QuestManager extends Array
 {
 	constructor(chapter, data = [])
 	{
-		super(...data.map(quest => this.processQuest(chapter, quest)));
+		super(...data.map(quest => QuestManager.processQuest(chapter, quest)));
 		this.chapter = chapter;
 		if (this.length <= 0) this.newQuest();
 	}
@@ -16,19 +16,6 @@ class QuestManager extends Array
 	get quest()
 	{
 		return this[0];
-	}
-
-	static processQuest(chapter, quest)
-	{
-		if (quest instanceof Quest) return quest;
-		switch (quest.type)
-		{
-			case 'slayer': return new SlayerQuest(chapter, quest);
-			case 'dungeon': return new DungeonCrawlQuest(chapter, quest);
-			case 'gathering': return new GatheringQuest(chapter, quest);
-			case 'selling': return new SellingQuest(chapter, quest);
-			default: return new Quest(chapter, quest);
-		}
 	}
 
 	newQuest()
@@ -42,6 +29,19 @@ class QuestManager extends Array
 	compress()
 	{
 		return this.map(quest => quest.compress());
+	}
+
+	static processQuest(chapter, quest)
+	{
+		if (quest instanceof Quest) return quest;
+		switch (quest.type)
+		{
+			case 'slayer': return new SlayerQuest(chapter, quest);
+			case 'dungeon': return new DungeonCrawlQuest(chapter, quest);
+			case 'gathering': return new GatheringQuest(chapter, quest);
+			case 'selling': return new SellingQuest(chapter, quest);
+			default: return new Quest(chapter, quest);
+		}
 	}
 }
 

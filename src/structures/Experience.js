@@ -15,12 +15,12 @@ class Experience
 		return this.xpInCurrentLevel() / this.getXP(this.level);
 	}
 
-	static getLevel(xp)
+	getLevel(xp)
 	{
 		return Math.floor(xp / 100);
 	}
 
-	static getXPTotal(level)
+	getXPTotal(level)
 	{
 		return Math.ceil(level * 100);
 	}
@@ -30,7 +30,7 @@ class Experience
 		return this.getXPTotal(level) - this.getXPTotal(level - 1);
 	}
 
-	static bonusXP(xp)
+	bonusXP(xp)
 	{
 		return xp * 0;
 	}

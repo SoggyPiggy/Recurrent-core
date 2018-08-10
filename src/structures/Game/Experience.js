@@ -13,12 +13,12 @@ class MasteryExperience extends Experience
 		return this.game.random;
 	}
 
-	static getLevel(xp)
+	getLevel(xp)
 	{
 		return Math.floor((xp + 1) ** (1 / 5));
 	}
 
-	static getXP(level)
+	getXP(level)
 	{
 		return Math.ceil((level ** 5) - 1);
 	}

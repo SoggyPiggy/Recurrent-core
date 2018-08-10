@@ -5,7 +5,7 @@ class Attributes extends Base
 	constructor(data = {})
 	{
 		super(data);
-		this.raw = this.applyAttributes(data);
+		this.raw = Attributes.apply(data);
 	}
 
 	get charm()
@@ -53,31 +53,11 @@ class Attributes extends Base
 		return this.raw.stamina;
 	}
 
-	static allAttributes()
-	{
-		const attributes = {};
-		attributes.charm = 0;			// ????? (Maybe help with reputation)
-		attributes.constitution = 0;	// More Health
-		attributes.fortitude = 0;		// Damage Resistance
-		attributes.fortuity = 0;		// Better Luck/Chances
-		attributes.insight = 0;			// More XP
-		attributes.might = 0;			// Stronger Attacks
-		attributes.perception = 0;		// Accuracy
-		attributes.proficiency = 0;	// Faster Tick Rate
-		attributes.stamina = 0;			// Longer in the Field
-		return attributes;
-	}
-
-	applyAttributes(attribs = {})
-	{
-		return { ...this.allAttributes(), ...attribs };
-	}
-
 	generatePoints(selection, points, limit, increment, shift)
 	{
-		const data = this.applyAttributes();
-		let used = 0;
+		const data = Attributes.template();
 		const total = selection.length * points;
+		let used = 0;
 		while (used < total)
 		{
 			const selected = this.random.pick(selection);
@@ -93,7 +73,7 @@ class Attributes extends Base
 
 	randomize(points = 100, select = ['all'], duds = 0)
 	{
-		const selection = select.includes('all') ? this.allAttributes() : [...select];
+		const selection = select.includes('all') ? Attributes.template() : [...select];
 		const data = this.generatePoints(
 			selection,
 			points,
@@ -110,12 +90,32 @@ class Attributes extends Base
 				delete data[selected];
 			}
 		}
-		this.raw = this.applyAttributes(data);
+		this.raw = Attributes.apply(data);
 	}
 
 	compress()
 	{
 		return { ...this.raw };
+	}
+
+	static template()
+	{
+		const attributes = {};
+		attributes.charm = 0;			// ????? (Maybe help with reputation)
+		attributes.constitution = 0;	// More Health
+		attributes.fortitude = 0;		// Damage Resistance
+		attributes.fortuity = 0;		// Better Luck/Chances
+		attributes.insight = 0;			// More XP
+		attributes.might = 0;			// Stronger Attacks
+		attributes.perception = 0;		// Accuracy
+		attributes.proficiency = 0;	// Faster Tick Rate
+		attributes.stamina = 0;			// Longer in the Field
+		return attributes;
+	}
+
+	static apply(attribs = {})
+	{
+		return { ...Attributes.template(), ...attribs };
 	}
 }
 

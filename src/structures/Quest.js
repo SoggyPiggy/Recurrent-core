@@ -55,7 +55,7 @@ class Quest extends EventBase
 		return objectives;
 	}
 
-	static generateRewards()
+	generateRewards()
 	{
 		return {};
 	}

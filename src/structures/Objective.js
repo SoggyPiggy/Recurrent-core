@@ -45,7 +45,7 @@ class Objective extends EventBase
 		return this.random.integer(750, 1250);
 	}
 
-	static generateRewards()
+	generateRewards()
 	{
 		return {};
 	}
@@ -64,7 +64,7 @@ class Objective extends EventBase
 		return this.random.integer(75, 125);
 	}
 
-	static drain()
+	drain()
 	{
 		return 5;
 	}

@@ -7,7 +7,7 @@ class ObjectiveManager extends Array
 {
 	constructor(quest, data = [])
 	{
-		super(...data.map(objective => this.processObjective(quest, objective)));
+		super(...data.map(objective => ObjectiveManager.processObjective(quest, objective)));
 		this.quest = quest;
 		this._ = {};
 		if (this.length <= 0) this.push(...quest.generateObjectives());
@@ -30,18 +30,6 @@ class ObjectiveManager extends Array
 		return this._.completion;
 	}
 
-	static processObjective(quest, objective)
-	{
-		if (objective instanceof Objective) return objective;
-		switch (objective.type)
-		{
-			case 'fight': return new FightingObjective(quest, objective);
-			case 'rest': return new RestingObjective(quest, objective);
-			case 'gather': return new GatheringObjective(quest, objective);
-			default: return new Objective(quest, objective);
-		}
-	}
-
 	refreshActiveObjective()
 	{
 		this._.activeobjective = this.find(objective => !objective.complete);
@@ -58,6 +46,18 @@ class ObjectiveManager extends Array
 	compress()
 	{
 		return this.map(objective => objective.compress());
+	}
+
+	static processObjective(quest, objective)
+	{
+		if (objective instanceof Objective) return objective;
+		switch (objective.type)
+		{
+			case 'fight': return new FightingObjective(quest, objective);
+			case 'rest': return new RestingObjective(quest, objective);
+			case 'gather': return new GatheringObjective(quest, objective);
+			default: return new Objective(quest, objective);
+		}
 	}
 }
 

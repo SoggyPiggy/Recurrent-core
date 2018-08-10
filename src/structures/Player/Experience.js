@@ -13,12 +13,12 @@ class PlayerExperience extends Experience
 		return this.player.random;
 	}
 
-	static getLevel(xp)
+	getLevel(xp)
 	{
 		return Math.floor((xp + 1) ** (2 / 5));
 	}
 
-	static getXP(level)
+	getXP(level)
 	{
 		return Math.ceil((level ** (5 / 2)) - 1);
 	}
