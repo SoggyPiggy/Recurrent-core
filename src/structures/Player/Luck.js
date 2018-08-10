@@ -26,20 +26,9 @@ class PlayerLuck
 		{
 			const fails = Array(30).fill(0);
 			const passes = Array(this.player.fortuity * 2 + 15).fill(1);
-			const rolls = this.shuffle([].concat(fails).concat(passes));
+			const rolls = this.random.shuffle([].concat(fails).concat(passes));
 			this.rolls.concat(rolls);
 		}
-	}
-
-	static shuffle(data)
-	{
-		const array = [...data];
-		for (let i = array.length - 1; i > 0; i -= 1)
-		{
-			const j = Math.floor(Math.random() * (i + 1));
-			[array[i], array[j]] = [array[j], array[i]];
-		}
-		return array;
 	}
 
 	compress()
