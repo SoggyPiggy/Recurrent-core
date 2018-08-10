@@ -1,16 +1,16 @@
 const { Chapter } = require('./../structures/Chapter');
 
-class ChapterManager extends Array
+class ChapterManager
 {
 	constructor(game, data = [])
 	{
-		super(...data.map(chapter => new Chapter(chapter)));
 		this.game = game;
+		this.items = [...data.map(chapter => new Chapter(chapter))];
 	}
 
 	get chapter()
 	{
-		return this.length ? this[0] : this.newChapter();
+		return this.items.length ? this.items[0] : this.newChapter();
 	}
 
 	get player()
@@ -21,13 +21,13 @@ class ChapterManager extends Array
 	newChapter()
 	{
 		const chapter = new Chapter();
-		this.unshift(chapter);
+		this.items.unshift(chapter);
 		return chapter;
 	}
 
 	compress()
 	{
-		return this.map(chapter => chapter.compress());
+		return this.items.map(chapter => chapter.compress());
 	}
 }
 

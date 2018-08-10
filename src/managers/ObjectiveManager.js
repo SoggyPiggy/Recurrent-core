@@ -3,52 +3,50 @@ const { FightingObjective } = require('./../structures/Objectives/FightingObject
 const { RestingObjective } = require('./../structures/Objectives/RestingObjective');
 const { GatheringObjective } = require('./../structures/Objectives/GatheringObjective');
 
-class ObjectiveManager extends Array
+class ObjectiveManager
 {
 	constructor(quest, data = [])
 	{
-		super(...data.map(objective => ObjectiveManager.processObjective(quest, objective)));
 		this.quest = quest;
-		this._ = {};
-		if (this.length <= 0) this.push(...quest.generateObjectives());
+		this.items = [...data.map(objective => ObjectiveManager.process(quest, objective))];
+		if (this.items.length <= 0) this.items.push(...quest.generateObjectives());
 		this.refreshActiveObjective();
 		this.refreshCompletion();
 	}
 
 	get objective()
 	{
-		return this._.activeobjective;
+		return this.activeObjective;
 	}
 
 	get complete()
 	{
-		return this[this.length - 1].complete;
-	}
-
-	get completion()
-	{
-		return this._.completion;
+		return this.items[this.items.length - 1].complete;
 	}
 
 	refreshActiveObjective()
 	{
-		this._.activeobjective = this.find(objective => !objective.complete);
-		this.objective.once('completed', () => this.refreshActiveObjective());
+		const nextObjective = this.items.find(objective => !objective.complete);
+		if (nextObjective)
+		{
+			this.activeObjective = nextObjective;
+			nextObjective.once('completed', () => this.refreshActiveObjective());
+		}
 	}
 
 	refreshCompletion()
 	{
-		const total = this.reduce((accumulation, objective) => accumulation + objective.completion);
-		const completion = total / this.length;
-		this._.completion = !Number.isNaN(completion) ? completion : 0;
+		const total = this.items.reduce((sum, objective) => sum + objective.completion, 0);
+		const completion = total / this.items.length;
+		this.completion = !Number.isNaN(completion) ? completion : 0;
 	}
 
 	compress()
 	{
-		return this.map(objective => objective.compress());
+		return this.items.map(objective => objective.compress());
 	}
 
-	static processObjective(quest, objective)
+	static process(quest, objective)
 	{
 		if (objective instanceof Objective) return objective;
 		switch (objective.type)

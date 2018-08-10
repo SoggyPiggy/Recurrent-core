@@ -4,34 +4,34 @@ const { GatheringQuest } = require('./../structures/Quests/GatheringQuest');
 const { SellingQuest } = require('./../structures/Quests/SellingQuest');
 const { SlayerQuest } = require('./../structures/Quests/SlayerQuest');
 
-class QuestManager extends Array
+class QuestManager
 {
 	constructor(chapter, data = [])
 	{
-		super(...data.map(quest => QuestManager.processQuest(chapter, quest)));
 		this.chapter = chapter;
-		if (this.length <= 0) this.newQuest();
+		this.items = [...data.map(quest => QuestManager.process(chapter, quest))];
+		if (this.items.length <= 0) this.newQuest();
 	}
 
 	get quest()
 	{
-		return this[0];
+		return this.items[0];
 	}
 
 	newQuest()
 	{
 		// TODO: Add functionality to this shit
 		const quest = new SlayerQuest(this.chapter);
-		this.unshift(quest);
+		this.items.unshift(quest);
 		return quest;
 	}
 
 	compress()
 	{
-		return this.map(quest => quest.compress());
+		return this.items.map(quest => quest.compress());
 	}
 
-	static processQuest(chapter, quest)
+	static process(chapter, quest)
 	{
 		if (quest instanceof Quest) return quest;
 		switch (quest.type)
