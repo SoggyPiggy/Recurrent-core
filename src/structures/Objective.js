@@ -46,9 +46,18 @@ class Objective extends EventBase
 		return Math.round(this.random.integer(750, 1250) * this.modifier);
 	}
 
+	generateXPReward()
+	{
+		const levels = this.player.experience.level + (this.quest.chapter.game.mastery.level - 1);
+		let xp = Math.floor((20 + levels) ** (3 / 4));
+		xp = Math.round(xp * this.random.real(0.8, 1.2) * this.modifier);
+		return xp;
+	}
+
 	generateRewards()
 	{
-		return {};
+		const xp = this.generateXPReward();
+		return { xp };
 	}
 
 	reward()
