@@ -5,7 +5,7 @@ class ChapterManager
 	constructor(game, data = [])
 	{
 		this.game = game;
-		this.items = [...data.map(chapter => new Chapter(chapter))];
+		this.items = [...data.map(chapter => new Chapter(game, chapter))];
 	}
 
 	get chapter()
@@ -20,7 +20,7 @@ class ChapterManager
 
 	newChapter()
 	{
-		const chapter = new Chapter();
+		const chapter = new Chapter(this.game);
 		this.items.unshift(chapter);
 		return chapter;
 	}

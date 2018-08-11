@@ -4,9 +4,10 @@ const { QuestManager } = require('../managers/QuestManager');
 
 class Chapter extends TickBase
 {
-	constructor(data = {})
+	constructor(game, data = {})
 	{
 		super(data);
+		this.game = game;
 		this.player = new Player(data.player);
 		this.quests = new QuestManager(this, data.quests);
 	}
