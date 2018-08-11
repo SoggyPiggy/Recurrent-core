@@ -70,6 +70,11 @@ class Objective extends EventBase
 		return 5;
 	}
 
+	damage()
+	{
+		return 0;
+	}
+
 	completionCheck()
 	{
 		if (!this.complete) return false;
@@ -81,8 +86,9 @@ class Objective extends EventBase
 	tick()
 	{
 		this.progress += Math.round(this.advance());
-		this.player.status.loseStamina(Math.round(this.drain()));
 		this.completionCheck();
+		this.player.status.loseStamina(Math.round(this.drain()));
+		this.player.status.loseHealth(Math.round(this.damage()));
 	}
 
 	compress()
