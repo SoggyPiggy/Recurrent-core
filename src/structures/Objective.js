@@ -9,6 +9,7 @@ class Objective extends EventBase
 		this.type = 'base';
 		this.title = typeof data.title !== 'undefined' ? data.title : 'TITLE';
 		this.description = typeof data.description !== 'undefined' ? data.description : 'DESCRIPTION';
+		this.modifier = typeof data.modifier !== 'undefined' ? data.modifier : 1;
 		this.progress = typeof data.progress !== 'undefined' ? data.progress : 0;
 		this.end = typeof data.end !== 'undefined' ? data.end : this.generateEnd();
 		this.rewards = typeof data.rewards !== 'undefined' ? data.rewards : this.generateRewards();
@@ -42,7 +43,7 @@ class Objective extends EventBase
 
 	generateEnd()
 	{
-		return this.random.integer(750, 1250);
+		return Math.round(this.random.integer(750, 1250) * this.modifier);
 	}
 
 	generateRewards()
