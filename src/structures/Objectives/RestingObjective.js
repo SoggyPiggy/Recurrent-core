@@ -13,6 +13,11 @@ class RestingObjective extends Objective
 		return this.random.integer(2, 5);
 	}
 
+	generateRewards()
+	{
+		return {};
+	}
+
 	advance()
 	{
 		return 1;
