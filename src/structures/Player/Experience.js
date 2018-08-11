@@ -15,12 +15,12 @@ class PlayerExperience extends Experience
 
 	getLevel(xp)
 	{
-		return Math.floor((xp + 1) ** (2 / 5));
+		return Math.floor((xp + 1) ** (20 / 71));
 	}
 
-	getXP(level)
+	getXPTotal(level)
 	{
-		return Math.ceil((level ** (5 / 2)) - 1);
+		return Math.ceil((level ** (71 / 20)) - 1);
 	}
 
 	bonusXP(xp)

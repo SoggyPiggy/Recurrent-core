@@ -15,12 +15,12 @@ class MasteryExperience extends Experience
 
 	getLevel(xp)
 	{
-		return Math.floor((xp + 1) ** (1 / 5));
+		return Math.floor((xp + 1) ** (1 / 6));
 	}
 
-	getXP(level)
+	getXPTotal(level)
 	{
-		return Math.ceil((level ** 5) - 1);
+		return Math.ceil((level ** 6) - 1);
 	}
 
 	gain(xp)
