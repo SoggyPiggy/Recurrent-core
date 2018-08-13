@@ -109,6 +109,14 @@ class PlayerStatus
 		this.player.emit('fatigued');
 		return true;
 	}
+
+	compress()
+	{
+		const data = {};
+		data.health = this.health;
+		data.stamina = this.stamina;
+		return data;
+	}
 }
 
 module.exports = { PlayerStatus };

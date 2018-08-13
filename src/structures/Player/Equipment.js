@@ -9,6 +9,12 @@ class PlayerEquipment
 	{
 		return this.player.random;
 	}
+
+	compress()
+	{
+		const data = {};
+		return data;
+	}
 }
 
 module.exports = { PlayerEquipment };
