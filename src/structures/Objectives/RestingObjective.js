@@ -13,16 +13,19 @@ class RestingObjective extends Objective
 		return this.random.integer(2, 5);
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	generateRewards()
 	{
 		return {};
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	advance()
 	{
 		return 1;
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	drain()
 	{
 		return 0;

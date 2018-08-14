@@ -74,11 +74,13 @@ class Objective extends EventBase
 		return this.random.integer(75, 125);
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	drain()
 	{
 		return 5;
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	damage()
 	{
 		return 0;

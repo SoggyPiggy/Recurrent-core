@@ -8,11 +8,13 @@ class PlayerExperience extends Experience
 		this.player = player;
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	getLevel(xp)
 	{
 		return Math.floor((xp + 1) ** (20 / 71));
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	getXPTotal(level)
 	{
 		return Math.ceil((level ** (71 / 20)) - 1);

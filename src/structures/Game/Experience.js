@@ -8,11 +8,13 @@ class MasteryExperience extends Experience
 		this.game = game;
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	getLevel(xp)
 	{
 		return Math.floor((xp + 1) ** (1 / 6));
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	getXPTotal(level)
 	{
 		return Math.ceil((level ** 6) - 1);

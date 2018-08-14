@@ -18,11 +18,13 @@ class Experience extends Base
 		return this.xpInCurrentLevel() / this.getXP(this.level);
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	getLevel(xp)
 	{
 		return Math.floor(xp / 100);
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	getXPTotal(level)
 	{
 		return Math.ceil(level * 100);
@@ -33,6 +35,7 @@ class Experience extends Base
 		return this.getXPTotal(level) - this.getXPTotal(level - 1);
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	bonusXP(xp)
 	{
 		return xp * 0;
