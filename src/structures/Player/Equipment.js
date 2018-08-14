@@ -16,15 +16,15 @@ class PlayerEquipment extends Base
 		this.storage = new EquipmentStorage(this, data.storage);
 	}
 
-	compress()
+	toJSON()
 	{
 		const data = {};
-		data.head = this.head.compress();
-		data.body = this.body.compress();
-		data.legs = this.legs.compress();
-		data.hands = this.hands.compress();
-		data.waist = this.waist.compress();
-		data.storage = this.storage.compress();
+		data.head = this.head.toJSON();
+		data.body = this.body.toJSON();
+		data.legs = this.legs.toJSON();
+		data.hands = this.hands.toJSON();
+		data.waist = this.waist.toJSON();
+		data.storage = this.storage.toJSON();
 		return data;
 	}
 }

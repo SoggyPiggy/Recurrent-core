@@ -43,9 +43,9 @@ class ObjectiveManager extends Base
 		this.completion = !Number.isNaN(completion) ? completion : 0;
 	}
 
-	compress()
+	toJSON()
 	{
-		return this.items.map(objective => objective.compress());
+		return this.items.map(objective => objective.toJSON());
 	}
 
 	static process(quest, objective)

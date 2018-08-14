@@ -29,7 +29,7 @@ class PlayerLuck extends Base
 		}
 	}
 
-	compress()
+	toJSON()
 	{
 		const data = {};
 		data.rolls = this.rolls;

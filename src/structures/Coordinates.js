@@ -75,7 +75,7 @@ class Coordinates extends Base
 		return `(${this.distance}, ${this.degree}°)`;
 	}
 
-	compress()
+	toJSON()
 	{
 		const data = {};
 		data.phi = this.phi;

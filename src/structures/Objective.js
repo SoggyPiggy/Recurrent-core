@@ -100,9 +100,9 @@ class Objective extends EventBase
 		this.player.status.loseHealth(Math.round(this.damage()));
 	}
 
-	compress()
+	toJSON()
 	{
-		const data = super.compress();
+		const data = super.toJSON();
 		data.type = this.type;
 		data.title = this.title;
 		data.description = this.description;

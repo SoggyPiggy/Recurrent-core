@@ -61,7 +61,7 @@ class PlayerInformation extends Base
 		this.custom = true;
 	}
 
-	compress()
+	toJSON()
 	{
 		const data = {};
 		data.race = this.race;

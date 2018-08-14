@@ -108,7 +108,7 @@ class PlayerStatus extends Base
 		return true;
 	}
 
-	compress()
+	toJSON()
 	{
 		const data = {};
 		data.health = this.health;

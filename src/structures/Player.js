@@ -135,15 +135,15 @@ class Player extends EventBase
 		return `'${this.name}' the ${this.race}`;
 	}
 
-	compress()
+	toJSON()
 	{
-		const data = super.compress();
-		data.attributes = this.attributes.compress();
-		data.coordinates = this.coordinates.compress();
-		data.equipment = this.equipment.compress();
-		data.experience = this.experience.compress();
-		data.information = this.information.compress();
-		data.status = this.status.compress();
+		const data = super.toJSON();
+		data.attributes = this.attributes.toJSON();
+		data.coordinates = this.coordinates.toJSON();
+		data.equipment = this.equipment.toJSON();
+		data.experience = this.experience.toJSON();
+		data.information = this.information.toJSON();
+		data.status = this.status.toJSON();
 		return data;
 	}
 }

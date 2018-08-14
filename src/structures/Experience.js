@@ -61,7 +61,7 @@ class Experience extends Base
 		};
 	}
 
-	compress()
+	toJSON()
 	{
 		const data = {};
 		data.xp = this.xp;

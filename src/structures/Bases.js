@@ -3,6 +3,11 @@ const RandomJs = require('random-js');
 
 const Random = new RandomJs(RandomJs.engines.browserCrypto);
 
+function stringify(data)
+{
+	return JSON.stringify(data, null, 3);
+}
+
 class Base
 {
 	constructor()
@@ -10,21 +15,15 @@ class Base
 		this.random = Random;
 	}
 
-	// eslint-disable-next-line class-methods-use-this
-	compress()
-	{
-		const data = {};
-		return data;
-	}
-
 	toString()
 	{
-		return JSON.stringify(this.compress(), null, '\t');
+		return stringify(this.toJSON());
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	toJSON()
 	{
-		return JSON.stringify(this.compress());
+		return {};
 	}
 }
 
@@ -37,9 +36,9 @@ class IDBase extends Base
 		this.created = typeof data.created !== 'undefined' ? data.created : new Date().getTime();
 	}
 
-	compress()
+	toJSON()
 	{
-		const data = super.compress();
+		const data = super.toJSON();
 		data.id = this.id;
 		data.created = this.created;
 		return data;
@@ -56,22 +55,17 @@ class EventBase extends EventEmitter
 		this.random = Random;
 	}
 
-	compress()
+	toString()
+	{
+		return stringify(this.toJSON());
+	}
+
+	toJSON()
 	{
 		const data = {};
 		data.id = this.id;
 		data.created = this.created;
 		return data;
-	}
-
-	toString()
-	{
-		return JSON.stringify(this.compress(), null, '\t');
-	}
-
-	toJSON()
-	{
-		return JSON.stringify(this.compress());
 	}
 }
 
@@ -112,23 +106,11 @@ class TickBase extends EventBase
 	tick()
 	{}
 
-	compress()
-	{
-		const data = {};
-		data.id = this.id;
-		data.created = this.created;
-		data.ticks = this.ticks;
-		return data;
-	}
-
-	toString()
-	{
-		return JSON.stringify(this.compress(), null, '\t');
-	}
-
 	toJSON()
 	{
-		return JSON.stringify(this.compress());
+		const data = super.toJSON();
+		data.ticks = this.ticks;
+		return data;
 	}
 }
 

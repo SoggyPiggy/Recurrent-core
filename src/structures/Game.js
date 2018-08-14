@@ -21,11 +21,11 @@ class Game extends EventBase
 		return this.chapters.player;
 	}
 
-	compress()
+	toJSON()
 	{
-		const data = super.compress();
-		data.chapters = this.chapters.compress();
-		data.masetry = this.mastery.compress();
+		const data = super.toJSON();
+		data.chapters = this.chapters.toJSON();
+		data.masetry = this.mastery.toJSON();
 		return data;
 	}
 }

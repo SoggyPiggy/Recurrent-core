@@ -28,9 +28,9 @@ class QuestManager extends Base
 		return quest;
 	}
 
-	compress()
+	toJSON()
 	{
-		return this.items.map(quest => quest.compress());
+		return this.items.map(quest => quest.toJSON());
 	}
 
 	static process(chapter, quest)

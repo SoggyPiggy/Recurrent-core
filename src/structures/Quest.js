@@ -91,11 +91,11 @@ class Quest extends EventBase
 		this.completionCheck();
 	}
 
-	compress()
+	toJSON()
 	{
-		const data = super.compress();
+		const data = super.toJSON();
 		data.type = this.type;
-		data.objectives = this.objectives.compress();
+		data.objectives = this.objectives.toJSON();
 		data.rewards = this.rewards;
 		return data;
 	}

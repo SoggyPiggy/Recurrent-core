@@ -27,9 +27,9 @@ class ChapterManager extends Base
 		return chapter;
 	}
 
-	compress()
+	toJSON()
 	{
-		return this.items.map(chapter => chapter.compress());
+		return this.items.map(chapter => chapter.toJSON());
 	}
 }
 

@@ -93,7 +93,7 @@ class Attributes extends Base
 		this.raw = Attributes.apply(data);
 	}
 
-	compress()
+	toJSON()
 	{
 		return { ...this.raw };
 	}
