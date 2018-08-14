@@ -1,12 +1,14 @@
+const { Base } = require('./../structures/Bases');
 const { Objective } = require('./../structures/Objective');
 const { FightingObjective } = require('./../structures/Objectives/FightingObjective');
 const { RestingObjective } = require('./../structures/Objectives/RestingObjective');
 const { GatheringObjective } = require('./../structures/Objectives/GatheringObjective');
 
-class ObjectiveManager
+class ObjectiveManager extends Base
 {
 	constructor(quest, data = [])
 	{
+		super();
 		this.quest = quest;
 		this.items = [...data.map(objective => ObjectiveManager.process(quest, objective))];
 		if (this.items.length <= 0) this.items.push(...quest.generateObjectives());

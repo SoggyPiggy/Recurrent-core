@@ -1,15 +1,13 @@
-class PlayerStatus
+const { Base } = require('./../Bases');
+
+class PlayerStatus extends Base
 {
 	constructor(player, data = {})
 	{
+		super();
 		this.player = player;
 		this.health = typeof data.health !== 'undefined' ? data.health : this.maxHealth;
 		this.stamina = typeof data.stamina !== 'undefined' ? data.stamina : this.maxStamina;
-	}
-
-	get random()
-	{
-		return this.player.random;
 	}
 
 	get maxHealth()

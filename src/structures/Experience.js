@@ -1,7 +1,10 @@
-class Experience
+const { Base } = require('./Bases');
+
+class Experience extends Base
 {
 	constructor(data = {})
 	{
+		super();
 		this.xp = typeof data.xp !== 'undefined' ? data.xp : 0;
 	}
 

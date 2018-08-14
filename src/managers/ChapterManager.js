@@ -1,9 +1,11 @@
+const { Base } = require('./../structures/Bases');
 const { Chapter } = require('./../structures/Chapter');
 
-class ChapterManager
+class ChapterManager extends Base
 {
 	constructor(game, data = [])
 	{
+		super();
 		this.game = game;
 		this.items = [...data.map(chapter => new Chapter(game, chapter))];
 	}

@@ -1,13 +1,15 @@
+const { Base } = require('./../structures/Bases');
 const { Quest } = require('./../structures/Quest');
 const { DungeonCrawlQuest } = require('./../structures/Quests/DungeonCrawlQuest');
 const { GatheringQuest } = require('./../structures/Quests/GatheringQuest');
 const { SellingQuest } = require('./../structures/Quests/SellingQuest');
 const { SlayerQuest } = require('./../structures/Quests/SlayerQuest');
 
-class QuestManager
+class QuestManager extends Base
 {
 	constructor(chapter, data = [])
 	{
+		super();
 		this.chapter = chapter;
 		this.items = [...data.map(quest => QuestManager.process(chapter, quest))];
 		if (this.items.length <= 0) this.newQuest();

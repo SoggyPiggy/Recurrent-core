@@ -8,11 +8,6 @@ class PlayerExperience extends Experience
 		this.player = player;
 	}
 
-	get random()
-	{
-		return this.player.random;
-	}
-
 	getLevel(xp)
 	{
 		return Math.floor((xp + 1) ** (20 / 71));

@@ -1,16 +1,14 @@
-class PlayerLuck
+const { Base } = require('./../Bases');
+
+class PlayerLuck extends Base
 {
 	constructor(player, data = {})
 	{
+		super();
 		// TODO: Make better.
 		this.player = player;
 		this.rolls = typeof data.rolls !== 'undefined' ? data.rolls : [];
 		this.rollsCheck();
-	}
-
-	get random()
-	{
-		return this.player.random;
 	}
 
 	roll()

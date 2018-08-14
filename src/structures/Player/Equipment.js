@@ -1,10 +1,12 @@
+const { Base } = require('./../Bases');
 const { EquipmentSlot } = require('./Equipment/Slot');
 const { EquipmentStorage } = require('./Equipment/Storage');
 
-class PlayerEquipment
+class PlayerEquipment extends Base
 {
 	constructor(player, data = {})
 	{
+		super();
 		this.player = player;
 		this.head = new EquipmentSlot(this, data.head);
 		this.body = new EquipmentSlot(this, data.body);
@@ -12,11 +14,6 @@ class PlayerEquipment
 		this.hands = new EquipmentSlot(this, data.hands);
 		this.waist = new EquipmentSlot(this, data.waist);
 		this.storage = new EquipmentStorage(this, data.storage);
-	}
-
-	get random()
-	{
-		return this.player.random;
 	}
 
 	compress()

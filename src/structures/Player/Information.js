@@ -1,3 +1,5 @@
+const { Base } = require('./../Bases');
+
 const races = {
 	human:
 	{
@@ -11,20 +13,16 @@ const races = {
 	},
 };
 
-class PlayerInformation
+class PlayerInformation extends Base
 {
 	constructor(player, data = {})
 	{
+		super();
 		this.player = player;
 		this.custom = typeof data.custom !== 'undefined' ? data.custom : false;
 		this.race = typeof data.race !== 'undefined' ? data.race : this.randomRace();
 		this.name = typeof data.name !== 'undefined' ? data.name : this.randomName();
 		this.raceName = races[this.race].race;
-	}
-
-	get random()
-	{
-		return this.player.random;
 	}
 
 	randomRace()

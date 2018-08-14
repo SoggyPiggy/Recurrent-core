@@ -5,18 +5,15 @@ const Random = new RandomJs(RandomJs.engines.browserCrypto);
 
 class Base
 {
-	constructor(data = {})
+	constructor()
 	{
-		this.id = typeof data.id !== 'undefined' ? data.id : Random.uuid4();
-		this.created = typeof data.created !== 'undefined' ? data.created : new Date().getTime();
 		this.random = Random;
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	compress()
 	{
 		const data = {};
-		data.id = this.id;
-		data.created = this.created;
 		return data;
 	}
 
@@ -28,6 +25,24 @@ class Base
 	toJSON()
 	{
 		return JSON.stringify(this.compress());
+	}
+}
+
+class IDBase extends Base
+{
+	constructor(data = {})
+	{
+		super(data);
+		this.id = typeof data.id !== 'undefined' ? data.id : Random.uuid4();
+		this.created = typeof data.created !== 'undefined' ? data.created : new Date().getTime();
+	}
+
+	compress()
+	{
+		const data = super.compress();
+		data.id = this.id;
+		data.created = this.created;
+		return data;
 	}
 }
 
@@ -93,7 +108,8 @@ class TickBase extends EventBase
 		this.interval = null;
 	}
 
-	tick() // eslint-disable-line class-methods-use-this
+	// eslint-disable-next-line class-methods-use-this
+	tick()
 	{}
 
 	compress()
@@ -116,4 +132,9 @@ class TickBase extends EventBase
 	}
 }
 
-module.exports = { Base, EventBase, TickBase };
+module.exports = {
+	Base,
+	IDBase,
+	EventBase,
+	TickBase,
+};

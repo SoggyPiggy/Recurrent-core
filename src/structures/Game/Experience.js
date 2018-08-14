@@ -8,11 +8,6 @@ class MasteryExperience extends Experience
 		this.game = game;
 	}
 
-	get random()
-	{
-		return this.game.random;
-	}
-
 	getLevel(xp)
 	{
 		return Math.floor((xp + 1) ** (1 / 6));

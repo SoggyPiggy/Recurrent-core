@@ -1,13 +1,16 @@
+const { Base } = require('./Bases');
+
 function phix(phi)
 {
 	const angle = phi % 360;
 	return angle < 0 ? 360 + angle : angle;
 }
 
-class Coordinates
+class Coordinates extends Base
 {
 	constructor(data = {})
 	{
+		super();
 		this.phi = typeof data.phi !== 'undefined' ? data.phi : 0;
 		this.rho = typeof data.rho !== 'undefined' ? data.rho : 0;
 	}

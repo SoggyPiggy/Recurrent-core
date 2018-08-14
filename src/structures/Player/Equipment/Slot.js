@@ -1,7 +1,10 @@
-class EquipmentSlot
+const { Base } = require('./../../Bases');
+
+class EquipmentSlot extends Base
 {
 	constructor(equipment, data = {})
 	{
+		super();
 		this.equipment = equipment;
 		this.item = typeof data.item !== 'undefined' ? data.item : null;
 	}
