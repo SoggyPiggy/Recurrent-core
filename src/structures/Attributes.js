@@ -53,44 +53,38 @@ class Attributes extends Base
 		return this.core.stamina;
 	}
 
-	generatePoints(selection, points, limit, increment, shift)
+	roll(points, selected = Attributes.list(), fails = 0)
 	{
-		const data = Attributes.template();
+		let attributes;
+		if (fails <= 0) attributes = Attributes.apply(this.generate(points, selected));
+		else
+		{
+			const possiblities = [...selected, ...new Array(fails).fill().map(() => this.random.uuid4())];
+			const selection = this.random.sample(possiblities, selected.length);
+			attributes = Attributes.apply(this.generate(points, selection));
+		}
+		this.core = attributes;
+	}
+
+	generate(points = 100, selection = Attributes.list())
+	{
+		const attributes = Attributes.template(selection);
+		const limit = points * 1.5;
+		const increment = points * 0.15;
+		const shift = points * 0.075;
 		const total = selection.length * points;
 		let used = 0;
 		while (used < total)
 		{
 			const selected = this.random.pick(selection);
-			if (data[selected] < limit)
+			if (attributes[selected] < limit)
 			{
 				const adjust = Math.round(increment + this.random.real(-shift, shift));
-				data[selected] += adjust;
+				attributes[selected] += adjust;
 				used += adjust;
 			}
 		}
-		return data;
-	}
-
-	randomize(points = 100, select = ['all'], duds = 0)
-	{
-		const selection = select.includes('all') ? Attributes.template() : [...select];
-		const data = this.generatePoints(
-			selection,
-			points,
-			points * 1.5,
-			points * 0.15,
-			points * 0.075,
-		);
-		if (duds > 0)
-		{
-			for (let i = 0; i < duds; i += 1)
-			{
-				const keys = Object.keys(data);
-				const selected = this.random.pick(keys);
-				delete data[selected];
-			}
-		}
-		this.raw = Attributes.apply(data);
+		return attributes;
 	}
 
 	toJSON()
@@ -98,24 +92,41 @@ class Attributes extends Base
 		return { ...this.core };
 	}
 
-	static template()
+	static list()
+	{
+		const attributes = [
+			'charm',				// ????? (Maybe help with reputation)
+			'constitution',	// More Health
+			'fortitude',		// Damage Resistance
+			'fortuity',			// Better Luck/Chances
+			'insight',			// More XP
+			'might',				// Stronger Attacks
+			'perception',		// Accuracy
+			'proficiency',		// Faster Tick Rate
+			'stamina',			// Longer in the Field
+		];
+		return attributes;
+	}
+
+	static template(list = Attributes.list())
 	{
 		const attributes = {};
-		attributes.charm = 0;			// ????? (Maybe help with reputation)
-		attributes.constitution = 0;	// More Health
-		attributes.fortitude = 0;		// Damage Resistance
-		attributes.fortuity = 0;		// Better Luck/Chances
-		attributes.insight = 0;			// More XP
-		attributes.might = 0;			// Stronger Attacks
-		attributes.perception = 0;		// Accuracy
-		attributes.proficiency = 0;	// Faster Tick Rate
-		attributes.stamina = 0;			// Longer in the Field
+		list.forEach((attribute) =>
+		{
+			attributes[attribute] = 0;
+		});
 		return attributes;
 	}
 
 	static apply(attribs = {})
 	{
-		return { ...Attributes.template(), ...attribs };
+		const attributes = { ...attribs };
+		const list = Attributes.list();
+		Object.keys(attributes).forEach((attribute) =>
+		{
+			if (!list.includes(attribute)) delete attributes[attribute];
+		});
+		return { ...Attributes.template(), ...attributes };
 	}
 }
 
