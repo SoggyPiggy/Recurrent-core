@@ -2,6 +2,8 @@ const { EventBase } = require('./Bases');
 const { ChapterManager } = require('./../managers/ChapterManager');
 const { MasteryExperience } = require('./Game/Experience');
 
+let instance;
+
 class Game extends EventBase
 {
 	constructor(data = {})
@@ -27,6 +29,22 @@ class Game extends EventBase
 		data.chapters = this.chapters.toJSON();
 		data.masetry = this.mastery.toJSON();
 		return data;
+	}
+
+	static createInstance(data)
+	{
+		instance = new Game(data);
+		return instance;
+	}
+
+	static getInstance(data)
+	{
+		return instance || Game.createInstance(data);
+	}
+
+	static get instance()
+	{
+		return Game.getInstance();
 	}
 }
 
