@@ -3,11 +3,9 @@ const { IDBase } = require('./Bases');
 class Item extends IDBase
 {
 	// TODO: Do a lot of things with this. Such as information generation
-	// TODO: Change something into something like, Player or Chapter
-	constructor(something, data = {})
+	constructor(data = {})
 	{
-		super();
-		this.something = something;
+		super(data);
 		this.name = typeof data.name !== 'undefined' ? data.name : 'UNKNOWN';
 		this.description = typeof data.description !== 'undefined' ? data.description : 'UNKNOWN';
 		this.value = typeof data.value !== 'undefined' ? data.value : 1;

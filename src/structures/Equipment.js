@@ -4,9 +4,9 @@ const { Attributes } = require('./Attributes');
 class Equipment extends Item
 {
 	// TODO: Also change the something here, just like in Item class
-	constructor(something, data = {})
+	constructor(data = {})
 	{
-		super(something, data);
+		super(data);
 		this.attributes = new Attributes(data.attributes);
 	}
 
