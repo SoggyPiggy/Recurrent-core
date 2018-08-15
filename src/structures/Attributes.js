@@ -5,52 +5,52 @@ class Attributes extends Base
 	constructor(data = {})
 	{
 		super(data);
-		this.raw = Attributes.apply(data);
+		this.core = Attributes.apply(data);
 	}
 
 	get charm()
 	{
-		return this.raw.charm;
+		return this.core.charm;
 	}
 
 	get constitution()
 	{
-		return this.raw.constitution;
+		return this.core.constitution;
 	}
 
 	get fortitude()
 	{
-		return this.raw.fortitude;
+		return this.core.fortitude;
 	}
 
 	get fortuity()
 	{
-		return this.raw.fortuity;
+		return this.core.fortuity;
 	}
 
 	get insight()
 	{
-		return this.raw.insight;
+		return this.core.insight;
 	}
 
 	get might()
 	{
-		return this.raw.might;
+		return this.core.might;
 	}
 
 	get perception()
 	{
-		return this.raw.perception;
+		return this.core.perception;
 	}
 
 	get proficiency()
 	{
-		return this.raw.proficiency;
+		return this.core.proficiency;
 	}
 
 	get stamina()
 	{
-		return this.raw.stamina;
+		return this.core.stamina;
 	}
 
 	generatePoints(selection, points, limit, increment, shift)
@@ -95,7 +95,7 @@ class Attributes extends Base
 
 	toJSON()
 	{
-		return { ...this.raw };
+		return { ...this.core };
 	}
 
 	static template()
