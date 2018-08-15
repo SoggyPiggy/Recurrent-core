@@ -1,6 +1,6 @@
 const { EventBase } = require('./Bases');
 const { PlayerAttributes } = require('./Player/Attributes');
-const { PlayerEquipment } = require('./Player/Equipment');
+const { PlayerGear } = require('./Player/Gear');
 const { PlayerInformation } = require('./Player/Information');
 const { PlayerStatus } = require('./Player/Status');
 const { PlayerExperience } = require('./Player/Experience');
@@ -14,7 +14,7 @@ class Player extends EventBase
 		this.chapter = chapter;
 		this.attributes = new PlayerAttributes(this, data.attributes);
 		this.coordinates = new PlayerCoordinates(this, data.coordinates);
-		this.equipment = new PlayerEquipment(this, data.equipment);
+		this.gear = new PlayerGear(this, data.gear);
 		this.experience = new PlayerExperience(this, data.experience);
 		this.information = new PlayerInformation(this, data.information);
 		this.status = new PlayerStatus(this, data.status);
@@ -140,7 +140,7 @@ class Player extends EventBase
 		const data = super.toJSON();
 		data.attributes = this.attributes.toJSON();
 		data.coordinates = this.coordinates.toJSON();
-		data.equipment = this.equipment.toJSON();
+		data.gear = this.gear.toJSON();
 		data.experience = this.experience.toJSON();
 		data.information = this.information.toJSON();
 		data.status = this.status.toJSON();

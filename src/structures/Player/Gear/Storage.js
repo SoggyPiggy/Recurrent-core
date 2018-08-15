@@ -1,6 +1,6 @@
 const { Base } = require('./../../Bases');
 
-class EquipmentStorage extends Base
+class GearStorage extends Base
 {
 	constructor(equipment, data = {})
 	{
@@ -10,4 +10,4 @@ class EquipmentStorage extends Base
 	}
 }
 
-module.exports = { EquipmentStorage };
+module.exports = { GearStorage };
