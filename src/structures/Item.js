@@ -1,6 +1,6 @@
-const { Base } = require('./Bases');
+const { IDBase } = require('./Bases');
 
-class Item extends Base
+class Item extends IDBase
 {
 	// TODO: Do a lot of things with this. Such as information generation
 	// TODO: Change something into something like, Player or Chapter
