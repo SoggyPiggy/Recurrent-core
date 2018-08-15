@@ -7,7 +7,8 @@ class GearSlot extends Base
 	{
 		super();
 		this.gear = gear;
-		this.equipment = new Equipment(data.equipment);
+		if (typeof data.equipment !== 'undefined') this.equipment = new Equipment(data.equipment);
+		else this.equipment = Equipment.empty();
 	}
 
 	get player()
@@ -58,6 +59,13 @@ class GearSlot extends Base
 	get stamina()
 	{
 		return this.equipment.stamina;
+	}
+
+	equip(equipment = Equipment.empty())
+	{
+		const old = this.equipment;
+		this.equipment = equipment;
+		if (!old.empty) this.gear.storage.add(old);
 	}
 }
 
