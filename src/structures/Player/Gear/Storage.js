@@ -15,6 +15,11 @@ class GearStorage extends Base
 
 	remove(equipment)
 	{}
+
+	// TODO: Add toJSON
+	toJSON()
+	{
+	}
 }
 
 module.exports = { GearStorage };
