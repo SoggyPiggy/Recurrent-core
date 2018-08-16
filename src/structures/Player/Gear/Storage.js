@@ -2,10 +2,10 @@ const { Base } = require('./../../Bases');
 
 class GearStorage extends Base
 {
-	constructor(equipment, data = {})
+	constructor(gear, data = {})
 	{
 		super();
-		this.equipment = equipment;
+		this.gear = gear;
 		this.items = typeof data.items !== 'undefined' ? data.items : [];
 	}
 
