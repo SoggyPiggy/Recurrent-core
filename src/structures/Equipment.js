@@ -8,6 +8,7 @@ class Equipment extends Item
 	{
 		super(data);
 		this.empty = typeof data.empty !== 'undefined' ? data.empty : false;
+		this.level = typeof data.level !== 'undefined' ? data.level : 0;
 		this.attributes = new Attributes(data.attributes);
 	}
 
