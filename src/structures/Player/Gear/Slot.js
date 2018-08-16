@@ -7,8 +7,7 @@ class GearSlot extends Base
 	{
 		super();
 		this.gear = gear;
-		if (typeof data.equipment !== 'undefined') this.equipment = new Equipment(data.equipment);
-		else this.equipment = Equipment.empty();
+		this.equipment = typeof data.equipment !== 'undefined' ? new Equipment(data.equipment) : Equipment.empty;
 	}
 
 	get player()
