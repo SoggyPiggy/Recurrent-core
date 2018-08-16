@@ -66,6 +66,13 @@ class GearSlot extends Base
 		this.equipment = equipment;
 		if (!old.empty) this.gear.storage.add(old);
 	}
+
+	toJSON()
+	{
+		const data = super.toJSON();
+		data.equipment = this.equipment.toJSON();
+		return data;
+	}
 }
 
 module.exports = { GearSlot };
