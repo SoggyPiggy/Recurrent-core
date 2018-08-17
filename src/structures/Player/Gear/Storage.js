@@ -1,12 +1,18 @@
-const { Base } = require('./../../Bases');
+const { Storage } = require('./../../Storage');
+const { Equipment } = require('./../../Equipment');
 
-class GearStorage extends Base
+class GearStorage extends Storage
 {
-	constructor(gear, data = {})
+	constructor(gear, data = [])
 	{
-		super();
+		super(data);
 		this.gear = gear;
-		this.items = typeof data.items !== 'undefined' ? data.items : [];
+	}
+
+	// eslint-disable-next-line class-methods-use-this
+	processItems(items)
+	{
+		return items.map(item => new Equipment(item));
 	}
 
 	// TODO: Add functionality to these two methods
@@ -15,11 +21,6 @@ class GearStorage extends Base
 
 	remove(equipment)
 	{}
-
-	// TODO: Add toJSON
-	toJSON()
-	{
-	}
 }
 
 module.exports = { GearStorage };
