@@ -1,6 +1,7 @@
 const { EventBase } = require('./Bases');
 const { ChapterManager } = require('./../managers/ChapterManager');
 const { MasteryExperience } = require('./Game/Experience');
+const { SaveManager } = require('./../managers/SaveManager');
 
 let instance;
 
@@ -11,6 +12,7 @@ class Game extends EventBase
 		super(data);
 		this.chapters = new ChapterManager(this, data.chapters);
 		this.mastery = new MasteryExperience(this, data.masetry);
+		this.savemanager = new SaveManager(this);
 	}
 
 	get chapter()
