@@ -3,10 +3,42 @@ const RandomJs = require('random-js');
 
 const Random = new RandomJs(RandomJs.engines.browserCrypto);
 
-function stringify(data)
+const stringify = function jsonStringifyObjectToConsistentLayout(data)
 {
 	return JSON.stringify(data, null, 3);
-}
+};
+
+const compressArray = function compressArrayToReduceIDObjects(data = [])
+{
+	const copy = [...data].map((value) =>
+	{
+		if (Array.isArray(value)) return compressArray(value);
+		if (typeof value === 'object')
+		{
+			if (typeof value.id === 'string') return value.id;
+			// eslint-disable-next-line no-use-before-define
+			return compressObject(value);
+		}
+		return value;
+	});
+	return copy;
+};
+
+const compressObject = function compressObjectToReduceIDObjects(data = {})
+{
+	const copy = { ...data };
+	Object.keys(copy).forEach((key) =>
+	{
+		// eslint-disable-next-line no-use-before-define
+		if (Array.isArray(copy[key])) copy[key] = compressArray(copy[key]);
+		else if (typeof copy[key] === 'object')
+		{
+			if (typeof copy[key].id === 'string') copy[key] = copy[key].id;
+			else copy[key] = compressObject(copy[key]);
+		}
+	});
+	return copy;
+};
 
 class Base
 {
@@ -24,6 +56,13 @@ class Base
 	toJSON()
 	{
 		return {};
+	}
+
+	compress(toString = false)
+	{
+		const data = compressObject(this.toJSON());
+		if (toString) return stringify(data);
+		return data;
 	}
 }
 
@@ -65,6 +104,13 @@ class EventBase extends EventEmitter
 		const data = {};
 		data.id = this.id;
 		data.created = this.created;
+		return data;
+	}
+
+	compress(toString = false)
+	{
+		const data = compressObject(this.toJSON());
+		if (toString) return stringify(data);
 		return data;
 	}
 }
