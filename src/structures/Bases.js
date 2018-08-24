@@ -63,11 +63,10 @@ class IDBase extends Base
 
 class ArrayBase extends Base
 {
-	constructor(data = [], parent = null)
+	constructor(data = [])
 	{
 		super();
-		this.parent = parent;
-		this.items = [...data.map(item => this.processItem(item, parent))];
+		this.items = this.processItems(data);
 	}
 
 	get item()
@@ -75,22 +74,14 @@ class ArrayBase extends Base
 		return this.items[0];
 	}
 
-	// eslint-disable-next-line class-methods-use-this
-	processItem(data)
+	processItems(items = [])
 	{
-		return data;
+		return items.map(item => this.processItem(item));
 	}
 
 	// eslint-disable-next-line class-methods-use-this
-	generateItem()
+	processItem(item)
 	{
-		return {};
-	}
-
-	newItem()
-	{
-		const item = this.generateItem();
-		this.items.unshift(item);
 		return item;
 	}
 
@@ -111,6 +102,29 @@ class ArrayBase extends Base
 			if (item instanceof Base) return item.toJSON();
 			return item;
 		});
+	}
+}
+
+class ManagerBase extends ArrayBase
+{
+	constructor(data = [], parent = null)
+	{
+		super();
+		this.parent = parent;
+		this.items = this.processItems(data);
+	}
+
+	// eslint-disable-next-line class-methods-use-this
+	generateItem()
+	{
+		return {};
+	}
+
+	newItem()
+	{
+		const item = this.generateItem();
+		this.items.unshift(item);
+		return item;
 	}
 }
 
@@ -197,6 +211,7 @@ module.exports = {
 	Base,
 	IDBase,
 	ArrayBase,
+	ManagerBase,
 	EventBase,
 	EventIDBase,
 	TickBase,
