@@ -24,6 +24,11 @@ class ChapterManager extends ManagerBase
 		return this.chapter.player;
 	}
 
+	generateItem()
+	{
+		return new Chapter(this.game);
+	}
+
 	processItem(chapter)
 	{
 		if (chapter instanceof Chapter) return chapter;
