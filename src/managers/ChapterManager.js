@@ -16,7 +16,7 @@ class ChapterManager extends ManagerBase
 
 	get chapter()
 	{
-		return this.items.length ? this.items[0] : this.newChapter();
+		return this.item;
 	}
 
 	get player()
