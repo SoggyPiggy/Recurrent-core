@@ -32,16 +32,17 @@ class Base
 		return data;
 	}
 
-	compress()
+	compress(stringify = false)
 	{
 		const data = {};
 		this.jsonKeys().forEach((key) =>
 		{
 			// eslint-disable-next-line no-use-before-define
 			if (this[key] instanceof IDBase) data[key] = this[key].id;
-			else if (this[key] instanceof Base) data[key] = this[key].toJSON();
+			else if (this[key] instanceof Base) data[key] = this[key].compress();
 			else data[key] = this[key];
 		});
+		if (stringify) return JSON.stringify(data, null, 3);
 		return data;
 	}
 }
