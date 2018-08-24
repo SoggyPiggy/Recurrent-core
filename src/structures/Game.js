@@ -11,7 +11,7 @@ class Game extends EventBase
 	{
 		super(data);
 		this.chapters = new ChapterManager(this, data.chapters);
-		this.mastery = new MasteryExperience(this, data.masetry);
+		this.mastery = new MasteryExperience(this, data.mastery);
 		this.savemanager = new SaveManager(this);
 	}
 
@@ -29,7 +29,7 @@ class Game extends EventBase
 	{
 		const data = super.toJSON();
 		data.chapters = this.chapters.toJSON();
-		data.masetry = this.mastery.toJSON();
+		data.mastery = this.mastery.toJSON();
 		return data;
 	}
 
