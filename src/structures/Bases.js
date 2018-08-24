@@ -3,43 +3,6 @@ const RandomJs = require('random-js');
 
 const Random = new RandomJs(RandomJs.engines.browserCrypto);
 
-const stringify = function jsonStringifyObjectToConsistentLayout(data)
-{
-	return JSON.stringify(data, null, 3);
-};
-
-const compressArray = function compressArrayToReduceIDObjects(data = [])
-{
-	const copy = [...data].map((value) =>
-	{
-		if (Array.isArray(value)) return compressArray(value);
-		if (typeof value === 'object')
-		{
-			if (typeof value.id === 'string') return value.id;
-			// eslint-disable-next-line no-use-before-define
-			return compressObject(value);
-		}
-		return value;
-	});
-	return copy;
-};
-
-const compressObject = function compressObjectToReduceIDObjects(data = {})
-{
-	const copy = { ...data };
-	Object.keys(copy).forEach((key) =>
-	{
-		// eslint-disable-next-line no-use-before-define
-		if (Array.isArray(copy[key])) copy[key] = compressArray(copy[key]);
-		else if (typeof copy[key] === 'object')
-		{
-			if (typeof copy[key].id === 'string') copy[key] = copy[key].id;
-			else copy[key] = compressObject(copy[key]);
-		}
-	});
-	return copy;
-};
-
 class Base
 {
 	constructor()
@@ -49,75 +12,90 @@ class Base
 
 	toString()
 	{
-		return stringify(this.toJSON());
+		return JSON.stringify(this.toJSON(), null, 3);
 	}
 
 	// eslint-disable-next-line class-methods-use-this
-	toJSON()
+	jsonKeys()
 	{
-		return {};
+		return [];
 	}
 
-	compress(toString = false)
+	toJSON()
 	{
-		const data = compressObject(this.toJSON());
-		if (toString) return stringify(data);
+		const data = {};
+		this.jsonKeys().forEach((key) =>
+		{
+			if (this[key] instanceof Base) data[key] = this[key].toJSON();
+			else data[key] = this[key];
+		});
+		return data;
+	}
+
+	compress()
+	{
+		const data = {};
+		this.jsonKeys().forEach((key) =>
+		{
+			// eslint-disable-next-line no-use-before-define
+			if (this[key] instanceof IDBase) data[key] = this[key].id;
+			else if (this[key] instanceof Base) data[key] = this[key].toJSON();
+			else data[key] = this[key];
+		});
 		return data;
 	}
 }
 
 class IDBase extends Base
 {
-	constructor(data = {})
+	constructor(data)
 	{
 		super(data);
 		this.id = typeof data.id !== 'undefined' ? data.id : Random.uuid4();
 		this.created = typeof data.created !== 'undefined' ? data.created : new Date().getTime();
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = super.toJSON();
-		data.id = this.id;
-		data.created = this.created;
-		return data;
+		return [...super.jsonKeys(), 'id', 'created'];
 	}
 }
 
-class EventBase extends EventEmitter
+class EventBase extends Base
 {
-	constructor(data = {})
+	constructor(data)
 	{
-		super();
-		this.id = typeof data.id !== 'undefined' ? data.id : Random.uuid4();
-		this.created = typeof data.created !== 'undefined' ? data.created : new Date().getTime();
-		this.random = Random;
-	}
-
-	toString()
-	{
-		return stringify(this.toJSON());
-	}
-
-	toJSON()
-	{
-		const data = {};
-		data.id = this.id;
-		data.created = this.created;
-		return data;
-	}
-
-	compress(toString = false)
-	{
-		const data = compressObject(this.toJSON());
-		if (toString) return stringify(data);
-		return data;
+		super(data);
+		this.eventHandler = new EventEmitter();
+		Object.getOwnPropertyNames(Object.getPrototypeOf(this.eventHandler)).forEach((key) =>
+		{
+			if (key !== 'constructor' && typeof this.eventHandler[key] === 'function')
+			{
+				this[key] = this.eventHandler[key];
+			}
+		});
 	}
 }
 
-class TickBase extends EventBase
+class EventIDBase extends IDBase
 {
-	constructor(data = {})
+	constructor(data)
+	{
+		super(data);
+		this.eventHandler = new EventEmitter();
+		Object.getOwnPropertyNames(Object.getPrototypeOf(this.eventHandler)).forEach((key) =>
+		{
+			if (key !== 'constructor' && typeof this.eventHandler[key] === 'function')
+			{
+				this[key] = this.eventHandler[key];
+			}
+		});
+	}
+}
+
+class TickBase extends EventIDBase
+{
+	constructor(data)
 	{
 		super(data);
 		this.interval = null;
@@ -126,9 +104,7 @@ class TickBase extends EventBase
 		{
 			this.ticks += 1;
 		});
-		this.on('tick', () => this.tick());
-		this.on('start', () => this.activate());
-		this.on('end', () => this.deactivate());
+		this.on('tick', () => this.ticks());
 	}
 
 	get active()
@@ -148,15 +124,19 @@ class TickBase extends EventBase
 		this.interval = null;
 	}
 
+	toggle()
+	{
+		if (this.active) this.deactivate();
+		else this.activate();
+	}
+
 	// eslint-disable-next-line class-methods-use-this
 	tick()
 	{}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = super.toJSON();
-		data.ticks = this.ticks;
-		return data;
+		return [...super.jsonKeys(), 'ticks'];
 	}
 }
 
@@ -164,5 +144,6 @@ module.exports = {
 	Base,
 	IDBase,
 	EventBase,
+	EventIDBase,
 	TickBase,
 };
