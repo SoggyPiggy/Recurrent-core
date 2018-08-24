@@ -1,49 +1,45 @@
-const { Base } = require('./../structures/Bases');
+const { ManagerBase } = require('./../structures/Bases');
 const { Quest } = require('./../structures/Quest');
 const { DungeonCrawlQuest } = require('./../structures/Quests/DungeonCrawlQuest');
 const { GatheringQuest } = require('./../structures/Quests/GatheringQuest');
 const { SellingQuest } = require('./../structures/Quests/SellingQuest');
 const { SlayerQuest } = require('./../structures/Quests/SlayerQuest');
 
-class QuestManager extends Base
+class QuestManager extends ManagerBase
 {
 	constructor(chapter, data = [])
 	{
-		super();
-		this.chapter = chapter;
-		this.items = [...data.map(quest => QuestManager.process(chapter, quest))];
+		super(data, chapter);
+		this.newQuest = this.newItem;
 		if (this.items.length <= 0) this.newQuest();
+	}
+
+	get chapter()
+	{
+		return this.parent;
 	}
 
 	get quest()
 	{
-		return this.items[0];
+		return this.item;
 	}
 
-	newQuest()
-	{
-		// TODO: Add functionality to this shit
-		const quest = new SlayerQuest(this.chapter);
-		this.items.unshift(quest);
-		return quest;
-	}
-
-	toJSON()
-	{
-		return this.items.map(quest => quest.toJSON());
-	}
-
-	static process(chapter, quest)
+	processItem(quest)
 	{
 		if (quest instanceof Quest) return quest;
 		switch (quest.type)
 		{
-			case 'slayer': return new SlayerQuest(chapter, quest);
-			case 'dungeon': return new DungeonCrawlQuest(chapter, quest);
-			case 'gathering': return new GatheringQuest(chapter, quest);
-			case 'selling': return new SellingQuest(chapter, quest);
-			default: return new Quest(chapter, quest);
+			case 'slayer': return new SlayerQuest(this.chapter, quest);
+			case 'dungeon': return new DungeonCrawlQuest(this.chapter, quest);
+			case 'gathering': return new GatheringQuest(this.chapter, quest);
+			case 'selling': return new SellingQuest(this.chapter, quest);
+			default: return new Quest(this.chapter, quest);
 		}
+	}
+
+	generateItem()
+	{
+		return new SlayerQuest(this.chapter);
 	}
 }
 

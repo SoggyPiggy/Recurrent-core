@@ -1,13 +1,17 @@
-const { Base } = require('./../structures/Bases');
+const { ManagerBase } = require('./../structures/Bases');
 const { Chapter } = require('./../structures/Chapter');
 
-class ChapterManager extends Base
+class ChapterManager extends ManagerBase
 {
 	constructor(game, data = [])
 	{
-		super();
-		this.game = game;
-		this.items = [...data.map(chapter => new Chapter(game, chapter))];
+		super(data, game);
+		this.newChapter = this.newItem;
+	}
+
+	get game()
+	{
+		return this.parent;
 	}
 
 	get chapter()
@@ -20,16 +24,10 @@ class ChapterManager extends Base
 		return this.chapter.player;
 	}
 
-	newChapter()
+	processItem(chapter)
 	{
-		const chapter = new Chapter(this.game);
-		this.items.unshift(chapter);
-		return chapter;
-	}
-
-	toJSON()
-	{
-		return this.items.map(chapter => chapter.toJSON());
+		if (chapter instanceof Chapter) return chapter;
+		return new Chapter(this.game, chapter);
 	}
 }
 

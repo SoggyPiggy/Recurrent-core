@@ -1,23 +1,18 @@
-const { Base } = require('./Bases');
+const { ArrayBase } = require('./Bases');
 const { Item } = require('./Item');
 
-class Storage extends Base
+class Storage extends ArrayBase
 {
 	constructor(data = [])
 	{
-		super();
-		this.items = this.processItems(data);
+		super(data);
 	}
 
 	// eslint-disable-next-line class-methods-use-this
-	processItems(items)
+	processItem(item)
 	{
-		return items.map(item => new Item(item));
-	}
-
-	toJSON()
-	{
-		return this.items.map(item => item.toJSON());
+		if (item instanceof Item) return item;
+		return new Item(item);
 	}
 }
 
