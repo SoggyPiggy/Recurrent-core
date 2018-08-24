@@ -61,6 +61,59 @@ class IDBase extends Base
 	}
 }
 
+class ArrayBase extends Base
+{
+	constructor(data = [], parent = null)
+	{
+		super();
+		this.parent = parent;
+		this.items = [...data.map(item => this.processItem(item, parent))];
+	}
+
+	get item()
+	{
+		return this.items[0];
+	}
+
+	// eslint-disable-next-line class-methods-use-this
+	processItem(data)
+	{
+		return data;
+	}
+
+	// eslint-disable-next-line class-methods-use-this
+	generateItem()
+	{
+		return {};
+	}
+
+	newItem()
+	{
+		const item = this.generateItem();
+		this.items.unshift(item);
+		return item;
+	}
+
+	toJSON()
+	{
+		return this.items.map((item) =>
+		{
+			if (item instanceof Base) return item.toJSON();
+			return item;
+		});
+	}
+
+	compress()
+	{
+		return this.items.map((item) =>
+		{
+			if (item instanceof IDBase) return item.id;
+			if (item instanceof Base) return item.toJSON();
+			return item;
+		});
+	}
+}
+
 class EventBase extends Base
 {
 	constructor(data)
@@ -143,6 +196,7 @@ class TickBase extends EventIDBase
 module.exports = {
 	Base,
 	IDBase,
+	ArrayBase,
 	EventBase,
 	EventIDBase,
 	TickBase,
