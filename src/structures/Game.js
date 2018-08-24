@@ -1,11 +1,11 @@
-const { EventBase } = require('./Bases');
+const { EventIDBase } = require('./Bases');
 const { ChapterManager } = require('./../managers/ChapterManager');
 const { MasteryExperience } = require('./Game/Experience');
 const { SaveManager } = require('./../managers/SaveManager');
 
 let instance;
 
-class Game extends EventBase
+class Game extends EventIDBase
 {
 	constructor(data = {})
 	{

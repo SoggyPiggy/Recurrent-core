@@ -1,8 +1,8 @@
-const { EventBase } = require('./Bases');
+const { EventIDBase } = require('./Bases');
 const { ObjectiveManager } = require('./../managers/ObjectiveManager');
 const { Objective } = require('./Objective');
 
-class Quest extends EventBase
+class Quest extends EventIDBase
 {
 	constructor(chapter, data = {})
 	{
