@@ -100,7 +100,7 @@ class ArrayBase extends Base
 		return this.items.map((item) =>
 		{
 			if (item instanceof IDBase) return item.id;
-			if (item instanceof Base) return item.toJSON();
+			if (item instanceof Base) return item.compress();
 			return item;
 		});
 	}
