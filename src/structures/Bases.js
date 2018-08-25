@@ -172,7 +172,7 @@ class TickBase extends EventIDBase
 		{
 			this.ticks += 1;
 		});
-		this.on('tick', () => this.ticks());
+		this.on('tick', () => this.tick());
 	}
 
 	get active()
