@@ -25,6 +25,16 @@ class Game extends EventIDBase
 		return this.chapters.player;
 	}
 
+	get quest()
+	{
+		return this.chapter.quest;
+	}
+
+	get objective()
+	{
+		return this.chapter.objective;
+	}
+
 	jsonKeys()
 	{
 		return [
