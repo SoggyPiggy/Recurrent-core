@@ -91,13 +91,14 @@ class Quest extends EventIDBase
 		this.completionCheck();
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = super.toJSON();
-		data.type = this.type;
-		data.objectives = this.objectives.toJSON();
-		data.rewards = this.rewards;
-		return data;
+		return [
+			...super.jsonKeys(),
+			'type',
+			'objectives',
+			'rewards',
+		];
 	}
 }
 

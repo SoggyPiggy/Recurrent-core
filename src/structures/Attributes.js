@@ -5,7 +5,7 @@ class Attributes extends Base
 	constructor(data = {})
 	{
 		super(data);
-		this.core = Attributes.apply(data);
+		this.core = Attributes.apply(data.core);
 	}
 
 	get charm()
@@ -87,9 +87,12 @@ class Attributes extends Base
 		return attributes;
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		return { ...this.core };
+		return [
+			...super.jsonKeys(),
+			'core',
+		];
 	}
 
 	static list()

@@ -64,11 +64,12 @@ class Experience extends Base
 		};
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = {};
-		data.xp = this.xp;
-		return data;
+		return [
+			...super.jsonKeys(),
+			'xp',
+		];
 	}
 }
 

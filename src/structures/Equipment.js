@@ -12,12 +12,13 @@ class Equipment extends Item
 		this.attributes = new Attributes(data.attributes);
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = super.toJSON();
-		data.empty = this.empty;
-		data.attributes = this.attributes.toJSON();
-		return data;
+		return [
+			...super.jsonKeys(),
+			'empty',
+			'attributes',
+		];
 	}
 
 	static empty()

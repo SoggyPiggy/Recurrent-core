@@ -29,11 +29,12 @@ class PlayerLuck extends Base
 		}
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = {};
-		data.rolls = this.rolls;
-		return data;
+		return [
+			...super.jsonKeys(),
+			'rolls',
+		];
 	}
 }
 

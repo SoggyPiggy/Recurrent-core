@@ -108,12 +108,13 @@ class PlayerStatus extends Base
 		return true;
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = {};
-		data.health = this.health;
-		data.stamina = this.stamina;
-		return data;
+		return [
+			...super.jsonKeys(),
+			'health',
+			'stamina',
+		];
 	}
 }
 

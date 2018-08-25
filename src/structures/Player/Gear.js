@@ -16,16 +16,17 @@ class PlayerGear extends Base
 		this.storage = new GearStorage(this, data.storage);
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = {};
-		data.head = this.head.toJSON();
-		data.body = this.body.toJSON();
-		data.legs = this.legs.toJSON();
-		data.hands = this.hands.toJSON();
-		data.waist = this.waist.toJSON();
-		data.storage = this.storage.toJSON();
-		return data;
+		return [
+			...super.jsonKeys(),
+			'head',
+			'body',
+			'legs',
+			'hands',
+			'waist',
+			'storage',
+		];
 	}
 }
 

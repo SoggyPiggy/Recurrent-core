@@ -75,12 +75,13 @@ class Coordinates extends Base
 		return `(${this.distance}, ${this.degree}°)`;
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = {};
-		data.phi = this.phi;
-		data.rho = this.rho;
-		return data;
+		return [
+			...super.jsonKeys(),
+			'phi',
+			'rho',
+		];
 	}
 }
 

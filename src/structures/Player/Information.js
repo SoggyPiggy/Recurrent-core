@@ -61,13 +61,14 @@ class PlayerInformation extends Base
 		this.custom = true;
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = {};
-		data.race = this.race;
-		data.name = this.name;
-		data.custom = this.custom;
-		return data;
+		return [
+			...super.jsonKeys(),
+			'race',
+			'name',
+			'custom',
+		];
 	}
 }
 

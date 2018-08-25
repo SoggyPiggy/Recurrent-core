@@ -25,12 +25,13 @@ class Game extends EventIDBase
 		return this.chapters.player;
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = super.toJSON();
-		data.chapters = this.chapters.toJSON();
-		data.mastery = this.mastery.toJSON();
-		return data;
+		return [
+			...super.jsonKeys(),
+			'chapters',
+			'mastery',
+		];
 	}
 
 	static createInstance(data)

@@ -36,12 +36,13 @@ class Chapter extends TickBase
 		this.player.emit('tick');
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = super.toJSON();
-		data.player = this.player.toJSON();
-		data.quests = this.quests.toJSON();
-		return data;
+		return [
+			...super.jsonKeys(),
+			'player',
+			'quests',
+		];
 	}
 }
 

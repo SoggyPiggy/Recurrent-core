@@ -11,13 +11,14 @@ class Item extends IDBase
 		this.value = typeof data.value !== 'undefined' ? data.value : 1;
 	}
 
-	toJSON()
+	jsonKeys()
 	{
-		const data = super.toJSON();
-		data.name = this.name;
-		data.description = this.description;
-		data.value = this.value;
-		return data;
+		return [
+			...super.jsonKeys(),
+			'name',
+			'description',
+			'value',
+		];
 	}
 }
 
