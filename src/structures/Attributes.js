@@ -100,7 +100,7 @@ class Attributes extends Base
 		const attributes = [
 			'charm',				// ????? (Maybe help with reputation)
 			'constitution',	// More Health
-			'fortitude',		// Damage Resistance
+			'perseverance',	// Damage Resistance
 			'fortuity',			// Better Luck/Chances
 			'insight',			// More XP
 			'might',				// Stronger Attacks
