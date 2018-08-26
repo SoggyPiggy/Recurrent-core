@@ -97,7 +97,7 @@ class Attributes extends Base
 
 	static list()
 	{
-		const attributes = [
+		return [
 			'charm',				// ????? (Maybe help with reputation)
 			'constitution',	// More Health
 			'perseverance',	// Damage Resistance
@@ -108,7 +108,6 @@ class Attributes extends Base
 			'proficiency',		// Faster Tick Rate
 			'stamina',			// Longer in the Field
 		];
-		return attributes;
 	}
 
 	static template(list = Attributes.list())
