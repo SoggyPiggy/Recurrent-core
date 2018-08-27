@@ -74,18 +74,6 @@ class Objective extends EventBase
 		return this.random.integer(75, 125);
 	}
 
-	// eslint-disable-next-line class-methods-use-this
-	drain()
-	{
-		return 5;
-	}
-
-	// eslint-disable-next-line class-methods-use-this
-	damage()
-	{
-		return 0;
-	}
-
 	completionCheck()
 	{
 		if (!this.complete) return false;
@@ -98,8 +86,8 @@ class Objective extends EventBase
 	{
 		this.progress += Math.round(this.advance());
 		this.completionCheck();
-		this.player.status.loseStamina(Math.round(this.drain()));
-		this.player.status.loseHealth(Math.round(this.damage()));
+		this.emit('healthAdjust');
+		this.emit('staminaAdjust');
 	}
 
 	jsonKeys()
