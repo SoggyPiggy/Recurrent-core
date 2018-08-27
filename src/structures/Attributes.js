@@ -87,6 +87,11 @@ class Attributes extends Base
 		return attributes;
 	}
 
+	toString()
+	{
+		return `AWR:${this.awarness} CHA:${this.charm} CON:${this.constitution} DIL:${this.diligence} FOR:${this.fortuity} ING:${this.ingenuity} INS:${this.insight} MIT:${this.might} PRO:${this.proficiency}`;
+	}
+
 	jsonKeys()
 	{
 		return [

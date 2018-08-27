@@ -64,6 +64,11 @@ class Experience extends Base
 		};
 	}
 
+	toString()
+	{
+		return `${this.level}:${this.xp}`;
+	}
+
 	jsonKeys()
 	{
 		return [
