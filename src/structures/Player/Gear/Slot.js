@@ -15,6 +15,11 @@ class GearSlot extends Base
 		return this.gear.player;
 	}
 
+	get awarness()
+	{
+		return this.equipment.awarness;
+	}
+
 	get charm()
 	{
 		return this.equipment.charm;
@@ -25,14 +30,19 @@ class GearSlot extends Base
 		return this.equipment.constitution;
 	}
 
-	get fortitude()
+	get diligence()
 	{
-		return this.equipment.fortitude;
+		return this.equipment.diligence;
 	}
 
 	get fortuity()
 	{
 		return this.equipment.fortuity;
+	}
+
+	get ingenuity()
+	{
+		return this.equipment.ingenuity;
 	}
 
 	get insight()
@@ -45,19 +55,9 @@ class GearSlot extends Base
 		return this.equipment.might;
 	}
 
-	get perception()
-	{
-		return this.equipment.perception;
-	}
-
 	get proficiency()
 	{
 		return this.equipment.proficiency;
-	}
-
-	get stamina()
-	{
-		return this.equipment.stamina;
 	}
 
 	equip(equipment = Equipment.empty())

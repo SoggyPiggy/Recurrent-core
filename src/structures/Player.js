@@ -40,49 +40,19 @@ class Player extends EventBase
 		this.information.setRace(race);
 	}
 
+	get awarness()
+	{
+		return this.attributes.awarness;
+	}
+
+	get awarnessMod()
+	{
+		return this.awarness / 171;
+	}
+
 	get charm()
 	{
 		return this.attributes.charm;
-	}
-
-	get constitution()
-	{
-		return this.attributes.constitution;
-	}
-
-	get fortitude()
-	{
-		return this.attributes.fortitude;
-	}
-
-	get fortuity()
-	{
-		return this.attributes.fortuity;
-	}
-
-	get insight()
-	{
-		return this.attributes.insight;
-	}
-
-	get might()
-	{
-		return this.attributes.might;
-	}
-
-	get perception()
-	{
-		return this.attributes.perception;
-	}
-
-	get proficiency()
-	{
-		return this.attributes.proficiency;
-	}
-
-	get stamina()
-	{
-		return this.attributes.stamina;
 	}
 
 	get charmMod()
@@ -90,14 +60,29 @@ class Player extends EventBase
 		return this.charm / 171;
 	}
 
+	get constitution()
+	{
+		return this.attributes.constitution;
+	}
+
 	get constitutionMod()
 	{
 		return this.constitution / 171;
 	}
 
-	get fortitudeMod()
+	get diligence()
 	{
-		return this.fortitude / 171;
+		return this.attributes.diligence;
+	}
+
+	get diligenceMod()
+	{
+		return this.diligence / 171;
+	}
+
+	get fortuity()
+	{
+		return this.attributes.fortuity;
 	}
 
 	get fortuityMod()
@@ -105,9 +90,29 @@ class Player extends EventBase
 		return this.fortuity / 171;
 	}
 
+	get ingenuity()
+	{
+		return this.attributes.ingenuity;
+	}
+
+	get ingenuityMod()
+	{
+		return this.ingenuity / 171;
+	}
+
+	get insight()
+	{
+		return this.attributes.insight;
+	}
+
 	get insightMod()
 	{
 		return this.insight / 171;
+	}
+
+	get might()
+	{
+		return this.attributes.might;
 	}
 
 	get mightMod()
@@ -115,19 +120,14 @@ class Player extends EventBase
 		return this.might / 171;
 	}
 
-	get perceptionMod()
+	get proficiency()
 	{
-		return this.perception / 171;
+		return this.attributes.proficiency;
 	}
 
 	get proficiencyMod()
 	{
 		return this.proficiency / 171;
-	}
-
-	get staminaMod()
-	{
-		return this.stamina / 171;
 	}
 
 	toString()

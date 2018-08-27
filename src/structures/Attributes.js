@@ -8,6 +8,11 @@ class Attributes extends Base
 		this.core = Attributes.apply(data.core);
 	}
 
+	get awarness()
+	{
+		return this.core.awarness;
+	}
+
 	get charm()
 	{
 		return this.core.charm;
@@ -18,14 +23,19 @@ class Attributes extends Base
 		return this.core.constitution;
 	}
 
-	get fortitude()
+	get diligence()
 	{
-		return this.core.fortitude;
+		return this.core.diligence;
 	}
 
 	get fortuity()
 	{
 		return this.core.fortuity;
+	}
+
+	get ingenuity()
+	{
+		return this.core.ingenuity;
 	}
 
 	get insight()
@@ -38,19 +48,9 @@ class Attributes extends Base
 		return this.core.might;
 	}
 
-	get perception()
-	{
-		return this.core.perception;
-	}
-
 	get proficiency()
 	{
 		return this.core.proficiency;
-	}
-
-	get stamina()
-	{
-		return this.core.stamina;
 	}
 
 	roll(points, selected = Attributes.list(), fails = 0)
@@ -98,15 +98,15 @@ class Attributes extends Base
 	static list()
 	{
 		return [
-			'charm',				// ????? (Maybe help with reputation)
-			'constitution',	// More Health
-			'perseverance',	// Damage Resistance
-			'fortuity',			// Better Luck/Chances
-			'insight',			// More XP
-			'might',				// Stronger Attacks
-			'perception',		// Accuracy
-			'proficiency',		// Faster Tick Rate
-			'stamina',			// Longer in the Field
+			'awarness',			// Searching		AWR
+			'charm',				// Interactions	CHA
+			'constitution',	// Health			CON
+			'diligence',		// Stamina			DIL
+			'fortuity',			// Luck				FOR
+			'ingenuity',		// Crafting			ING
+			'insight',			// XP					INS
+			'might',				// Attacks			MIT
+			'proficiency',		// Tick rate		PRO
 		];
 	}
 

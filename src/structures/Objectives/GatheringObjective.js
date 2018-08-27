@@ -11,7 +11,6 @@ class GatheringObjective extends Objective
 	advance()
 	{
 		let progress = super.advance();
-		progress *= (1 + this.player.perceptionMod);
 		if (this.player.status.fatigued) progress *= 0.2;
 		return progress;
 	}
