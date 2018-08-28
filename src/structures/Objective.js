@@ -79,6 +79,14 @@ class Objective extends EventBase
 		return this.random.integer(75, 125);
 	}
 
+	// eslint-disable-next-line class-methods-use-this
+	playerHealthAdjust()
+	{}
+
+	// eslint-disable-next-line class-methods-use-this
+	playerStaminaAdjust()
+	{}
+
 	completionCheck()
 	{
 		if (!this.complete) return false;
@@ -91,8 +99,8 @@ class Objective extends EventBase
 	{
 		this.progress += Math.round(this.advance());
 		this.completionCheck();
-		this.emit('healthAdjust');
-		this.emit('staminaAdjust');
+		this.playerHealthAdjust();
+		this.playerStaminaAdjust();
 	}
 
 	jsonKeys()
