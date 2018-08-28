@@ -17,7 +17,7 @@ class PlayerStatus extends Base
 
 	get maxStamina()
 	{
-		return 20 + (this.player.diligence);
+		return 20 + (this.player.determination);
 	}
 
 	get fullHealth()

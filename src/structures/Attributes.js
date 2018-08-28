@@ -8,9 +8,9 @@ class Attributes extends Base
 		this.core = Attributes.apply(data.core);
 	}
 
-	get awarness()
+	get awareness()
 	{
-		return this.core.awarness;
+		return this.core.awareness;
 	}
 
 	get charm()
@@ -23,9 +23,9 @@ class Attributes extends Base
 		return this.core.constitution;
 	}
 
-	get diligence()
+	get determination()
 	{
-		return this.core.diligence;
+		return this.core.determination;
 	}
 
 	get fortuity()
@@ -89,7 +89,7 @@ class Attributes extends Base
 
 	toString()
 	{
-		return `AWR:${this.awarness} CHA:${this.charm} CON:${this.constitution} DIL:${this.diligence} FOR:${this.fortuity} ING:${this.ingenuity} INS:${this.insight} MIT:${this.might} PRO:${this.proficiency}`;
+		return `AWR:${this.awareness} CHA:${this.charm} CON:${this.constitution} DET:${this.determination} FOR:${this.fortuity} ING:${this.ingenuity} INS:${this.insight} MIT:${this.might} PRO:${this.proficiency}`;
 	}
 
 	jsonKeys()
@@ -103,10 +103,10 @@ class Attributes extends Base
 	static list()
 	{
 		return [
-			'awarness',			// Searching		AWR
+			'awareness',		// Searching		AWR
 			'charm',				// Interactions	CHA
 			'constitution',	// Health			CON
-			'diligence',		// Stamina			DIL
+			'determination',	// Stamina			DET
 			'fortuity',			// Luck				FOR
 			'ingenuity',		// Crafting			ING
 			'insight',			// XP					INS

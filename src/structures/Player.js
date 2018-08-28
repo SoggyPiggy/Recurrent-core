@@ -40,14 +40,14 @@ class Player extends EventBase
 		this.information.setRace(race);
 	}
 
-	get awarness()
+	get awareness()
 	{
-		return this.attributes.awarness;
+		return this.attributes.awareness;
 	}
 
-	get awarnessMod()
+	get awarenessMod()
 	{
-		return this.awarness / 171;
+		return this.awareness / 171;
 	}
 
 	get charm()
@@ -70,14 +70,14 @@ class Player extends EventBase
 		return this.constitution / 171;
 	}
 
-	get diligence()
+	get determination()
 	{
-		return this.attributes.diligence;
+		return this.attributes.determination;
 	}
 
-	get diligenceMod()
+	get determinationMod()
 	{
-		return this.diligence / 171;
+		return this.determination / 171;
 	}
 
 	get fortuity()
