@@ -35,6 +35,11 @@ class Game extends EventIDBase
 		return this.chapter.objective;
 	}
 
+	get active()
+	{
+		return this.chapter.active;
+	}
+
 	jsonKeys()
 	{
 		return [
