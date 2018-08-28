@@ -31,6 +31,11 @@ class Objective extends EventBase
 		return this.quest.objectives;
 	}
 
+	get level()
+	{
+		return this.quest.level;
+	}
+
 	get complete()
 	{
 		return this.progress >= this.end;

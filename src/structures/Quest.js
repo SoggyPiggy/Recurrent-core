@@ -9,6 +9,7 @@ class Quest extends EventIDBase
 		super(data);
 		this.chapter = chapter;
 		this.type = 'base';
+		this.level = this.player.experience.level;
 		this.objectives = new ObjectiveManager(this, data.objectives);
 		this.rewards = typeof data.rewards !== 'undefined' ? data.rewards : this.generateRewards();
 		if (!this.complete)
