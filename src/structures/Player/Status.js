@@ -83,14 +83,14 @@ class PlayerStatus extends Base
 	loseHealth(damage)
 	{
 		if (this.dead) return;
-		this.health -= damage;
+		this.health -= Math.round(damage);
 		this.deathCheck();
 	}
 
 	loseStamina(energy)
 	{
 		if (this.fatigued) return;
-		this.stamina -= energy;
+		this.stamina -= Math.round(energy);
 		this.fatiguedCheck();
 	}
 
@@ -106,6 +106,12 @@ class PlayerStatus extends Base
 		if (!this.fatigued) return false;
 		this.player.emit('fatigued');
 		return true;
+	}
+
+	reset()
+	{
+		this.health = this.maxHealth;
+		this.stamina = this.maxStamina;
 	}
 
 	jsonKeys()

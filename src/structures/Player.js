@@ -130,6 +130,13 @@ class Player extends EventBase
 		return this.proficiency / 171;
 	}
 
+	roll()
+	{
+		if (this.chapter.ticks > 0) return;
+		this.attributes.roll(100);
+		this.status.reset();
+	}
+
 	toString()
 	{
 		return `'${this.name}' the ${this.race}`;
