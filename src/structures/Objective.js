@@ -85,11 +85,7 @@ class Objective extends EventBase
 	}
 
 	// eslint-disable-next-line class-methods-use-this
-	playerHealthAdjust()
-	{}
-
-	// eslint-disable-next-line class-methods-use-this
-	playerStaminaAdjust()
+	playerStatusAdjust()
 	{}
 
 	completionCheck()
@@ -104,8 +100,7 @@ class Objective extends EventBase
 	{
 		this.progress += Math.round(this.advance());
 		this.completionCheck();
-		this.playerHealthAdjust();
-		this.playerStaminaAdjust();
+		this.playerStatusAdjust();
 	}
 
 	jsonKeys()
