@@ -64,10 +64,10 @@ class Objective extends EventBase
 		return xp;
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	generateRewards()
 	{
-		const xp = this.generateXPReward();
-		return { xp };
+		return {};
 	}
 
 	reward()
