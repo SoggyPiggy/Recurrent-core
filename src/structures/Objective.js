@@ -36,6 +36,11 @@ class Objective extends EventBase
 		return this.quest.level;
 	}
 
+	get difficultyMod()
+	{
+		return this.level / 99;
+	}
+
 	get complete()
 	{
 		return this.progress >= this.end;
