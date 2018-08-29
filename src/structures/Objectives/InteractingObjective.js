@@ -1,6 +1,6 @@
 const { Objective } = require('../Objective');
 
-class _Objective extends Objective
+class InteractingObjective extends Objective
 {
 	constructor(chapter, data)
 	{
@@ -23,4 +23,4 @@ class _Objective extends Objective
 	}
 }
 
-module.exports = { _Objective };
+module.exports = { InteractingObjective };
