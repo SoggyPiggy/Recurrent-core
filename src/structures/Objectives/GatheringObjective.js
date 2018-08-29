@@ -8,6 +8,12 @@ class GatheringObjective extends Objective
 		this.type = 'gather';
 	}
 
+	generateRewards()
+	{
+		const xp = this.generateXPReward();
+		return { xp };
+	}
+
 	advance()
 	{
 		let progress = super.advance();

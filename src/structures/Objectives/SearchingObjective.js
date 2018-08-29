@@ -7,6 +7,12 @@ class SearchingObjective extends Objective
 		super(chapter, data);
 		this.type = 'search';
 	}
+
+	generateRewards()
+	{
+		const xp = this.generateXPReward();
+		return { xp };
+	}
 }
 
 module.exports = { SearchingObjective };

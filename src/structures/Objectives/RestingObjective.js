@@ -14,28 +14,15 @@ class RestingObjective extends Objective
 	}
 
 	// eslint-disable-next-line class-methods-use-this
-	generateRewards()
-	{
-		return {};
-	}
-
-	// eslint-disable-next-line class-methods-use-this
 	advance()
 	{
 		return 1;
 	}
 
-	// eslint-disable-next-line class-methods-use-this
-	drain()
-	{
-		return 0;
-	}
-
-	tick()
+	playerStatusAdjust()
 	{
 		if (this.player.status.healthy) this.player.status.respite();
 		else this.player.status.recover();
-		super.tick();
 	}
 }
 
