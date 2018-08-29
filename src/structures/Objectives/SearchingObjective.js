@@ -8,6 +8,14 @@ class SearchingObjective extends Objective
 		this.type = 'search';
 	}
 
+	advance()
+	{
+		let progress = super.advance();
+		progress *= (1 + this.player.awarenessMod);
+		if (this.player.status.fatigued) progress *= 0.8;
+		return progress;
+	}
+
 	generateRewards()
 	{
 		const xp = this.generateXPReward();
