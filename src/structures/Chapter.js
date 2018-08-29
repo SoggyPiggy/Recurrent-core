@@ -8,7 +8,7 @@ class Chapter extends TickBase
 	{
 		super(data);
 		this.game = game;
-		this.player = new Player(data.player);
+		this.player = new Player(this, data.player);
 		this.quests = new QuestManager(this, data.quests);
 	}
 
