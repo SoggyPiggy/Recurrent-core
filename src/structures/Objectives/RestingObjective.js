@@ -21,8 +21,20 @@ class RestingObjective extends Objective
 
 	playerStatusAdjust()
 	{
-		if (this.player.status.healthy) this.player.status.respite();
-		else this.player.status.recover();
+		let health = this.player.status.maxHealth;
+		let stamina = this.player.status.maxStamina;
+		if (this.player.status.healthy)
+		{
+			health *= 0.01;
+			stamina *= 0.05;
+		}
+		else
+		{
+			health *= 0.05;
+			stamina *= 0.01;
+		}
+		this.player.status.gainHealth(health);
+		this.player.status.gainStamina(stamina);
 	}
 }
 
