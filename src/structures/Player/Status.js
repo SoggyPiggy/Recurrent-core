@@ -12,12 +12,12 @@ class PlayerStatus extends Base
 
 	get maxHealth()
 	{
-		return 145 + (this.player.constitution);
+		return 725 + (this.player.constitution * 5);
 	}
 
 	get maxStamina()
 	{
-		return 20 + (this.player.determination);
+		return 100 + (this.player.determination * 5);
 	}
 
 	get fullHealth()
