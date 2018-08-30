@@ -1,11 +1,11 @@
 const { Objective } = require('../Objective');
 
-class GatheringObjective extends Objective
+class ScavengingObjective extends Objective
 {
 	constructor(chapter, data)
 	{
 		super(chapter, data);
-		this.type = 'gather';
+		this.type = 'scavenge';
 	}
 
 	generateRewards()
@@ -17,9 +17,10 @@ class GatheringObjective extends Objective
 	advance()
 	{
 		let progress = super.advance();
-		if (this.player.status.fatigued) progress *= 0.2;
+		progress *= (1 + (this.player.ingenutiyMod + this.player.awarenessMod) / 2);
+		if (this.player.status.fatigued) progress *= 0.8;
 		return progress;
 	}
 }
 
-module.exports = { GatheringObjective };
+module.exports = { ScavengingObjective };

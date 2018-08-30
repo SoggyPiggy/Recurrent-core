@@ -31,6 +31,16 @@ class Objective extends EventBase
 		return this.quest.objectives;
 	}
 
+	get level()
+	{
+		return this.quest.level;
+	}
+
+	get difficultyMod()
+	{
+		return this.level / 99;
+	}
+
 	get complete()
 	{
 		return this.progress >= this.end;
@@ -50,14 +60,14 @@ class Objective extends EventBase
 	{
 		const levels = this.player.experience.level + (this.quest.chapter.game.mastery.level - 1);
 		let xp = Math.floor((20 + levels) ** (3 / 4));
-		xp = Math.round(xp * this.random.real(0.8, 1.2) * this.modifier);
+		xp = Math.round(xp * this.random.real(0.7, 1.1) * this.modifier);
 		return xp;
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	generateRewards()
 	{
-		const xp = this.generateXPReward();
-		return { xp };
+		return {};
 	}
 
 	reward()
@@ -74,6 +84,10 @@ class Objective extends EventBase
 		return this.random.integer(75, 125);
 	}
 
+	// eslint-disable-next-line class-methods-use-this
+	playerStatusAdjust()
+	{}
+
 	completionCheck()
 	{
 		if (!this.complete) return false;
@@ -86,8 +100,7 @@ class Objective extends EventBase
 	{
 		this.progress += Math.round(this.advance());
 		this.completionCheck();
-		this.emit('healthAdjust');
-		this.emit('staminaAdjust');
+		this.playerStatusAdjust();
 	}
 
 	jsonKeys()

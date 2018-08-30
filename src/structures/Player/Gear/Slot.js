@@ -15,9 +15,9 @@ class GearSlot extends Base
 		return this.gear.player;
 	}
 
-	get awarness()
+	get awareness()
 	{
-		return this.equipment.awarness;
+		return this.equipment.awareness;
 	}
 
 	get charm()
@@ -30,9 +30,9 @@ class GearSlot extends Base
 		return this.equipment.constitution;
 	}
 
-	get diligence()
+	get determination()
 	{
-		return this.equipment.diligence;
+		return this.equipment.determination;
 	}
 
 	get fortuity()

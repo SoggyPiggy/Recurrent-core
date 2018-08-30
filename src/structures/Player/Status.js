@@ -12,12 +12,12 @@ class PlayerStatus extends Base
 
 	get maxHealth()
 	{
-		return 145 + (this.player.constitution);
+		return 725 + (this.player.constitution * 5);
 	}
 
 	get maxStamina()
 	{
-		return 20 + (this.player.diligence);
+		return 100 + (this.player.determination * 5);
 	}
 
 	get fullHealth()
@@ -50,24 +50,6 @@ class PlayerStatus extends Base
 		return this.stamina >= (this.maxStamina / 3) * 2;
 	}
 
-	recover()
-	{
-		if (!this.fullHealth && !this.fatigued)
-		{
-			const energy = this.stamina >= 5 ? 5 : this.stamina;
-			const health = this.maxHealth * (0.05 * (energy / 5));
-			this.loseStamina(energy);
-			this.gainHealth(health);
-			this.fatiguedCheck();
-		}
-	}
-
-	respite()
-	{
-		const energy = this.maxStamina * 0.05;
-		this.gainStamina(energy);
-	}
-
 	gainHealth(health = this.maxHealth)
 	{
 		if (Math.round(health) + this.health > this.maxHealth) this.health = this.maxHealth;
@@ -83,14 +65,14 @@ class PlayerStatus extends Base
 	loseHealth(damage)
 	{
 		if (this.dead) return;
-		this.health -= damage;
+		this.health -= Math.round(damage);
 		this.deathCheck();
 	}
 
 	loseStamina(energy)
 	{
 		if (this.fatigued) return;
-		this.stamina -= energy;
+		this.stamina -= Math.round(energy);
 		this.fatiguedCheck();
 	}
 
@@ -106,6 +88,12 @@ class PlayerStatus extends Base
 		if (!this.fatigued) return false;
 		this.player.emit('fatigued');
 		return true;
+	}
+
+	reset()
+	{
+		this.health = this.maxHealth;
+		this.stamina = this.maxStamina;
 	}
 
 	jsonKeys()
