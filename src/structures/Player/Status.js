@@ -50,24 +50,6 @@ class PlayerStatus extends Base
 		return this.stamina >= (this.maxStamina / 3) * 2;
 	}
 
-	recover()
-	{
-		if (!this.fullHealth && !this.fatigued)
-		{
-			const energy = this.stamina >= 5 ? 5 : this.stamina;
-			const health = this.maxHealth * (0.05 * (energy / 5));
-			this.loseStamina(energy);
-			this.gainHealth(health);
-			this.fatiguedCheck();
-		}
-	}
-
-	respite()
-	{
-		const energy = this.maxStamina * 0.05;
-		this.gainStamina(energy);
-	}
-
 	gainHealth(health = this.maxHealth)
 	{
 		if (Math.round(health) + this.health > this.maxHealth) this.health = this.maxHealth;
