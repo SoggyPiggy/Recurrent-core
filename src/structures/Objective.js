@@ -60,7 +60,7 @@ class Objective extends EventBase
 	{
 		const levels = this.player.experience.level + (this.quest.chapter.game.mastery.level - 1);
 		let xp = Math.floor((20 + levels) ** (3 / 4));
-		xp = Math.round(xp * this.random.real(0.8, 1.2) * this.modifier);
+		xp = Math.round(xp * this.random.real(0.7, 1.1) * this.modifier);
 		return xp;
 	}
 

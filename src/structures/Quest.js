@@ -60,7 +60,7 @@ class Quest extends EventIDBase
 	{
 		const levels = this.player.experience.level + (this.chapter.game.mastery.level - 1);
 		let xp = Math.floor((20 + levels) ** (3 / 4));
-		xp = Math.round(xp * this.random.real(0.4, 0.6));
+		xp = Math.round(xp * this.random.real(0.3, 0.5));
 		return xp;
 	}
 
