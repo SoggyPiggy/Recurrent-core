@@ -10,7 +10,7 @@ class RestingObjective extends Objective
 
 	generateEnd()
 	{
-		return this.random.integer(2, 5);
+		return this.random.integer(5, 10);
 	}
 
 	// eslint-disable-next-line class-methods-use-this
