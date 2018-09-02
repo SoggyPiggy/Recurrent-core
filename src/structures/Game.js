@@ -40,6 +40,12 @@ class Game extends EventIDBase
 		return this.chapter.active;
 	}
 
+	newChapter()
+	{
+		this.chapters.newChapter();
+		this.player.roll();
+	}
+
 	jsonKeys()
 	{
 		return [
