@@ -22,7 +22,11 @@ class PlayerInformation extends Base
 		this.custom = typeof data.custom !== 'undefined' ? data.custom : false;
 		this.race = typeof data.race !== 'undefined' ? data.race : this.randomRace();
 		this.name = typeof data.name !== 'undefined' ? data.name : this.randomName();
-		this.raceName = races[this.race].race;
+	}
+
+	get raceName()
+	{
+		return races[this.race].race;
 	}
 
 	randomRace()
