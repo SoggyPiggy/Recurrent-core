@@ -40,11 +40,12 @@ class Game extends EventIDBase
 		return this.chapter.active;
 	}
 
-	get canEditPlayer()
+	get status()
 	{
 		if (!this.chapter) return 'no-chapter';
-		if (this.chapter.ticks > 0) return 'in-progress';
-		return true;
+		if (this.chapter.ticks <= 0) return 'new-chapter';
+		if (this.chapter.active) return 'active-chapter';
+		return 'idle-chapter';
 	}
 
 	newChapter()
