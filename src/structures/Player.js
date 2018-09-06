@@ -1,5 +1,5 @@
 const { EventBase } = require('./Bases');
-const { PlayerAttributes } = require('./Player/Attributes');
+const { Attributes } = require('./Attributes');
 const { PlayerGear } = require('./Player/Gear');
 const { PlayerInformation } = require('./Player/Information');
 const { PlayerStatus } = require('./Player/Status');
@@ -12,7 +12,7 @@ class Player extends EventBase
 	{
 		super(data);
 		this.chapter = chapter;
-		this.attributes = new PlayerAttributes(this, data.attributes);
+		this.attributes = new Attributes(data.attributes);
 		this.coordinates = new PlayerCoordinates(this, data.coordinates);
 		this.gear = new PlayerGear(this, data.gear);
 		this.experience = new PlayerExperience(this, data.experience);
