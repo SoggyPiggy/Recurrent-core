@@ -1,4 +1,5 @@
 const { Base } = require('../Bases');
+const { Attributes } = require('./../Attributes');
 const { Equipment } = require('./../Equipment');
 const { GearStorage } = require('./Gear/Storage');
 
@@ -37,6 +38,13 @@ class PlayerGear extends Base
 						this[`${slot}Reference`] = Equipment.empty();
 					}
 				},
+			});
+		});
+		Attributes.list.forEach((attribute) =>
+		{
+			Object.defineProperty(this, attribute, {
+				get: () =>
+					PlayerGear.slots.reduce((total, slot) => total + this[slot].attributes[attribute], 0),
 			});
 		});
 	}
