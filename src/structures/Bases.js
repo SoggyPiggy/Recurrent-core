@@ -151,7 +151,7 @@ class EventBase extends Base
 		{
 			if (key !== 'constructor' && typeof this.eventHandler[key] === 'function')
 			{
-				this[key] = this.eventHandler[key];
+				this[key] = (...args) => this.eventHandler[key](...args);
 			}
 		});
 	}
@@ -167,7 +167,7 @@ class EventIDBase extends IDBase
 		{
 			if (key !== 'constructor' && typeof this.eventHandler[key] === 'function')
 			{
-				this[key] = this.eventHandler[key];
+				this[key] = (...args) => this.eventHandler[key](...args);
 			}
 		});
 	}
