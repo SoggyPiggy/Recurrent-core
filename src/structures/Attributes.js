@@ -6,51 +6,11 @@ class Attributes extends Base
 	{
 		super(data);
 		this.core = Attributes.apply(data.core);
-	}
 
-	get awareness()
+		Attributes.list.forEach((attribute) =>
 	{
-		return this.core.awareness;
-	}
-
-	get charm()
-	{
-		return this.core.charm;
-	}
-
-	get constitution()
-	{
-		return this.core.constitution;
-	}
-
-	get determination()
-	{
-		return this.core.determination;
-	}
-
-	get fortuity()
-	{
-		return this.core.fortuity;
-	}
-
-	get ingenuity()
-	{
-		return this.core.ingenuity;
-	}
-
-	get insight()
-	{
-		return this.core.insight;
-	}
-
-	get might()
-	{
-		return this.core.might;
-	}
-
-	get proficiency()
-	{
-		return this.core.proficiency;
+			Object.defineProperty(this, attribute, { get: () => this.core[attribute] });
+		});
 	}
 
 	roll(points, selected = Attributes.list, fails = 0)
