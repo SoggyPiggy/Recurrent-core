@@ -21,7 +21,10 @@ class Player extends EventBase
 
 		Attributes.list.forEach((attribute) =>
 		{
-			Object.defineProperty(this, attribute, { get: () => this.attributes[attribute] });
+			Object.defineProperty(this, attribute, {
+				get: () =>
+					this.attributes[attribute] + this.gear[attribute],
+			});
 			Object.defineProperty(this, `${attribute}Mod`, { get: () => this.attributes[attribute] / 171 });
 		});
 	}
