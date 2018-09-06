@@ -93,6 +93,7 @@ class Objective extends EventBase
 		if (!this.complete) return false;
 		if (this.progress > this.end) this.progress = this.end;
 		this.emit('completed');
+		this.once('tick', () => this.manager.refreshActiveObjective());
 		return true;
 	}
 

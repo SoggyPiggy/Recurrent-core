@@ -32,11 +32,7 @@ class ObjectiveManager extends ManagerBase
 	refreshActiveObjective()
 	{
 		const nextObjective = this.items.find(objective => !objective.complete);
-		if (nextObjective)
-		{
-			this.activeObjective = nextObjective;
-			nextObjective.once('completed', () => this.refreshActiveObjective());
-		}
+		if (nextObjective) this.activeObjective = nextObjective;
 	}
 
 	refreshCompletion()
