@@ -8,36 +8,33 @@ class PlayerGear extends Base
 	{
 		super();
 		this.player = player;
-		PlayerGear.slots.forEach((part) =>
-		{
-			this[`${part}ID`] = typeof data[`${part}ID`] !== 'undefined' ? data[`${part}ID`] : null;
-		});
 		this.storage = new GearStorage(this, data.storage);
 
-		PlayerGear.slots.forEach((part) =>
+		PlayerGear.slots.forEach((slot) =>
 		{
-			const id = this[`${part}ID`];
-			if (id !== null)
-			{
-				const equipment = this.storage.find(item => item.id === id);
-				if (equipment) this[`${part}Reference`] = equipment;
-				else this[`${part}Reference`] = Equipment.empty();
-			}
-			else this[`${part}Reference`] = Equipment.empty();
+			this[`${slot}ID`] = typeof data[`${slot}ID`] !== 'undefined' ? data[`${slot}ID`] : null;
 
-			Object.defineProperty(this, part, {
-				get: () => this[`${part}Reference`],
+			if (this[`${slot}ID`] === null) this[`${slot}Reference`] = Equipment.empty();
+			else
+			{
+				const equipment = this.storage.find(item => item.id === this[`${slot}ID`]);
+				if (equipment) this[`${slot}Reference`] = equipment;
+				else this[`${slot}Reference`] = Equipment.empty();
+			}
+
+			Object.defineProperty(this, slot, {
+				get: () => this[`${slot}Reference`],
 				set: (item) =>
 				{
 					if (item instanceof Equipment)
 					{
-						this[`${part}ID`] = item.id;
-						this[`${part}Reference`] = item;
+						this[`${slot}ID`] = item.id;
+						this[`${slot}Reference`] = item;
 					}
 					else
 					{
-						this[`${part}ID`] = null;
-						this[`${part}Reference`] = Equipment.empty();
+						this[`${slot}ID`] = null;
+						this[`${slot}Reference`] = Equipment.empty();
 					}
 				},
 			});
@@ -48,7 +45,7 @@ class PlayerGear extends Base
 	{
 		return [
 			...super.jsonKeys(),
-			...PlayerGear.slots.map(part => `${part}ID`),
+			...PlayerGear.slots.map(slot => `${slot}ID`),
 			'storage',
 		];
 	}
