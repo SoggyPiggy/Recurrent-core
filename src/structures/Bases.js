@@ -68,6 +68,18 @@ class ArrayBase extends Base
 	{
 		super();
 		this.items = this.processItems(data);
+		Object.getOwnPropertyNames(Object.getPrototypeOf(this.items)).forEach((key) =>
+		{
+			if (key !== 'constructor' && typeof this.items[key] === 'function')
+			{
+				this[key] = (...args) => this.items[key](...args);
+			}
+		});
+	}
+
+	get length()
+	{
+		return this.items.length;
 	}
 
 	get item()
