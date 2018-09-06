@@ -13,14 +13,18 @@ class PlayerGear extends Base
 			this[`${part}ID`] = typeof data[`${part}ID`] !== 'undefined' ? data[`${part}ID`] : null;
 		});
 		this.storage = new GearStorage(this, data.storage);
-		this.refreshReferences();
-		this.setupGettersSetters();
-	}
 
-	setupGettersSetters()
-	{
 		PlayerGear.slots.forEach((part) =>
 		{
+			const id = this[`${part}ID`];
+			if (id !== null)
+			{
+				const equipment = this.storage.find(item => item.id === id);
+				if (equipment) this[`${part}Reference`] = equipment;
+				else this[`${part}Reference`] = Equipment.empty();
+			}
+			else this[`${part}Reference`] = Equipment.empty();
+
 			Object.defineProperty(this, part, {
 				get: () => this[`${part}Reference`],
 				set: (item) =>
@@ -37,24 +41,6 @@ class PlayerGear extends Base
 					}
 				},
 			});
-		});
-	}
-
-	refreshReferences()
-	{
-		PlayerGear.slots.forEach((part) =>
-		{
-			const id = this[`${part}ID`];
-			if (id !== null)
-			{
-				const equipment = this.storage.find(item => item.id === id);
-				if (equipment)
-				{
-					this[`${part}Reference`] = equipment;
-					return;
-				}
-			}
-			this[`${part}Reference`] = Equipment.empty();
 		});
 	}
 
