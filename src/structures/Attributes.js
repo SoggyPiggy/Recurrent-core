@@ -8,7 +8,7 @@ class Attributes extends Base
 		this.core = Attributes.apply(data.core);
 
 		Attributes.list.forEach((attribute) =>
-	{
+		{
 			Object.defineProperty(this, attribute, { get: () => this.core[attribute] });
 		});
 	}
@@ -49,7 +49,7 @@ class Attributes extends Base
 
 	toString()
 	{
-		return `AWR:${this.awareness} CHA:${this.charm} CON:${this.constitution} DET:${this.determination} FOR:${this.fortuity} ING:${this.ingenuity} INS:${this.insight} MIT:${this.might} PRO:${this.proficiency}`;
+		return Attributes.list.map(attribute => `${attribute}: ${this[attribute]}`).join(', ');
 	}
 
 	jsonKeys()
