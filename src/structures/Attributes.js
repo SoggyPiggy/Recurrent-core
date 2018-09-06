@@ -53,7 +53,7 @@ class Attributes extends Base
 		return this.core.proficiency;
 	}
 
-	roll(points, selected = Attributes.list(), fails = 0)
+	roll(points, selected = Attributes.list, fails = 0)
 	{
 		let attributes;
 		if (fails <= 0) attributes = Attributes.apply(this.generate(points, selected));
@@ -66,7 +66,7 @@ class Attributes extends Base
 		this.core = attributes;
 	}
 
-	generate(points = 100, selection = Attributes.list())
+	generate(points = 100, selection = Attributes.list)
 	{
 		const attributes = Attributes.template(selection);
 		const limit = points * 1.5;
@@ -100,7 +100,7 @@ class Attributes extends Base
 		];
 	}
 
-	static list()
+	static get list()
 	{
 		return [
 			'awareness',		// Searching		AWR
@@ -115,7 +115,7 @@ class Attributes extends Base
 		];
 	}
 
-	static template(list = Attributes.list())
+	static template(list = Attributes.list)
 	{
 		const attributes = {};
 		list.forEach((attribute) =>
@@ -128,10 +128,9 @@ class Attributes extends Base
 	static apply(attribs = {})
 	{
 		const attributes = { ...attribs };
-		const list = Attributes.list();
 		Object.keys(attributes).forEach((attribute) =>
 		{
-			if (!list.includes(attribute)) delete attributes[attribute];
+			if (!Attributes.list.includes(attribute)) delete attributes[attribute];
 		});
 		return { ...Attributes.template(), ...attributes };
 	}
