@@ -40,6 +40,20 @@ class SaveManager extends EventEmitter
 			this.ticked.clear();
 		}
 	}
+
+	static parse(data)
+	{
+		const { game } = data;
+		const chapters = new Map(Object.entries(data.chapters));
+		const quests = new Map(Object.entries(data.quests));
+		game.chapters = game.chapters.map((chapterID) =>
+		{
+			const chapter = chapters.get(chapterID);
+			chapter.quests = chapter.quests.map(questID => quests.get(questID));
+			return chapter;
+		});
+		return game;
+	}
 }
 
 module.exports = { SaveManager };
