@@ -5,14 +5,14 @@ const { Quest } = require('./../structures/Quest');
 
 class SaveManager extends EventEmitter
 {
-	constructor(game)
+	constructor(game, data = {})
 	{
 		super();
 		this.game = game;
 		this.last = new Date();
 		this.delay = 1000 * 60;
 		this.ticked = new Set();
-		this.hashes = new Map();
+		this.hashes = new Map(typeof data.hashes !== 'undefined' ? data.hashes : []);
 		this.interval = setInterval(() => this.save(false), 1000 * 60 * 10);
 		this.game.on('chapterTick', chapter => this.ticked.add(chapter));
 		this.game.on('questTick', quest => this.ticked.add(quest));
