@@ -9,6 +9,7 @@ class SaveManager extends EventEmitter
 		this.last = new Date().getTime();
 		this.ticked = new Set();
 		this.hashes = new Map();
+		this.interval = setInterval(() => this.save(false), 120000);
 	}
 
 	save(force = true)
