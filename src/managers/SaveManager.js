@@ -36,6 +36,7 @@ class SaveManager extends EventEmitter
 				else if (item instanceof Chapter) this.emit('save', 'chapter', item);
 				else if (item instanceof Game) this.emit('save', 'game', item);
 			});
+			this.last = time;
 			this.ticked.clear();
 		}
 	}
