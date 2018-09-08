@@ -8,6 +8,7 @@ class SaveManager extends EventEmitter
 		this.game = game;
 		this.last = new Date().getTime();
 		this.ticked = new Set();
+		this.hashes = new Map();
 	}
 
 	save(force = true)
