@@ -1,11 +1,7 @@
 const hashsum = require('hash-sum');
 const { EventEmitter } = require('events');
-const {
-	Game,
-	Chapter,
-	Quest,
-	Item,
-} = require('./../index');
+const { Chapter } = require('./../structures/Chapter');
+const { Quest } = require('./../structures/Quest');
 
 class SaveManager extends EventEmitter
 {
@@ -27,15 +23,12 @@ class SaveManager extends EventEmitter
 		const time = new Date();
 		if (force || (time - this.last > this.delay))
 		{
-			Array.from(this.ticked.entries()).map(item => item.compress()).forEach((item) =>
+			Array.from(this.ticked.values()).forEach((item) =>
 			{
-				const hash = hashsum(item);
-				if (this.hashes.has(item.id) && this.hashes.get(item.id) === hash) return;
-				this.hashes.set(item.id, hash);
-				if (item instanceof Quest) this.emit('save', 'quest', item);
-				else if (item instanceof Chapter) this.emit('save', 'chapter', item);
-				else if (item instanceof Game) this.emit('save', 'game', item);
+				if (item instanceof Quest) this.saveItem(item, 'quest');
+				else if (item instanceof Chapter) this.saveItem(item, 'chapter');
 			});
+			this.saveItem(this.game, 'game');
 			this.last = time;
 			this.ticked.clear();
 		}
