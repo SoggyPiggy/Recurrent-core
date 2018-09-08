@@ -13,7 +13,7 @@ class SaveManager extends EventEmitter
 	{
 		super();
 		this.game = game;
-		this.last = new Date().getTime();
+		this.last = new Date();
 		this.ticked = new Set();
 		this.hashes = new Map();
 		this.interval = setInterval(() => this.save(false), 120000);
