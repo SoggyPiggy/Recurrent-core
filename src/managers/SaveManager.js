@@ -37,7 +37,7 @@ class SaveManager extends EventEmitter
 	saveItem(item, type)
 	{
 		const { id } = item;
-		const compression = this.item.compress();
+		const compression = item.compress();
 		const hash = hashsum(compression);
 		if (this.hashes.has(id) && this.hashes.get(id) === hash) return;
 		this.hashes.set(id, hash);
