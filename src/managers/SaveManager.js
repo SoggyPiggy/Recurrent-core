@@ -7,6 +7,7 @@ class SaveManager extends EventEmitter
 		super();
 		this.game = game;
 		this.last = new Date().getTime();
+		this.ticked = new Set();
 	}
 
 	save(force = true)
