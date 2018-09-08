@@ -20,7 +20,6 @@ class SaveManager extends EventEmitter
 		this.interval = setInterval(() => this.save(false), 120000);
 		this.game.on('chapterTick', chapter => this.ticked.add(chapter));
 		this.game.on('questTick', quest => this.ticked.add(quest));
-		this.game.on('playerTick', player => this.ticked.add(player));
 	}
 
 	save(force = true)
