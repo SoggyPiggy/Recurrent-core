@@ -6,15 +6,13 @@ class SaveManager extends EventEmitter
 	{
 		super();
 		this.game = game;
-		this.lastSave = new Date();
-		this.delay = 60000;
-		this.interval = setInterval(() => this.save(false), this.delay);
+		this.last = new Date().getTime();
 	}
 
 	save(force = true)
 	{
 		const time = new Date();
-		if (force && (time - this.lastSave > this.delay))
+		if (force || (time - this.last > this.delay))
 		{
 			/* Example
 			const data = {};
