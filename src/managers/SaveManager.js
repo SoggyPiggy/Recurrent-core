@@ -41,6 +41,21 @@ class SaveManager extends EventEmitter
 		}
 	}
 
+	saveItem(item, type)
+	{
+		const { id } = item;
+		const compression = this.item.compress();
+		const hash = hashsum(compression);
+		if (this.hashes.has(id) && this.hashes.get(id) === hash) return;
+		this.hashes.set(id, hash);
+		this.emit('save', {
+			id,
+			type,
+			hash,
+			compression,
+		});
+	}
+
 	static parse(data)
 	{
 		const { game } = data;
