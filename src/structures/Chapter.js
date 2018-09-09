@@ -31,8 +31,12 @@ class Chapter extends TickBase
 
 	tick()
 	{
+		this.game.emit('chapterTick', this);
+		this.game.emit('objectiveTick', this.objective);
 		this.objective.emit('tick');
+		this.game.emit('questTick', this.quest);
 		this.quest.emit('tick');
+		this.game.emit('playerTick', this.player);
 		this.player.emit('tick');
 	}
 

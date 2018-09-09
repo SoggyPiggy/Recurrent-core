@@ -1,5 +1,6 @@
 const { Base } = require('../Bases');
-const { GearSlot } = require('./Gear/Slot');
+const { Attributes } = require('./../Attributes');
+const { Equipment } = require('./../Equipment');
 const { GearStorage } = require('./Gear/Storage');
 
 class PlayerGear extends Base
@@ -8,24 +9,64 @@ class PlayerGear extends Base
 	{
 		super();
 		this.player = player;
-		this.head = new GearSlot(this, data.head);
-		this.body = new GearSlot(this, data.body);
-		this.legs = new GearSlot(this, data.legs);
-		this.hands = new GearSlot(this, data.hands);
-		this.waist = new GearSlot(this, data.waist);
 		this.storage = new GearStorage(this, data.storage);
+
+		PlayerGear.slots.forEach((slot) =>
+		{
+			this[`${slot}ID`] = typeof data[`${slot}ID`] !== 'undefined' ? data[`${slot}ID`] : null;
+
+			if (this[`${slot}ID`] === null) this[`${slot}Reference`] = Equipment.empty();
+			else
+			{
+				const equipment = this.storage.find(item => item.id === this[`${slot}ID`]);
+				if (equipment) this[`${slot}Reference`] = equipment;
+				else this[`${slot}Reference`] = Equipment.empty();
+			}
+
+			Object.defineProperty(this, slot, {
+				get: () => this[`${slot}Reference`],
+				set: (item) =>
+				{
+					if (item instanceof Equipment)
+					{
+						this[`${slot}ID`] = item.id;
+						this[`${slot}Reference`] = item;
+					}
+					else
+					{
+						this[`${slot}ID`] = null;
+						this[`${slot}Reference`] = Equipment.empty();
+					}
+				},
+			});
+		});
+		Attributes.list.forEach((attribute) =>
+		{
+			Object.defineProperty(this, attribute, {
+				get: () =>
+					PlayerGear.slots.reduce((total, slot) => total + this[slot].attributes[attribute], 0),
+			});
+		});
 	}
 
 	jsonKeys()
 	{
 		return [
 			...super.jsonKeys(),
+			...PlayerGear.slots.map(slot => `${slot}ID`),
+			'storage',
+		];
+	}
+
+	static get slots()
+	{
+		return [
 			'head',
 			'body',
 			'legs',
+			'feet',
 			'hands',
 			'waist',
-			'storage',
 		];
 	}
 }
