@@ -1,6 +1,6 @@
 {
   "name": "recurrent-core",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "The core game for 'recurrent'",
   "main": "src/index.js",
   "repository": "https://github.com/SoggyPiggy/recurrent-core.git",
@@ -8,6 +8,7 @@
   "license": "Apache License 2.0",
   "private": false,
   "dependencies": {
+    "hash-sum": "^1.0.2",
     "random-js": "^1.0.8"
   },
   "devDependencies": {

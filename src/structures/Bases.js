@@ -68,6 +68,18 @@ class ArrayBase extends Base
 	{
 		super();
 		this.items = this.processItems(data);
+		Object.getOwnPropertyNames(Object.getPrototypeOf(this.items)).forEach((key) =>
+		{
+			if (key !== 'constructor' && typeof this.items[key] === 'function')
+			{
+				this[key] = (...args) => this.items[key](...args);
+			}
+		});
+	}
+
+	get length()
+	{
+		return this.items.length;
 	}
 
 	get item()
@@ -139,7 +151,7 @@ class EventBase extends Base
 		{
 			if (key !== 'constructor' && typeof this.eventHandler[key] === 'function')
 			{
-				this[key] = this.eventHandler[key];
+				this[key] = (...args) => this.eventHandler[key](...args);
 			}
 		});
 	}
@@ -155,7 +167,7 @@ class EventIDBase extends IDBase
 		{
 			if (key !== 'constructor' && typeof this.eventHandler[key] === 'function')
 			{
-				this[key] = this.eventHandler[key];
+				this[key] = (...args) => this.eventHandler[key](...args);
 			}
 		});
 	}

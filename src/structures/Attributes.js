@@ -6,54 +6,14 @@ class Attributes extends Base
 	{
 		super(data);
 		this.core = Attributes.apply(data.core);
+
+		Attributes.list.forEach((attribute) =>
+		{
+			Object.defineProperty(this, attribute, { get: () => this.core[attribute] });
+		});
 	}
 
-	get awareness()
-	{
-		return this.core.awareness;
-	}
-
-	get charm()
-	{
-		return this.core.charm;
-	}
-
-	get constitution()
-	{
-		return this.core.constitution;
-	}
-
-	get determination()
-	{
-		return this.core.determination;
-	}
-
-	get fortuity()
-	{
-		return this.core.fortuity;
-	}
-
-	get ingenuity()
-	{
-		return this.core.ingenuity;
-	}
-
-	get insight()
-	{
-		return this.core.insight;
-	}
-
-	get might()
-	{
-		return this.core.might;
-	}
-
-	get proficiency()
-	{
-		return this.core.proficiency;
-	}
-
-	roll(points, selected = Attributes.list(), fails = 0)
+	roll(points, selected = Attributes.list, fails = 0)
 	{
 		let attributes;
 		if (fails <= 0) attributes = Attributes.apply(this.generate(points, selected));
@@ -66,7 +26,7 @@ class Attributes extends Base
 		this.core = attributes;
 	}
 
-	generate(points = 100, selection = Attributes.list())
+	generate(points = 100, selection = Attributes.list)
 	{
 		const attributes = Attributes.template(selection);
 		const limit = points * 1.5;
@@ -89,7 +49,7 @@ class Attributes extends Base
 
 	toString()
 	{
-		return `AWR:${this.awareness} CHA:${this.charm} CON:${this.constitution} DET:${this.determination} FOR:${this.fortuity} ING:${this.ingenuity} INS:${this.insight} MIT:${this.might} PRO:${this.proficiency}`;
+		return Attributes.list.map(attribute => `${attribute}: ${this[attribute]}`).join(', ');
 	}
 
 	jsonKeys()
@@ -100,7 +60,7 @@ class Attributes extends Base
 		];
 	}
 
-	static list()
+	static get list()
 	{
 		return [
 			'awareness',		// Searching		AWR
@@ -115,7 +75,7 @@ class Attributes extends Base
 		];
 	}
 
-	static template(list = Attributes.list())
+	static template(list = Attributes.list)
 	{
 		const attributes = {};
 		list.forEach((attribute) =>
@@ -128,10 +88,9 @@ class Attributes extends Base
 	static apply(attribs = {})
 	{
 		const attributes = { ...attribs };
-		const list = Attributes.list();
 		Object.keys(attributes).forEach((attribute) =>
 		{
-			if (!list.includes(attribute)) delete attributes[attribute];
+			if (!Attributes.list.includes(attribute)) delete attributes[attribute];
 		});
 		return { ...Attributes.template(), ...attributes };
 	}
