@@ -49,15 +49,14 @@ class SaveManager extends EventEmitter
 		});
 	}
 
-	static parse(data)
+	static parse(storage)
 	{
-		const { game } = data;
-		const chapters = new Map(Object.entries(data.chapters));
-		const quests = new Map(Object.entries(data.quests));
+		if (!storage.has('game')) return {};
+		const game = storage.get('game', { chapters: [] });
 		game.chapters = game.chapters.map((chapterID) =>
 		{
-			const chapter = chapters.get(chapterID);
-			chapter.quests = chapter.quests.map(questID => quests.get(questID));
+			const chapter = storage.get(`chapter.${chapterID}`, { quests: [] });
+			chapter.quests = chapter.quests.map(questID => storage.get(`quest.${questID}`, {}));
 			return chapter;
 		});
 		return game;
