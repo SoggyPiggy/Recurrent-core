@@ -27,6 +27,23 @@ class SaveManager extends EventEmitter
 		this.storage.set('version', version);
 	}
 
+	processItem(item)
+	{
+		const { id } = item;
+		const compression = item.compress();
+		const hash = hashsum(compression);
+		const isNew = !this.hashes.has(id);
+		const hasChanged = isNew ? true : this.hashes.get(id) !== hash;
+		return {
+			item,
+			id,
+			hash,
+			compression,
+			isNew,
+			hasChanged,
+		};
+	}
+
 	save()
 		{
 			Array.from(this.ticked.values()).forEach((item) =>
