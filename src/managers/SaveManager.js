@@ -65,18 +65,33 @@ class SaveManager extends EventEmitter
 		this.storage.set(`hashes.${data.id}`, data.hash);
 		this.emit('save', { ...data, key });
 	}
+
+	saveAll()
 	{
-		const { id } = item;
-		const compression = item.compress();
-		const hash = hashsum(compression);
-		if (this.hashes.has(id) && this.hashes.get(id) === hash) return;
-		this.hashes.set(id, hash);
-		this.emit('save', {
-			id,
-			type,
-			hash,
-			compression,
+		const data = {
+			game: this.game.compress(),
+			chapters: {},
+			quests: {},
+			hashes: {},
+		};
+		data.hashes[this.game.id] = hashsum(data.game);
+		const chapters = new Map(this.game.chapters.map(chapter => [chapter.id, chapter]));
+		data.game.chapters.forEach((chapterID) =>
+	{
+			const chapter = chapters.get(chapterID);
+			const chapterCompression = chapter.compress();
+			data.chapters[chapterID] = chapterCompression;
+			data.hashes[chapterID] = hashsum(chapterCompression);
+			const quests = new Map(chapter.quests.map(quest => [quest.id, quest]));
+			chapterCompression.quests.forEach((questID) =>
+			{
+				const quest = quests.get(questID);
+				const questCompression = quest.compress();
+				data.quests[questID] = questCompression;
+				data.hashes[questID] = hashsum(questCompression);
+			});
 		});
+		return data;
 	}
 
 	static parse(storage)
