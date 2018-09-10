@@ -9,19 +9,14 @@ class SaveManager extends EventEmitter
 	{
 		super();
 		this.game = game;
-		this.last = new Date();
-		this.delay = 1000 * 60;
 		this.ticked = new Set();
 		this.hashes = new Map(typeof data.hashes !== 'undefined' ? data.hashes : []);
 		this.game.on('chapterTick', chapter => this.ticked.add(chapter));
 		this.game.on('questTick', quest => this.ticked.add(quest));
-		this.interval = setInterval(() => this.save(false), 1000 * 60 * 10);
+		this.interval = setInterval(() => this.save(), 1000 * 60 * 10);
 	}
 
-	save(force = true)
-	{
-		const time = new Date();
-		if (force || (time - this.last > this.delay))
+	save()
 		{
 			Array.from(this.ticked.values()).forEach((item) =>
 			{
@@ -29,10 +24,8 @@ class SaveManager extends EventEmitter
 				else if (item instanceof Chapter) this.saveItem(item, 'chapter');
 			});
 			this.saveItem(this.game, 'game');
-			this.last = time;
 			this.ticked.clear();
 		}
-	}
 
 	saveItem(item, type)
 	{
