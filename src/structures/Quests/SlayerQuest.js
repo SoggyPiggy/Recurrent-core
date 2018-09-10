@@ -53,7 +53,7 @@ class SlayerQuest extends Quest
 
 		for (let i = 0; i < fightCount; i += 1)
 		{
-			const infoTarget = `${this.random.pick(['ferral', 'wild', 'murderous', 'aroused', 'brutal', 'deadly'])} ${this.random.pick(['badger', 'fox', 'bandit', 'chiwawa'])}`;
+			const infoTarget = `${this.random.pick(['feral', 'wild', 'murderous', 'aroused', 'brutal', 'deadly'])} ${this.random.pick(['badger', 'fox', 'bandit', 'chihuahua'])}`;
 			const fightData = {
 				title: `${this.random.pick(['Fight', 'Slay', 'Fight', 'Slay', 'Brawl', 'Duel'])} the ${infoTarget}`,
 				description: `The ${infoTarget} has been wreaking havoc. Its time to put a stop to them.`,
