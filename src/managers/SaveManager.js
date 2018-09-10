@@ -59,8 +59,8 @@ class SaveManager extends EventEmitter
 		const game = storage.get('game', { chapters: [] });
 		game.chapters = game.chapters.map((chapterID) =>
 		{
-			const chapter = storage.get(`chapter.${chapterID}`, { quests: [] });
-			chapter.quests = chapter.quests.map(questID => storage.get(`quest.${questID}`, {}));
+			const chapter = storage.get(`chapters.${chapterID}`, { quests: [] });
+			chapter.quests = chapter.quests.map(questID => storage.get(`quests.${questID}`, {}));
 			return chapter;
 		});
 		return game;
