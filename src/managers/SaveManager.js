@@ -45,18 +45,18 @@ class SaveManager extends EventEmitter
 	}
 
 	save()
+	{
+		Array.from(this.ticked.values()).forEach((item) =>
 		{
-			Array.from(this.ticked.values()).forEach((item) =>
-			{
 			const data = this.processItem(item);
 			if (!data.isNew || !data.hasChanged) return;
 			if (item instanceof Quest) this.saveItem(data, `quests.${item.id}`);
 			else if (item instanceof Chapter) this.saveItem(data, `chapters.${item.id}`);
-			});
+		});
 		const data = this.processItem(this.game);
 		this.saveItem(data, 'game');
-			this.ticked.clear();
-		}
+		this.ticked.clear();
+	}
 
 	saveItem(data, key)
 	{
@@ -77,7 +77,7 @@ class SaveManager extends EventEmitter
 		data.hashes[this.game.id] = hashsum(data.game);
 		const chapters = new Map(this.game.chapters.map(chapter => [chapter.id, chapter]));
 		data.game.chapters.forEach((chapterID) =>
-	{
+		{
 			const chapter = chapters.get(chapterID);
 			const chapterCompression = chapter.compress();
 			data.chapters[chapterID] = chapterCompression;
