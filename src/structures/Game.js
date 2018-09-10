@@ -9,10 +9,11 @@ class Game extends EventIDBase
 {
 	constructor(data = {})
 	{
-		super(data);
-		this.chapters = new ChapterManager(this, data.chapters);
-		this.mastery = new MasteryExperience(this, data.mastery);
-		this.savemanager = new SaveManager(this);
+		const save = SaveManager.parse(data.storage);
+		super(save);
+		this.chapters = new ChapterManager(this, save.chapters);
+		this.mastery = new MasteryExperience(this, save.mastery);
+		this.savemanager = new SaveManager(this, data.storage);
 	}
 
 	get chapter()
