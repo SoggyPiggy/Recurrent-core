@@ -13,9 +13,9 @@ class SaveManager extends EventEmitter
 		this.delay = 1000 * 60;
 		this.ticked = new Set();
 		this.hashes = new Map(typeof data.hashes !== 'undefined' ? data.hashes : []);
-		this.interval = setInterval(() => this.save(false), 1000 * 60 * 10);
 		this.game.on('chapterTick', chapter => this.ticked.add(chapter));
 		this.game.on('questTick', quest => this.ticked.add(quest));
+		this.interval = setInterval(() => this.save(false), 1000 * 60 * 10);
 	}
 
 	save(force = true)
