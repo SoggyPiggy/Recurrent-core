@@ -3,14 +3,23 @@ const { EventEmitter } = require('events');
 const { Chapter } = require('./../structures/Chapter');
 const { Quest } = require('./../structures/Quest');
 
+const fakeStorage = {
+	get: (key, value = null) => value,
+	set: () => null,
+	remove: () => null,
+	clear: () => null,
+	store: {},
+};
+
 class SaveManager extends EventEmitter
 {
-	constructor(game, data = {})
+	constructor(game, storage = fakeStorage)
 	{
 		super();
 		this.game = game;
+		this.storage = storage;
+		this.hashes = new Map(Object.entries(storage.get('hashes', {})));
 		this.ticked = new Set();
-		this.hashes = new Map(typeof data.hashes !== 'undefined' ? data.hashes : []);
 		this.game.on('chapterTick', chapter => this.ticked.add(chapter));
 		this.game.on('questTick', quest => this.ticked.add(quest));
 		this.interval = setInterval(() => this.save(), 1000 * 60 * 10);
