@@ -48,14 +48,23 @@ class SaveManager extends EventEmitter
 		{
 			Array.from(this.ticked.values()).forEach((item) =>
 			{
-				if (item instanceof Quest) this.saveItem(item, 'quest');
-				else if (item instanceof Chapter) this.saveItem(item, 'chapter');
+			const data = this.processItem(item);
+			if (!data.isNew || !data.hasChanged) return;
+			if (item instanceof Quest) this.saveItem(data, `quests.${item.id}`);
+			else if (item instanceof Chapter) this.saveItem(data, `chapters.${item.id}`);
 			});
-			this.saveItem(this.game, 'game');
+		const data = this.processItem(this.game);
+		this.saveItem(data, 'game');
 			this.ticked.clear();
 		}
 
-	saveItem(item, type)
+	saveItem(data, key)
+	{
+		this.hashes.set(data.id, data.hash);
+		this.storage.set(key, data.compression);
+		this.storage.set(`hashes.${data.id}`, data.hash);
+		this.emit('save', { ...data, key });
+	}
 	{
 		const { id } = item;
 		const compression = item.compress();
