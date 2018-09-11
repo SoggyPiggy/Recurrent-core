@@ -53,19 +53,13 @@ class IDBase extends Base
 	{
 		super(data);
 		// eslint-disable-next-line no-underscore-dangle
-		this._id = typeof data._id !== 'undefined' ? data._id : Random.uuid4();
+		this.id = typeof data.id !== 'undefined' ? data.id : Random.uuid4();
 		this.created = typeof data.created !== 'undefined' ? data.created : new Date().getTime();
-	}
-
-	get id()
-	{
-		// eslint-disable-next-line no-underscore-dangle
-		return this._id;
 	}
 
 	jsonKeys()
 	{
-		return [...super.jsonKeys(), '_id', 'created'];
+		return [...super.jsonKeys(), 'id', 'created'];
 	}
 }
 
