@@ -7,6 +7,7 @@ const { version } = require('./../../package.json');
 const fakeStorage = {
 	get: (key, value = null) => value,
 	set: () => null,
+	has: () => null,
 	remove: () => null,
 	clear: () => null,
 	store: {},
