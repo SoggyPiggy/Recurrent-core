@@ -54,6 +54,11 @@ class Database extends EventEmitter
 		if (!this.ready) return [];
 		return this.chaptersDB.find({});
 	}
+
+	saveQuest(data)
+	{
+		this.questsDB.upsert(data);
+	}
 }
 
 module.exports = { Database };
