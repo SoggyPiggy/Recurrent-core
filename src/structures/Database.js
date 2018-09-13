@@ -33,6 +33,11 @@ class Database extends EventEmitter
 		return this.gameDB.find({})[0];
 	}
 
+	saveGame(data)
+	{
+		this.gameDB.upsert(data);
+	}
+
 	chapters()
 	{
 		if (!this.ready) return [];
