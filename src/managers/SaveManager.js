@@ -97,7 +97,7 @@ class SaveManager extends EventEmitter
 		return data;
 	}
 
-	static parse(storage = fakeStorage)
+	static buildSave(storage = fakeStorage)
 	{
 		if (!storage.has('game')) return {};
 		const game = storage.get('game', { chapters: [] });

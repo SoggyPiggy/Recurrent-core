@@ -67,12 +67,12 @@ class Game extends EventIDBase
 	static createInstance(database)
 	{
 		if (!database) instance = new Game();
-		else if (database.ready) instance = new Game(SaveManager.parse(database));
+		else if (database.ready) instance = new Game(SaveManager.buildSave(database));
 		else
 		{
 			database.on('ready', () =>
 			{
-				instance = new Game(SaveManager.parse(database));
+				instance = new Game(SaveManager.buildSave(database));
 			});
 		}
 	}
