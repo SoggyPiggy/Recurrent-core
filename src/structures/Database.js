@@ -38,6 +38,12 @@ class Database extends EventEmitter
 		if (!this.ready) return [];
 		return this.chaptersDB.find({});
 	}
+
+	quests()
+	{
+		if (!this.ready) return [];
+		return this.chaptersDB.find({});
+	}
 }
 
 module.exports = { Database };
