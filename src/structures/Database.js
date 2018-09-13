@@ -44,6 +44,11 @@ class Database extends EventEmitter
 		return this.chaptersDB.find({});
 	}
 
+	saveChapter(data)
+	{
+		this.chaptersDB.upsert(data);
+	}
+
 	quests()
 	{
 		if (!this.ready) return [];
