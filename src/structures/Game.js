@@ -70,14 +70,9 @@ class Game extends EventIDBase
 		return instance;
 	}
 
-	static getInstance(data)
-	{
-		return instance || Game.createInstance(data);
-	}
-
 	static get instance()
 	{
-		return Game.getInstance();
+		return instance;
 	}
 }
 
