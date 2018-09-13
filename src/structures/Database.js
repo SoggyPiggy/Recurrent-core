@@ -21,6 +21,11 @@ class Database extends EventEmitter
 			this.emit('ready');
 		});
 	}
+
+	get ready()
+	{
+		return this.initialized;
+	}
 }
 
 module.exports = { Database };
