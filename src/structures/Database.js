@@ -1,75 +1,26 @@
-// const NeDB = require('nedb');
-// const path = require('path');
-// const crypto = require('crypto');
+const { EventEmitter } = require('events');
+const ForerunnerDB = require('forerunnerdb');
+const pathJoin = require('path').join;
 
-// const pass = 'recurrent';
-
-class Database
+class Database extends EventEmitter
 {
-	// constructor(...args)
-	// {
-	// 	this.db = new NeDB({
-	// 		filename: args.length < 1 ? undefined : path.join(...args, 'recurrent.save'),
-	// 		autoload: true,
-	// 		// afterSerialization: (data) =>
-	// 		// {
-	// 		// 	const cipher = crypto.createCipher('aes256', pass);
-	// 		// 	return cipher.update(JSON.stringify(data), 'utf8', 'hex') + cipher.final('hex');
-	// 		// },
-	// 		// beforeDeserialization: (data) =>
-	// 		// {
-	// 		// 	const decipher = crypto.createDecipher('aes256', pass);
-	// 		// 	return JSON.parse(decipher.update(data, 'hex', 'utf8') + decipher.final('utf8'));
-	// 		// },
-	// 	});
-	// }
-
-	// fetchGame(fallback)
-	// {
-	// 	return this.fetch('game', fallback);
-	// }
-
-	// saveGame(data)
-	// {
-	// 	this.save('game', data);
-	// }
-
-	// fetchQuest(id, fallback)
-	// {
-	// 	return this;
-	// }
-
-	// saveQuest(data)
-	// {
-	// 	this.save(`quest.${data.id}`, data);
-	// }
-
-	// fetchChapter(id, fallback)
-	// {
-
-	// }
-
-	// saveChapter(data)
-	// {
-	// 	this.save(`chapter.${data.id}`, data);
-	// }
-
-	// save(_id, data)
-	// {
-	// 	this.db.update({ _id }, { _id, data }, { upsert: true });
-	// }
-
-	// fetch(_id, fallback)
-	// {
-	// 	return new Promise((resolve) =>
-	// 	{
-	// 		this.db.findOne({ _id }, (error, document) =>
-	// 		{
-	// 			if (error) resolve(fallback);
-	// 			else resolve(document);
-	// 		});
-	// 	});
-	// }
+	constructor(...args)
+	{
+		super();
+		this.initialized = false;
+		this.forerunner = new ForerunnerDB();
+		this.database = this.forerunner.db('recurrent');
+		this.database.persist.dataDir(pathJoin(...args));
+		this.database.persist.addStep(new this.database.shared.plugins.FdbCrypto({ pass: 'rcrrnt' }));
+		this.gameDB = this.database.collection('game', { primaryKey: 'id', size: 1, capped: true });
+		this.chaptersDB = this.database.collection('chapters', { primaryKey: 'id' });
+		this.questsDB = this.database.collection('quests', { primaryKey: 'id' });
+		this.database.load(() =>
+		{
+			this.initialized = true;
+			this.emit('ready');
+		});
+	}
 }
 
 module.exports = { Database };
