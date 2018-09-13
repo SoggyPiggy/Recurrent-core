@@ -20,6 +20,18 @@ class Database extends EventEmitter
 			this.initialized = true;
 			this.emit('ready');
 		});
+		this.saveHandler = {
+			game: false,
+			chapters: false,
+			quests: false,
+			all: () => this.saveHandler.game && this.saveHandler.chapters && this.saveHandler.quests,
+			reset: () =>
+			{
+				this.saveHandler.game = false;
+				this.saveHandler.chapters = false;
+				this.saveHandler.quests = false;
+			},
+		};
 	}
 
 	get ready()
@@ -36,6 +48,7 @@ class Database extends EventEmitter
 	saveGame(data)
 	{
 		this.gameDB.upsert(data);
+		this.saveHandler.game = true;
 	}
 
 	chapters()
@@ -47,6 +60,7 @@ class Database extends EventEmitter
 	saveChapter(data)
 	{
 		this.chaptersDB.upsert(data);
+		this.saveHandler.chapters = true;
 	}
 
 	quests()
@@ -58,11 +72,19 @@ class Database extends EventEmitter
 	saveQuest(data)
 	{
 		this.questsDB.upsert(data);
+		this.saveHandler.quests = true;
 	}
 
 	save()
 	{
-		this.database.save();
+		if (this.saveHandler.all() === true) this.database.save();
+		else
+		{
+			if (this.saveHandler.game === true) this.gameDB.save();
+			if (this.saveHandler.chapters === true) this.chaptersDB.save();
+			if (this.saveHandler.quests === true) this.questsDB.save();
+		}
+		this.saveHandler.reset();
 	}
 }
 
