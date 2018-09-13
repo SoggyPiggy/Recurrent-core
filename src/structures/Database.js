@@ -32,6 +32,12 @@ class Database extends EventEmitter
 		if (!this.ready) return null;
 		return this.gameDB.find({})[0];
 	}
+
+	chapters()
+	{
+		if (!this.ready) return [];
+		return this.chaptersDB.find({});
+	}
 }
 
 module.exports = { Database };
