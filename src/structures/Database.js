@@ -59,6 +59,11 @@ class Database extends EventEmitter
 	{
 		this.questsDB.upsert(data);
 	}
+
+	save()
+	{
+		this.database.save();
+	}
 }
 
 module.exports = { Database };
