@@ -15,12 +15,12 @@ const fakeStorage = {
 
 class SaveManager extends EventEmitter
 {
-	constructor(game, storage = fakeStorage)
+	constructor(game, data)
 	{
 		super();
 		this.game = game;
-		this.storage = storage;
-		this.hashes = new Map(Object.entries(storage.get('hashes', {})));
+		this.storage = data.database;
+		this.hashes = new Map(data.hashes);
 		this.ticked = new Set();
 		this.game.on('chapterTick', chapter => this.ticked.add(chapter));
 		this.game.on('questTick', quest => this.ticked.add(quest));
@@ -127,6 +127,10 @@ class SaveManager extends EventEmitter
 			chapter.quests = chapter.quests.map(questID => questMap.get(questID));
 			return chapter;
 		});
+		data.savemanager = {
+			database,
+			hashes: hashMap,
+		};
 		return data;
 	}
 }

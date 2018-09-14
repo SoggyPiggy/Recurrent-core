@@ -12,7 +12,7 @@ class Game extends EventIDBase
 		super(data);
 		this.chapters = new ChapterManager(this, data.chapters);
 		this.mastery = new MasteryExperience(this, data.mastery);
-		this.savemanager = new SaveManager(this, data.storage);
+		this.savemanager = new SaveManager(this, data.savemanager);
 	}
 
 	get chapter()
