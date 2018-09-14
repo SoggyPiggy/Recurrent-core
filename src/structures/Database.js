@@ -1,6 +1,7 @@
 const { EventEmitter } = require('events');
 const ForerunnerDB = require('forerunnerdb');
 const pathJoin = require('path').join;
+const { version } = require('./../../package');
 
 class Database extends EventEmitter
 {
@@ -17,6 +18,7 @@ class Database extends EventEmitter
 		this.questsDB = this.database.collection('quests', { primaryKey: 'id' });
 		this.database.load(() =>
 		{
+			this.versionCheck();
 			this.initialized = true;
 			this.emit('ready');
 		});
@@ -37,6 +39,13 @@ class Database extends EventEmitter
 	get ready()
 	{
 		return this.initialized;
+	}
+
+	versionCheck()
+	{
+		const result = this.mainDB.find({ id: 'version' })[0];
+		if (!result) this.mainDB.upsert({ id: 'version', version });
+		else if (result.version !== version) this.mainDB.upsert({ id: 'version', version });
 	}
 
 	game()
