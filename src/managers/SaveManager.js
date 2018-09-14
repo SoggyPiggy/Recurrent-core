@@ -59,34 +59,6 @@ class SaveManager extends EventEmitter
 		this.database.save();
 	}
 
-	saveAll()
-	{
-		const data = {
-			game: this.game.compress(),
-			chapters: {},
-			quests: {},
-			hashes: {},
-		};
-		data.hashes[this.game.id] = hashsum(data.game);
-		const chapters = new Map(this.game.chapters.map(chapter => [chapter.id, chapter]));
-		data.game.chapters.forEach((chapterID) =>
-		{
-			const chapter = chapters.get(chapterID);
-			const chapterCompression = chapter.compress();
-			data.chapters[chapterID] = chapterCompression;
-			data.hashes[chapterID] = hashsum(chapterCompression);
-			const quests = new Map(chapter.quests.map(quest => [quest.id, quest]));
-			chapterCompression.quests.forEach((questID) =>
-			{
-				const quest = quests.get(questID);
-				const questCompression = quest.compress();
-				data.quests[questID] = questCompression;
-				data.hashes[questID] = hashsum(questCompression);
-			});
-		});
-		return data;
-	}
-
 	static buildSave(database)
 	{
 		if (!database) return {};
