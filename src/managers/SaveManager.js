@@ -97,17 +97,37 @@ class SaveManager extends EventEmitter
 		return data;
 	}
 
-	static buildSave(storage = fakeStorage)
+	static buildSave(database)
 	{
-		if (!storage.has('game')) return {};
-		const game = storage.get('game', { chapters: [] });
-		game.chapters = game.chapters.map((chapterID) =>
+		if (!database) return {};
+		const gameData = database.game();
+		if (!gameData) return {};
+		if (gameData.hash !== hashsum(gameData.data)) return {};
+		const chapters = database.chapters();
+		if (!chapters.every(({ data, hash }) => hash === hashsum(data))) return {};
+		const quests = database.quests();
+		if (!quests.every(({ data, hash }) => hash === hashsum(data))) return {};
+		const hashMap = new Map([[gameData.id, gameData.hash]]);
+		const chapterMap = new Map();
+		chapters.forEach(({ id, data, hash }) =>
 		{
-			const chapter = storage.get(`chapters.${chapterID}`, { quests: [] });
-			chapter.quests = chapter.quests.map(questID => storage.get(`quests.${questID}`, {}));
+			chapterMap.set(id, data);
+			hashMap.set(id, hash);
+		});
+		const questMap = new Map();
+		quests.forEach(({ id, data, hash }) =>
+		{
+			questMap.set(id, data);
+			hashMap.set(id, hash);
+		});
+		const { data } = gameData;
+		data.chapters = data.chapters.map((chapterID) =>
+		{
+			const chapter = chapterMap.get(chapterID);
+			chapter.quests = chapter.quests.map(questID => questMap.get(questID));
 			return chapter;
 		});
-		return game;
+		return data;
 	}
 }
 
