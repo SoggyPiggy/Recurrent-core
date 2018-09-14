@@ -84,12 +84,12 @@ class SaveManager extends EventEmitter
 			hashMap.set(id, hash);
 		});
 		const { data } = gameData;
-		data.chapters = data.chapters.map((chapterID) =>
-		{
-			const chapter = chapterMap.get(chapterID);
-			chapter.quests = chapter.quests.map(questID => questMap.get(questID));
-			return chapter;
-		});
+		data.chapters = data.chapters.map(id => chapterMap.get(id));
+		data.chapters = data.chapters.map(chapter =>
+			({
+				...chapter,
+				quests: chapter.quests.map(id => questMap.get(id)),
+			}));
 		data.savemanager = {
 			database,
 			hashes: hashMap,
