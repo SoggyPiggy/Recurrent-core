@@ -15,7 +15,7 @@ const fakeStorage = {
 
 class SaveManager extends EventEmitter
 {
-	constructor(game, data)
+	constructor(game, data = {})
 	{
 		super();
 		this.game = game;
