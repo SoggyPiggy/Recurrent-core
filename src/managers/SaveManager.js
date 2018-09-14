@@ -62,13 +62,14 @@ class SaveManager extends EventEmitter
 	static buildSave(database)
 	{
 		if (!database) return {};
+		const failedReturn = { savemanager: { database } };
 		const gameData = database.game();
-		if (!gameData) return {};
-		if (gameData.hash !== hashsum(gameData.data)) return {};
+		if (!gameData) return failedReturn;
+		if (gameData.hash !== hashsum(gameData.data)) return failedReturn;
 		const chapters = database.chapters();
-		if (!chapters.every(({ data, hash }) => hash === hashsum(data))) return {};
+		if (!chapters.every(({ data, hash }) => hash === hashsum(data))) return failedReturn;
 		const quests = database.quests();
-		if (!quests.every(({ data, hash }) => hash === hashsum(data))) return {};
+		if (!quests.every(({ data, hash }) => hash === hashsum(data))) return failedReturn;
 		const hashMap = new Map([[gameData.id, gameData.hash]]);
 		const chapterMap = new Map();
 		chapters.forEach(({ id, data, hash }) =>
