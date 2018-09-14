@@ -9,58 +9,82 @@ class SaveManager extends EventEmitter
 	{
 		super();
 		this.game = game;
-		this.last = new Date();
-		this.delay = 1000 * 60;
+		this.database = data.database;
+		this.hashes = new Map(data.hashes);
 		this.ticked = new Set();
-		this.hashes = new Map(typeof data.hashes !== 'undefined' ? data.hashes : []);
-		this.interval = setInterval(() => this.save(false), 1000 * 60 * 10);
 		this.game.on('chapterTick', chapter => this.ticked.add(chapter));
 		this.game.on('questTick', quest => this.ticked.add(quest));
+		this.interval = setInterval(() => this.save(), 1000 * 60);
 	}
 
-	save(force = true)
-	{
-		const time = new Date();
-		if (force || (time - this.last > this.delay))
-		{
-			Array.from(this.ticked.values()).forEach((item) =>
-			{
-				if (item instanceof Quest) this.saveItem(item, 'quest');
-				else if (item instanceof Chapter) this.saveItem(item, 'chapter');
-			});
-			this.saveItem(this.game, 'game');
-			this.last = time;
-			this.ticked.clear();
-		}
-	}
-
-	saveItem(item, type)
+	processItem(item)
 	{
 		const { id } = item;
 		const compression = item.compress();
 		const hash = hashsum(compression);
-		if (this.hashes.has(id) && this.hashes.get(id) === hash) return;
-		this.hashes.set(id, hash);
-		this.emit('save', {
+		const hasChanged = !this.hashes.has(id) ? true : this.hashes.get(id) !== hash;
+		return {
+			item,
 			id,
-			type,
 			hash,
 			compression,
-		});
+			hasChanged,
+		};
 	}
 
-	static parse(data)
+	save()
 	{
-		const { game } = data;
-		const chapters = new Map(Object.entries(data.chapters));
-		const quests = new Map(Object.entries(data.quests));
-		game.chapters = game.chapters.map((chapterID) =>
+		Array.from(this.ticked.values()).forEach((item) =>
 		{
-			const chapter = chapters.get(chapterID);
-			chapter.quests = chapter.quests.map(questID => quests.get(questID));
-			return chapter;
+			const data = this.processItem(item);
+			if (data.hasChanged)
+			{
+				if (item instanceof Quest) this.database.saveQuest(data);
+				else if (item instanceof Chapter) this.database.saveChapter(data);
+			}
 		});
-		return game;
+		const data = this.processItem(this.game);
+		if (data.hasChanged) this.database.saveGame(data);
+		this.ticked.clear();
+		this.database.save();
+	}
+
+	static buildSave(database)
+	{
+		if (!database) return {};
+		const failedReturn = { savemanager: { database } };
+		const gameData = database.game();
+		if (!gameData) return failedReturn;
+		if (gameData.hash !== hashsum(gameData.data)) return failedReturn;
+		const chapters = database.chapters();
+		if (!chapters.every(({ data, hash }) => hash === hashsum(data))) return failedReturn;
+		const quests = database.quests();
+		if (!quests.every(({ data, hash }) => hash === hashsum(data))) return failedReturn;
+		const hashMap = new Map([[gameData.id, gameData.hash]]);
+		const chapterMap = new Map();
+		chapters.forEach(({ id, data, hash }) =>
+		{
+			chapterMap.set(id, data);
+			hashMap.set(id, hash);
+		});
+		const questMap = new Map();
+		quests.forEach(({ id, data, hash }) =>
+		{
+			questMap.set(id, data);
+			hashMap.set(id, hash);
+		});
+		const { data } = gameData;
+		data.chapters = data.chapters.map(id => chapterMap.get(id));
+		data.chapters = data.chapters.map(chapter =>
+			({
+				...chapter,
+				quests: chapter.quests.map(id => questMap.get(id)),
+			}));
+		data.savemanager = {
+			database,
+			hashes: hashMap,
+		};
+		return data;
 	}
 }
 

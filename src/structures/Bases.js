@@ -52,6 +52,7 @@ class IDBase extends Base
 	constructor(data)
 	{
 		super(data);
+		// eslint-disable-next-line no-underscore-dangle
 		this.id = typeof data.id !== 'undefined' ? data.id : Random.uuid4();
 		this.created = typeof data.created !== 'undefined' ? data.created : new Date().getTime();
 	}

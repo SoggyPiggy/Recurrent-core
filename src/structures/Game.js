@@ -12,7 +12,7 @@ class Game extends EventIDBase
 		super(data);
 		this.chapters = new ChapterManager(this, data.chapters);
 		this.mastery = new MasteryExperience(this, data.mastery);
-		this.savemanager = new SaveManager(this);
+		this.savemanager = new SaveManager(this, data.savemanager);
 	}
 
 	get chapter()
@@ -63,20 +63,28 @@ class Game extends EventIDBase
 		];
 	}
 
-	static createInstance(data)
+	static createInstance(database)
 	{
-		instance = new Game(data);
-		return instance;
-	}
-
-	static getInstance(data)
-	{
-		return instance || Game.createInstance(data);
+		if (!database) instance = new Game();
+		else if (database.ready) instance = new Game(SaveManager.buildSave(database));
+		else
+		{
+			instance = new Promise((resolve) =>
+			{
+				database.on('ready', () =>
+				{
+					resolve(new Game(SaveManager.buildSave(database)));
+				});
+			}).then((value) =>
+			{
+				instance = value;
+			});
+		}
 	}
 
 	static get instance()
 	{
-		return Game.getInstance();
+		return instance;
 	}
 }
 
