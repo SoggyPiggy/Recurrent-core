@@ -59,14 +59,6 @@ class SaveManager extends EventEmitter
 		this.database.save();
 	}
 
-	saveItem(data, key)
-	{
-		this.hashes.set(data.id, data.hash);
-		this.database.set(key, data.compression);
-		this.database.set(`hashes.${data.id}`, data.hash);
-		this.emit('save', { ...data, key });
-	}
-
 	saveAll()
 	{
 		const data = {
