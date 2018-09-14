@@ -75,7 +75,7 @@ class Database extends EventEmitter
 	quests()
 	{
 		if (!this.ready) return [];
-		return this.chaptersDB.find({});
+		return this.questsDB.find({});
 	}
 
 	saveQuest({ id, compression, hash })
