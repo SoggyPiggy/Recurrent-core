@@ -32,14 +32,12 @@ class SaveManager extends EventEmitter
 		const { id } = item;
 		const compression = item.compress();
 		const hash = hashsum(compression);
-		const isNew = !this.hashes.has(id);
-		const hasChanged = isNew ? true : this.hashes.get(id) !== hash;
+		const hasChanged = !this.hashes.has(id) ? true : this.hashes.get(id) !== hash;
 		return {
 			item,
 			id,
 			hash,
 			compression,
-			isNew,
 			hasChanged,
 		};
 	}
