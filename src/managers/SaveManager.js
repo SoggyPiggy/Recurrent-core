@@ -2,16 +2,6 @@ const hashsum = require('hash-sum');
 const { EventEmitter } = require('events');
 const { Chapter } = require('./../structures/Chapter');
 const { Quest } = require('./../structures/Quest');
-const { version } = require('./../../package.json');
-
-const fakeStorage = {
-	get: (key, value = null) => value,
-	set: () => null,
-	has: () => null,
-	remove: () => null,
-	clear: () => null,
-	store: {},
-};
 
 class SaveManager extends EventEmitter
 {
