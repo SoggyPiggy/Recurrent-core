@@ -54,9 +54,9 @@ class Database extends EventEmitter
 		return this.mainDB.find({ id: 'game' })[0];
 	}
 
-	saveGame(data)
+	saveGame(data, hash)
 	{
-		this.mainDB.upsert({ id: 'game', data });
+		this.mainDB.upsert({ id: 'game', data, hash });
 		this.saveHandler.main = true;
 	}
 
@@ -66,9 +66,9 @@ class Database extends EventEmitter
 		return this.chaptersDB.find({});
 	}
 
-	saveChapter(data)
+	saveChapter(id, data, hash)
 	{
-		this.chaptersDB.upsert(data);
+		this.chaptersDB.upsert({ id, data, hash });
 		this.saveHandler.chapters = true;
 	}
 
@@ -78,9 +78,9 @@ class Database extends EventEmitter
 		return this.chaptersDB.find({});
 	}
 
-	saveQuest(data)
+	saveQuest(id, data, hash)
 	{
-		this.questsDB.upsert(data);
+		this.questsDB.upsert({ id, data, hash });
 		this.saveHandler.quests = true;
 	}
 
