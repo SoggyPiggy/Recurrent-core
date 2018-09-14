@@ -49,8 +49,8 @@ class SaveManager extends EventEmitter
 			const data = this.processItem(item);
 			if (data.hasChanged)
 			{
-				if (item instanceof Quest) this.saveItem(data, `quests.${item.id}`);
-				else if (item instanceof Chapter) this.saveItem(data, `chapters.${item.id}`);
+				if (item instanceof Quest) this.database.saveQuest(data.id, data.compression, data.hash);
+				else if (item instanceof Chapter) this.database.saveChapter(data.id, data.compression, data.hash);
 			}
 		});
 		const data = this.processItem(this.game);
