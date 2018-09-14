@@ -12,7 +12,7 @@ class Database extends EventEmitter
 		this.database = this.forerunner.db('recurrent');
 		this.database.persist.dataDir(pathJoin(...args));
 		this.database.persist.addStep(new this.database.shared.plugins.FdbCrypto({ pass: 'rcrrnt' }));
-		this.gameDB = this.database.collection('game', { primaryKey: 'id', size: 1, capped: true });
+		this.mainDB = this.database.collection('main', { primaryKey: 'id' });
 		this.chaptersDB = this.database.collection('chapters', { primaryKey: 'id' });
 		this.questsDB = this.database.collection('quests', { primaryKey: 'id' });
 		this.database.load(() =>
@@ -21,13 +21,13 @@ class Database extends EventEmitter
 			this.emit('ready');
 		});
 		this.saveHandler = {
-			game: false,
+			main: false,
 			chapters: false,
 			quests: false,
-			all: () => this.saveHandler.game && this.saveHandler.chapters && this.saveHandler.quests,
+			all: () => this.saveHandler.main && this.saveHandler.chapters && this.saveHandler.quests,
 			reset: () =>
 			{
-				this.saveHandler.game = false;
+				this.saveHandler.main = false;
 				this.saveHandler.chapters = false;
 				this.saveHandler.quests = false;
 			},
@@ -42,13 +42,13 @@ class Database extends EventEmitter
 	game()
 	{
 		if (!this.ready) return null;
-		return this.gameDB.find({})[0];
+		return this.mainDB.find({ id: 'game' })[0];
 	}
 
 	saveGame(data)
 	{
-		this.gameDB.upsert(data);
-		this.saveHandler.game = true;
+		this.mainDB.upsert({ id: 'game', data });
+		this.saveHandler.main = true;
 	}
 
 	chapters()
@@ -80,7 +80,7 @@ class Database extends EventEmitter
 		if (this.saveHandler.all() === true) this.database.save();
 		else
 		{
-			if (this.saveHandler.game === true) this.gameDB.save();
+			if (this.saveHandler.main === true) this.mainDB.save();
 			if (this.saveHandler.chapters === true) this.chaptersDB.save();
 			if (this.saveHandler.quests === true) this.questsDB.save();
 		}
