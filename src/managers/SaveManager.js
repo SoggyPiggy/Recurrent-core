@@ -19,7 +19,7 @@ class SaveManager extends EventEmitter
 	{
 		super();
 		this.game = game;
-		this.storage = data.database;
+		this.database = data.database;
 		this.hashes = new Map(data.hashes);
 		this.ticked = new Set();
 		this.game.on('chapterTick', chapter => this.ticked.add(chapter));
@@ -63,8 +63,8 @@ class SaveManager extends EventEmitter
 	saveItem(data, key)
 	{
 		this.hashes.set(data.id, data.hash);
-		this.storage.set(key, data.compression);
-		this.storage.set(`hashes.${data.id}`, data.hash);
+		this.database.set(key, data.compression);
+		this.database.set(`hashes.${data.id}`, data.hash);
 		this.emit('save', { ...data, key });
 	}
 
