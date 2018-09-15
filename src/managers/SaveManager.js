@@ -35,7 +35,24 @@ class SaveManager extends EventEmitter
 
 	save()
 	{
-		Array.from(this.ticked.values()).forEach((item) =>
+		if (this.game.active) this.saveFrom(this.ticked);
+		else
+		{
+			const items = new Set();
+			items.add(this.game);
+			this.game.chapters.forEach((chapter) =>
+			{
+				items.add(chapter);
+				chapter.quests.forEach(quest => items.add(quest));
+			});
+			this.saveFrom(items);
+		}
+		this.database.save();
+	}
+
+	saveFrom(items)
+	{
+		Array.from(items.values()).forEach((item) =>
 		{
 			const data = this.processItem(item);
 			if (data.hasChanged)
@@ -44,10 +61,7 @@ class SaveManager extends EventEmitter
 				else if (item instanceof Chapter) this.database.saveChapter(data);
 			}
 		});
-		const data = this.processItem(this.game);
-		if (data.hasChanged) this.database.saveGame(data);
-		this.ticked.clear();
-		this.database.save();
+		items.clear();
 	}
 
 	static buildSave(database)
