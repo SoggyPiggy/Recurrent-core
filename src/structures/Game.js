@@ -37,7 +37,7 @@ class Game extends EventIDBase
 
 	get active()
 	{
-		return this.chapter.active;
+		return this.chapter ? this.chapter.active : false;
 	}
 
 	get status()
