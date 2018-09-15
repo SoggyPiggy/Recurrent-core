@@ -73,18 +73,19 @@ class Game extends EventIDBase
 		if (!database) instance = new Game();
 		else
 		{
-			instance = new Promise((resolve) =>
+			return new Promise((resolve) =>
 			{
-				if (database.ready) resolve(new Game(SaveManager.buildSave(database)));
-				else database.on('ready', () => resolve(new Game(SaveManager.buildSave(database))));
-			}).then((value) =>
+				if (database.ready) resolve();
+				else database.on('ready', () => resolve());
+			}).then(() =>
 			{
-				instance = value;
+				instance = new Game(SaveManager.buildSave(database));
 			}).catch(() =>
 			{
 				instance = new Game();
 			});
 		}
+		return instance;
 	}
 
 	static get instance()
