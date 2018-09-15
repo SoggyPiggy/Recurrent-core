@@ -12,7 +12,7 @@ class Database extends EventEmitter
 		this.forerunner = new ForerunnerDB();
 		this.database = this.forerunner.db('recurrent');
 		if (this.database.persist.dataDir) this.database.persist.dataDir(pathJoin(...path));
-		else this.database.persist.driver('IndexDB');
+		else this.database.persist.driver('IndexedDB');
 		this.database.persist.addStep(new this.database.shared.plugins.FdbCrypto({ pass: 'rcrrnt' }));
 		this.mainDB = this.database.collection('main', { primaryKey: 'id' });
 		this.chaptersDB = this.database.collection('chapters', { primaryKey: 'id' });
