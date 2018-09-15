@@ -75,6 +75,9 @@ class Game extends EventIDBase
 			}).then((value) =>
 			{
 				instance = value;
+			}).catch(() =>
+			{
+				instance = new Game();
 			});
 		}
 	}
