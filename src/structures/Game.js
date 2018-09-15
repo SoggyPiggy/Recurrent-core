@@ -48,6 +48,11 @@ class Game extends EventIDBase
 		return 'idle-chapter';
 	}
 
+	get database()
+	{
+		return this.savemanager.database;
+	}
+
 	newChapter()
 	{
 		this.chapters.newChapter();
