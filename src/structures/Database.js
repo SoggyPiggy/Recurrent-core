@@ -5,13 +5,14 @@ const { version } = require('./../../package');
 
 class Database extends EventEmitter
 {
-	constructor(...args)
+	constructor(...path)
 	{
 		super();
 		this.initialized = false;
 		this.forerunner = new ForerunnerDB();
 		this.database = this.forerunner.db('recurrent');
-		this.database.persist.dataDir(pathJoin(...args));
+		if (this.database.persist.dataDir) this.database.persist.dataDir(pathJoin(...path));
+		else this.database.persist.driver('IndexDB');
 		this.database.persist.addStep(new this.database.shared.plugins.FdbCrypto({ pass: 'rcrrnt' }));
 		this.mainDB = this.database.collection('main', { primaryKey: 'id' });
 		this.chaptersDB = this.database.collection('chapters', { primaryKey: 'id' });
