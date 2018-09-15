@@ -3,6 +3,20 @@ const { EventEmitter } = require('events');
 const { Chapter } = require('./../structures/Chapter');
 const { Quest } = require('./../structures/Quest');
 
+const check = function checkIfDataExists(database)
+{
+	const game = database.game();
+	if (!game) return false;
+	if (game.hash !== hashsum(game.data)) return false;
+	const chapters = database.chapters();
+	if (chapters.length <= 0) return false;
+	if (!chapters.every(({ data, hash }) => hash === hashsum(data))) return false;
+	const quests = database.quests();
+	if (quests.length <= 0) return false;
+	if (!quests.every(({ data, hash }) => hash === hashsum(data))) return false;
+	return { game, chapters, quests };
+};
+
 class SaveManager extends EventEmitter
 {
 	constructor(game, data = {})
@@ -68,15 +82,10 @@ class SaveManager extends EventEmitter
 	static buildSave(database)
 	{
 		if (!database) return {};
-		const failedReturn = { savemanager: { database } };
-		const gameData = database.game();
-		if (!gameData) return failedReturn;
-		if (gameData.hash !== hashsum(gameData.data)) return failedReturn;
-		const chapters = database.chapters();
-		if (!chapters.every(({ data, hash }) => hash === hashsum(data))) return failedReturn;
-		const quests = database.quests();
-		if (!quests.every(({ data, hash }) => hash === hashsum(data))) return failedReturn;
-		const hashMap = new Map([[gameData.id, gameData.hash]]);
+		const checks = check(database);
+		if (!checks) return { savemanager: { database } };
+		const { game, chapters, quests } = checks;
+		const hashMap = new Map([[game.id, game.hash]]);
 		const chapterMap = new Map();
 		chapters.forEach(({ id, data, hash }) =>
 		{
@@ -89,7 +98,7 @@ class SaveManager extends EventEmitter
 			questMap.set(id, data);
 			hashMap.set(id, hash);
 		});
-		const { data } = gameData;
+		const { data } = game;
 		data.chapters = data.chapters.map(id => chapterMap.get(id));
 		data.chapters = data.chapters.map(chapter =>
 			({
