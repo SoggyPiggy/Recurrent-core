@@ -53,6 +53,12 @@ class Game extends EventIDBase
 		return this.savemanager.database;
 	}
 
+	save(...items)
+	{
+		if (items.length > 0) this.savemanager.saveFrom(new Set(items));
+		else this.savemanager.save();
+	}
+
 	newChapter()
 	{
 		this.chapters.newChapter();
