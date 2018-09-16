@@ -5,13 +5,14 @@ const { version } = require('./../../package');
 
 class Database extends EventEmitter
 {
-	constructor(...args)
+	constructor(...path)
 	{
 		super();
 		this.initialized = false;
 		this.forerunner = new ForerunnerDB();
 		this.database = this.forerunner.db('recurrent');
-		this.database.persist.dataDir(pathJoin(...args));
+		if (this.database.persist.dataDir) this.database.persist.dataDir(pathJoin(...path));
+		else this.database.persist.driver('IndexedDB');
 		this.database.persist.addStep(new this.database.shared.plugins.FdbCrypto({ pass: 'rcrrnt' }));
 		this.mainDB = this.database.collection('main', { primaryKey: 'id' });
 		this.chaptersDB = this.database.collection('chapters', { primaryKey: 'id' });
@@ -26,7 +27,6 @@ class Database extends EventEmitter
 			main: false,
 			chapters: false,
 			quests: false,
-			all: () => this.saveHandler.main && this.saveHandler.chapters && this.saveHandler.quests,
 			reset: () =>
 			{
 				this.saveHandler.main = false;
@@ -86,13 +86,9 @@ class Database extends EventEmitter
 
 	save()
 	{
-		if (this.saveHandler.all() === true) this.database.save();
-		else
-		{
-			if (this.saveHandler.main === true) this.mainDB.save();
-			if (this.saveHandler.chapters === true) this.chaptersDB.save();
-			if (this.saveHandler.quests === true) this.questsDB.save();
-		}
+		if (this.saveHandler.main === true) this.mainDB.save();
+		if (this.saveHandler.chapters === true) this.chaptersDB.save();
+		if (this.saveHandler.quests === true) this.questsDB.save();
 		this.saveHandler.reset();
 	}
 }

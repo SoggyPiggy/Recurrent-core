@@ -37,7 +37,7 @@ class Game extends EventIDBase
 
 	get active()
 	{
-		return this.chapter.active;
+		return this.chapter ? this.chapter.active : false;
 	}
 
 	get status()
@@ -51,6 +51,12 @@ class Game extends EventIDBase
 	get database()
 	{
 		return this.savemanager.database;
+	}
+
+	save(...items)
+	{
+		if (items.length > 0) this.savemanager.saveFrom(new Set(items));
+		else this.savemanager.save();
 	}
 
 	newChapter()
@@ -75,11 +81,11 @@ class Game extends EventIDBase
 		{
 			return new Promise((resolve) =>
 			{
-				if (database.ready) resolve(new Game(SaveManager.buildSave(database)));
-				else database.on('ready', () => resolve(new Game(SaveManager.buildSave(database))));
-			}).then((value) =>
+				if (database.ready) resolve();
+				else database.on('ready', () => resolve());
+			}).then(() =>
 			{
-				instance = value;
+				instance = new Game(SaveManager.buildSave(database));
 			}).catch(() =>
 			{
 				instance = new Game();
