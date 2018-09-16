@@ -1,6 +1,5 @@
 const hashsum = require('hash-sum');
 const { EventEmitter } = require('events');
-const { Game } = require('./../structures/Game');
 const { Chapter } = require('./../structures/Chapter');
 const { Quest } = require('./../structures/Quest');
 
@@ -75,7 +74,7 @@ class SaveManager extends EventEmitter
 			{
 				if (item instanceof Quest) this.database.saveQuest(data);
 				else if (item instanceof Chapter) this.database.saveChapter(data);
-				else if (item instanceof Game) this.database.saveGame(data);
+				else if (item === this.game) this.database.saveGame(data);
 			}
 		});
 		items.clear();
