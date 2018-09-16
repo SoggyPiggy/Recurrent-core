@@ -27,7 +27,6 @@ class Database extends EventEmitter
 			main: false,
 			chapters: false,
 			quests: false,
-			all: () => this.saveHandler.main && this.saveHandler.chapters && this.saveHandler.quests,
 			reset: () =>
 			{
 				this.saveHandler.main = false;
@@ -87,13 +86,9 @@ class Database extends EventEmitter
 
 	save()
 	{
-		if (this.saveHandler.all() === true) this.database.save();
-		else
-		{
-			if (this.saveHandler.main === true) this.mainDB.save();
-			if (this.saveHandler.chapters === true) this.chaptersDB.save();
-			if (this.saveHandler.quests === true) this.questsDB.save();
-		}
+		if (this.saveHandler.main === true) this.mainDB.save();
+		if (this.saveHandler.chapters === true) this.chaptersDB.save();
+		if (this.saveHandler.quests === true) this.questsDB.save();
 		this.saveHandler.reset();
 	}
 }
