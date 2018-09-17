@@ -19,8 +19,11 @@ class Attributes extends Base
 		if (fails <= 0) attributes = Attributes.apply(this.generate(points, selected));
 		else
 		{
-			const possiblities = [...selected, ...new Array(fails).fill().map(() => this.random.uuid4())];
-			const selection = this.random.sample(possiblities, selected.length);
+			const possibilities = [
+				...selected,
+				...new Array(fails).fill().map(() => this.random.uuid4()),
+			];
+			const selection = this.random.sample(possibilities, selected.length);
 			attributes = Attributes.apply(this.generate(points, selection));
 		}
 		this.core = attributes;

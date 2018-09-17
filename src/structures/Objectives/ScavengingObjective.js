@@ -17,7 +17,7 @@ class ScavengingObjective extends Objective
 	advance()
 	{
 		let progress = super.advance();
-		progress *= (1 + (this.player.ingenutiyMod + this.player.awarenessMod) / 2);
+		progress *= (1 + (this.player.ingenuityMod + this.player.awarenessMod) / 2);
 		if (this.player.status.fatigued) progress *= 0.8;
 		return progress;
 	}

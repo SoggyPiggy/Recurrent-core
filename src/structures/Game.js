@@ -12,7 +12,7 @@ class Game extends EventIDBase
 		super(data);
 		this.chapters = new ChapterManager(this, data.chapters);
 		this.mastery = new MasteryExperience(this, data.mastery);
-		this.savemanager = new SaveManager(this);
+		this.savemanager = new SaveManager(this, data.savemanager);
 	}
 
 	get chapter()
@@ -37,7 +37,7 @@ class Game extends EventIDBase
 
 	get active()
 	{
-		return this.chapter.active;
+		return this.chapter ? this.chapter.active : false;
 	}
 
 	get status()
@@ -46,6 +46,17 @@ class Game extends EventIDBase
 		if (this.chapter.ticks <= 0) return 'new-chapter';
 		if (this.chapter.active) return 'active-chapter';
 		return 'idle-chapter';
+	}
+
+	get database()
+	{
+		return this.savemanager.database;
+	}
+
+	save(...items)
+	{
+		if (items.length > 0) this.savemanager.saveFrom(new Set(items));
+		else this.savemanager.save();
 	}
 
 	newChapter()
@@ -63,20 +74,29 @@ class Game extends EventIDBase
 		];
 	}
 
-	static createInstance(data)
+	static createInstance(database)
 	{
-		instance = new Game(data);
+		if (!database) instance = new Game();
+		else
+		{
+			return new Promise((resolve) =>
+			{
+				if (database.ready) resolve();
+				else database.on('ready', () => resolve());
+			}).then(() =>
+			{
+				instance = new Game(SaveManager.buildSave(database));
+			}).catch(() =>
+			{
+				instance = new Game();
+			});
+		}
 		return instance;
-	}
-
-	static getInstance(data)
-	{
-		return instance || Game.createInstance(data);
 	}
 
 	static get instance()
 	{
-		return Game.getInstance();
+		return instance;
 	}
 }
 

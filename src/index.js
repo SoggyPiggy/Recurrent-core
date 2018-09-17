@@ -1,4 +1,5 @@
 const { Game } = require('./structures/Game');
+const { Database } = require('./structures/Database');
 
 const { Attributes } = require('./structures/Attributes');
 const {
@@ -20,6 +21,7 @@ const { Storage } = require('./structures/Storage');
 
 module.exports = {
 	Game,
+	Database,
 
 	Base,
 	EventBase,
