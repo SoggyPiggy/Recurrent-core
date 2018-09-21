@@ -1,13 +1,11 @@
 const { EventEmitter } = require('events');
-const RandomJs = require('random-js');
-
-const Random = new RandomJs(RandomJs.engines.browserCrypto);
+const { random } = require('./../utils/random');
 
 class Base
 {
 	constructor()
 	{
-		this.random = Random;
+		this.random = random;
 	}
 
 	toString()
@@ -53,7 +51,7 @@ class IDBase extends Base
 	{
 		super(data);
 		// eslint-disable-next-line no-underscore-dangle
-		this.id = typeof data.id !== 'undefined' ? data.id : Random.uuid4();
+		this.id = typeof data.id !== 'undefined' ? data.id : random.uuid4();
 		this.created = typeof data.created !== 'undefined' ? data.created : new Date().getTime();
 	}
 
