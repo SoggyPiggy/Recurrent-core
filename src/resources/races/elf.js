@@ -4,7 +4,7 @@ const { Race } = require('./../../structures/Race');
 module.exports = new Race({
 	id: 'elf',
 	title: 'Elven',
-	name: [
+	names: [
 		'Athtar',
 		'Cyran',
 		'Kesefehon',
