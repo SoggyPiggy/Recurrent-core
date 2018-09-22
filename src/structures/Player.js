@@ -41,7 +41,7 @@ class Player extends EventBase
 
 	get race()
 	{
-		return this.information.raceName;
+		return this.information.race;
 	}
 
 	set race(race)
