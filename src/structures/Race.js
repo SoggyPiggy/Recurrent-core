@@ -14,6 +14,11 @@ class Race extends Base
 	{
 		return this.random.pick(this.names);
 	}
+
+	toString()
+	{
+		return this.title;
+	}
 }
 
 module.exports = { Race };
