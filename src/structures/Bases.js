@@ -51,11 +51,7 @@ class Base
 				else if (this[key] instanceof Base) data[key] = this[key].compress();
 				else data[key] = this[key];
 			}
-			else if (typeof key === 'object')
-			{
-				const { id, route } = key;
-				data[id] = parseDot(route, this);
-			}
+			else data[key[0]] = parseDot(key[1], this);
 		});
 		if (stringify) return JSON.stringify(data, null, 3);
 		return data;
