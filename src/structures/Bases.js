@@ -31,8 +31,8 @@ class Base
 		{
 			if (typeof key === 'string')
 			{
-			if (this[key] instanceof Base) data[key] = this[key].toJSON();
-			else data[key] = this[key];
+				if (this[key] instanceof Base) data[key] = this[key].toJSON();
+				else data[key] = this[key];
 			}
 			else if (typeof key === 'object')
 			{
@@ -48,10 +48,18 @@ class Base
 		const data = {};
 		this.jsonKeys().forEach((key) =>
 		{
-			// eslint-disable-next-line no-use-before-define
-			if (this[key] instanceof IDBase) data[key] = this[key].id;
-			else if (this[key] instanceof Base) data[key] = this[key].compress();
-			else data[key] = this[key];
+			if (typeof key === 'string')
+			{
+				// eslint-disable-next-line no-use-before-define
+				if (this[key] instanceof IDBase) data[key] = this[key].id;
+				else if (this[key] instanceof Base) data[key] = this[key].compress();
+				else data[key] = this[key];
+			}
+			else if (typeof key === 'object')
+			{
+				const { id, route } = key;
+				data[id] = parseDot(route, this);
+			}
 		});
 		if (stringify) return JSON.stringify(data, null, 3);
 		return data;
