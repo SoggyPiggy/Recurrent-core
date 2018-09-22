@@ -29,8 +29,16 @@ class Base
 		const data = {};
 		this.jsonKeys().forEach((key) =>
 		{
+			if (typeof key === 'string')
+			{
 			if (this[key] instanceof Base) data[key] = this[key].toJSON();
 			else data[key] = this[key];
+			}
+			else if (typeof key === 'object')
+			{
+				const { id, route } = key;
+				data[id] = parseDot(route, this);
+			}
 		});
 		return data;
 	}
