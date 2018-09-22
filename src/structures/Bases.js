@@ -1,6 +1,11 @@
 const { EventEmitter } = require('events');
 const { random } = require('./../utils/random');
 
+const parseDot = function parseDotNotationFromObject(keys, data)
+{
+	return keys.split('.').reduce((temp, key) => temp[key], data);
+};
+
 class Base
 {
 	constructor()
