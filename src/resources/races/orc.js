@@ -6,7 +6,7 @@ module.exports = new Race({
 	title: 'Orc',
 	minHeight: 195,
 	maxHeight: 275,
-	name: [
+	names: [
 		'Xurek',
 		'Meakgu',
 		'Mug',
