@@ -4,6 +4,8 @@ const { Race } = require('./../../structures/Race');
 module.exports = new Race({
 	id: 'elf',
 	title: 'Elf',
+	minHeight: 175,
+	maxHeight: 245,
 	names: [
 		'Athtar',
 		'Cyran',
