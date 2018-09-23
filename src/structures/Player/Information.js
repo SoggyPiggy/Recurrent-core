@@ -25,7 +25,10 @@ class PlayerInformation extends Base
 
 	randomizeName()
 	{
-		this.setName(this.race.randomName(), false);
+		let name;
+		do name = this.race.randomName();
+		while (name === this.name);
+		this.setName(name, false);
 	}
 
 	randomizeHeight()
