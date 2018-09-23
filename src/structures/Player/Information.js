@@ -17,7 +17,10 @@ class PlayerInformation extends Base
 
 	randomizeRace()
 	{
-		this.setRace(this.random.pick(races));
+		let race;
+		do race = this.random.pick(races);
+		while (race === this.race);
+		this.setRace(race);
 	}
 
 	randomizeName()
