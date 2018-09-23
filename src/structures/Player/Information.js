@@ -1,17 +1,5 @@
 const { Base } = require('./../Bases');
-
-const races = {
-	human:
-	{
-		race: 'Human',
-		names: ['Frut', 'Brar', 'Crilk', 'Dhak', 'Bhob', 'Thulga', 'Virthi', 'Amgai', 'Mirta', 'Feto'],
-	},
-	orc:
-	{
-		race: 'Orc',
-		names: ['Xurek', 'Meakgu', 'Mug', 'Varbu', 'Dakgu', 'Shagar', 'Bum', 'Murob', 'Shazgob', 'Badbog'],
-	},
-};
+const { races } = require('./../../resources');
 
 class PlayerInformation extends Base
 {
@@ -19,59 +7,57 @@ class PlayerInformation extends Base
 	{
 		super();
 		this.player = player;
-		this.custom = typeof data.custom !== 'undefined' ? data.custom : false;
-		this.race = typeof data.race !== 'undefined' ? data.race : this.randomRace();
-		this.name = typeof data.name !== 'undefined' ? data.name : this.randomName();
-	}
-
-	get raceName()
-	{
-		return races[this.race].race;
-	}
-
-	randomRace()
-	{
-		const raceIDs = Object.keys(races);
-		return this.random.pick(raceIDs);
-	}
-
-	randomName()
-	{
-		return this.random.pick(races[this.race].names);
+		this.race = typeof data.race !== 'undefined'
+			? races.find(race => race.id === data.race)
+			: this.random.pick(races);
+		this.name = typeof data.name !== 'undefined' ? data.name : this.race.randomName();
+		this.nameLock = typeof data.nameLock !== 'undefined' ? data.nameLock : false;
+		this.height = typeof data.height !== 'undefined' ? data.height : this.race.randomHeight();
 	}
 
 	randomizeRace()
 	{
-		this.race = this.randomRace();
-		if (!this.custom) this.randomizeName();
+		this.setRace(this.random.pick(races));
 	}
 
 	randomizeName()
 	{
-		this.name = this.randomName();
-		this.custom = false;
+		this.setName(this.race.randomName(), false);
+	}
+
+	randomizeHeight()
+	{
+		this.setHeight(this.race.randomHeight());
 	}
 
 	setRace(race)
 	{
-		if (typeof races[race] === 'undefined') return;
-		this.race = race;
-		if (!this.custom) this.randomizeName();
+		if (races.includes(race)) this.race = race;
+		else return;
+		if (!this.nameLock) this.randomizeName();
+		this.randomizeHeight();
 	}
 
-	setName(name)
+	setName(name, locked = true)
 	{
 		this.name = name;
-		this.custom = true;
+		this.nameLock = locked;
+	}
+
+	setHeight(height)
+	{
+		if (height < this.race.minHeight || height > this.race.maxHeight) return;
+		this.height = height;
 	}
 
 	jsonKeys()
 	{
 		return [
 			...super.jsonKeys(),
-			'race',
+			['race', 'race.id'],
 			'name',
-			'custom',
+			'nameLock',
+			'height',
 		];
 	}
 }
