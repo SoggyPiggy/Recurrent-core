@@ -19,6 +19,8 @@ const { Player } = require('./structures/Player');
 const { Quest } = require('./structures/Quest');
 const { Storage } = require('./structures/Storage');
 
+const resources = require('./resources');
+
 module.exports = {
 	Game,
 	Database,
@@ -39,4 +41,6 @@ module.exports = {
 	Player,
 	Quest,
 	Storage,
+
+	resources,
 };
