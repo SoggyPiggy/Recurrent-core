@@ -13,7 +13,7 @@ class Database extends EventEmitter
 		this.database = this.forerunner.db('recurrent');
 		if (this.database.persist.dataDir) this.database.persist.dataDir(pathJoin(...path));
 		else this.database.persist.driver('IndexedDB');
-		this.database.persist.addStep(new this.database.shared.plugins.FdbCrypto({ pass: 'rcrrnt' }));
+		// this.database.persist.addStep(new this.database.shared.plugins.FdbCrypto({ pass: 'rcrrnt' }));
 		this.mainDB = this.database.collection('main', { primaryKey: 'id' });
 		this.chaptersDB = this.database.collection('chapters', { primaryKey: 'id' });
 		this.questsDB = this.database.collection('quests', { primaryKey: 'id' });
@@ -90,6 +90,16 @@ class Database extends EventEmitter
 		if (this.saveHandler.chapters === true) this.chaptersDB.save();
 		if (this.saveHandler.quests === true) this.questsDB.save();
 		this.saveHandler.reset();
+	}
+
+	clear()
+	{
+		this.mainDB.remove({});
+		this.mainDB.save();
+		this.chaptersDB.remove({});
+		this.chaptersDB.save();
+		this.questsDB.remove({});
+		this.questsDB.save();
 	}
 }
 
