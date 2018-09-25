@@ -87,7 +87,11 @@ class SaveManager extends EventEmitter
 	{
 		if (!database) return {};
 		const checks = check(database);
-		if (!checks) return { savemanager: { database } };
+		if (!checks)
+		{
+			database.clear();
+			return { savemanager: { database } };
+		}
 		const { game, chapters, quests } = checks;
 		const hashMap = new Map([[game.id, game.hash]]);
 		const chapterMap = new Map();
